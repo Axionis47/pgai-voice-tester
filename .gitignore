@@ -16,5 +16,8 @@ venv/
 .claude/
 CLAUDE.md
 
+# Challenge brief and rubric - keep PGAI's assessment out of the public repo
+CHALLENGE.md
+
 # Large intermediate audio - we keep the mp3 deliverable and the transcript, not the raw wav
 results/recordings/*.wav
