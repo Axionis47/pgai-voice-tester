@@ -1,0 +1,69 @@
+[0.0s] AGENT: This call may be recorded for quality and training purposes,
+[0.0s] BOT: Hi there.
+[3.3s] AGENT: para español, oprimados.
+[6.1s] AGENT: Thanks for calling to the point, orthopedics.
+[7.0s] BOT: Okay, I understand I'm just looking for some general information.
+[8.5s] AGENT: Part of pretty good AI.
+[10.2s] AGENT: My name is Ziggy with JAWS.
+[15.0s] BOT: I don't have a patient profile set up yet.
+[15.8s] AGENT: Please provide your data first.
+[20.0s] BOT: I'm just calling to get some information as a new patient.
+[23.0s] BOT: I was hoping to find out a little bit about your practice,
+[25.0s] BOT: like what your hours are and what services you offer before I set up an appointment.
+[31.0s] AGENT: I can answer general questions about the practice and services.
+[35.0s] AGENT: If you decide to set up an appointment,
+[37.0s] AGENT: I'll just need your full name and data first to get started.
+[41.0s] AGENT: What would you like to know first are hours
+[44.0s] AGENT: or the types of services we offer?
+[47.0s] BOT: Let's start with your hours please.
+[50.0s] AGENT: Are clinic hours can vary by day?
+[53.0s] AGENT: Are you interested in morning afternoon or evening appointments?
+[54.0s] BOT: Can you...
+[56.0s] AGENT: Or do you have a specific day in mind?
+[59.0s] BOT: No, I don't have a specific day in mind.
+[60.0s] AGENT: We're typically open weekdays with appointments available
+[61.0s] BOT: I'm just trying to get a general understanding of your hours of operation.
+[71.0s] AGENT: in the morning and afternoon.
+[73.0s] AGENT: If you'd like exact hours for a certain day,
+[75.0s] AGENT: just let me know.
+[76.0s] AGENT: Would you like to hear about our services next?
+[77.0s] BOT: No. Yes, please tell me about your services.
+[85.0s] AGENT: We offer orthopedic care, including joint pain treatment,
+[89.0s] AGENT: sports injuries, fracture care, and physical therapy.
+[90.0s] BOT: Okay.
+[94.0s] AGENT: If you have a specific concern or condition,
+[94.0s] BOT: Okay.
+[96.0s] AGENT: I can share more details.
+[98.0s] AGENT: Would you like to know about new patient appointments?
+[98.0s] BOT: No. I'd like to know what insurance plans you accept please.
+[107.0s] AGENT: We accept to most major insurance plans.
+[110.0s] AGENT: If you have a specific insurance provider in mind,
+[112.0s] AGENT: I can check if it's accepted.
+[114.0s] AGENT: Which insurance do you plan to use?
+[117.0s] BOT: I'm not sure yet.
+[119.0s] BOT: I'm just trying to get a general idea of what plans you accept before I choose a plan for myself.
+[120.0s] AGENT: We work with many common insurance providers,
+[129.0s] BOT: Okay.
+[131.0s] AGENT: including most major commercial plans,
+[133.0s] AGENT: Medicare, and some Medicaid options.
+[135.0s] BOT: No, I'm still trying to find out if you have more than one location.
+[136.0s] AGENT: If you want to confirm a specific plan later, just let us know.
+[139.0s] AGENT: Would you like information on how to schedule your first appointment?
+[149.0s] AGENT: We have one main location.
+[151.0s] AGENT: If you need the address or more details about our clinic,
+[153.0s] BOT: Okay, so just one location, got it.
+[154.0s] AGENT: just let me know.
+[158.0s] BOT: How much does a new patient visit cost if I'm paying with cash?
+[165.0s] AGENT: A new patient visit typically ranges from 150 to $200 if you're paying cash.
+[170.0s] AGENT: The exact amount can depend on the type of visit or services needed.
+[174.0s] AGENT: Would you like more details about what's included in that cost?
+[178.0s] AGENT: If you have more questions or want to schedule an appointment later,
+[179.0s] BOT: No, I think that's a good estimate for now.
+[181.0s] BOT: I appreciate your help today.
+[182.0s] AGENT: just give us a call.
+[182.0s] BOT: I have all the information I need for now.
+[184.0s] AGENT: Have a great day.
+[188.0s] BOT: No.
+[192.0s] BOT: Great.
+[194.0s] BOT: You too.
+[195.0s] BOT: Bye.

@@ -1,0 +1,18 @@
+# Transcribed with small.en. Call CA4eec72b99fcc56ad4ed20bf8665a0028
+[0.0s] AGENT: This call may be recorded for quality and training purposes.
+[0.0s] BOT: No, my name's not John. Can I get in on a Saturday by any chance?
+[6.0s] AGENT: Thanks for calling Pivot Point Orthopedics, part of Pretty Good AI. Am I speaking with John?
+[19.3s] AGENT: We're open Monday through Friday and do not have Saturday appointments.
+[20.0s] BOT: Sure. So just to confirm, there's no cancellation fee and no referral needed, right?
+[22.6s] AGENT: Would you like to hear about our next available weekday openings?
+[30.0s] AGENT: That's right. No referral is needed to book an appointment here. There's also no cancellation fee, if you let us know in advance.
+[40.0s] BOT: Okay, great. So just to confirm, no referral needed, no cancellation fee either, if I give you notice. Got it.
+[41.0s] AGENT: Would you like to schedule a weekday appointment?
+[43.4s] AGENT: You've got it. No referral needed and no cancellation fee with notice. If you ever want to book or have...
+[49.0s] BOT: And that's all I needed to know. Thanks so much for your help today.
+[61.0s] BOT: Yep.
+[66.0s] BOT: Yep, that's all.
+[66.4s] AGENT: Take care.
+[66.9s] AGENT: All right, I've got help. Have a great day.
+[68.0s] BOT: You too.
+[76.0s] BOT: You too.

@@ -1,0 +1,40 @@
+# Transcribed with small.en. Call CAe1aff2de4385b253fbeffb054ceb7dfb
+[0.0s] AGENT: This call may be recorded for quality and training purposes, para español o primaldos.
+[0.0s] BOT: Yes, you are.
+[6.0s] AGENT: Thanks for calling Pivot Point Orthopedics, part of Pretty Good AI.
+[6.0s] BOT: Yes, you are.
+[10.3s] AGENT: Am I speaking with John?
+[12.0s] BOT: My birthday is July 4th, 2000.
+[16.3s] AGENT: Please provide your date of birth.
+[18.0s] BOT: It's July 4th, 2000.
+[24.0s] BOT: Yes, I'm hoping to get a refill on my prescription today.
+[27.3s] AGENT: How can I help you today?
+[28.0s] BOT: I'm hoping that you can help me with that.
+[30.0s] AGENT: Thanks for confirming your date of birth.
+[32.0s] AGENT: What can I help you with today?
+[32.0s] BOT: I just wanted to verify what the current prescription is that I'm on.
+[52.0s] AGENT: Which medication do you need refilled today?
+[54.0s] BOT: Yes, I wanted to know what medications I'm currently on. Can you tell me what those are?
+[60.0s] AGENT: I do not see any medications listed for you right now.
+[66.0s] AGENT: Please tell me the name of the medication you need refilled.
+[70.0s] BOT: Oh, that's odd. I thought I had some medications with you guys. Can you tell me what my date of birth is that you have on file?
+[80.0s] AGENT: I have your date of birth as July 4, 2000.
+[82.0s] AGENT: Is that correct?
+[82.0s] BOT: Perfect. And do you have my current phone number as the one I'm calling from right now?
+[90.0s] AGENT: I have your number as 803-715-5862.
+[94.0s] BOT: Okay, perfect. That's great. And do I have any upcoming appointments?
+[96.0s] AGENT: Is that correct?
+[104.0s] AGENT: I can only help with medication refills right now.
+[106.0s] AGENT: Would you like to continue with your refill request?
+[110.0s] AGENT: If you need help with appointments, I can connect you to someone who can assist.
+[110.0s] BOT: Um, yes. Can you tell me what my insurance on file is with you guys? Can you tell me what that is?
+[120.0s] AGENT: I do not have access to your insurance information.
+[124.0s] AGENT: Would you like to continue with your medication refill request?
+[129.0s] BOT: Uh, no, not.
+[136.0s] AGENT: I see you want to verify your current prescription, but it looks like you chose not to continue with a refill request.
+[142.0s] AGENT: Would you like to book an appointment?
+[144.0s] BOT: No, I just wanted to verify my prescription, but it seems like you don't have it, so I guess I'll just call back later.
+[150.0s] AGENT: Understood.
+[154.0s] AGENT: If you need anything else, feel free to call back.
+[154.0s] BOT: Hmm. Yeah. Thank you. You too.
+[156.0s] AGENT: Have a good day.

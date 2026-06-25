@@ -1,0 +1,46 @@
+# Transcribed with small.en. Call CAdad8903ebe136e4ed47d81c3bde5cb23
+[0.0s] AGENT: This call may be recorded for quality and training purposes.
+[0.0s] BOT: No, my name is Karen Bell
+[3.2s] AGENT: Para español o primaldos.
+[6.0s] AGENT: Thanks for calling Pivot Point Orthopedics.
+[8.8s] AGENT: Part of pretty good AI.
+[10.4s] AGENT: Am I speaking with John?
+[16.7s] AGENT: Thanks for letting me know, Karen.
+[18.4s] AGENT: Are you calling for yourself or for someone else today?
+[22.0s] BOT: For myself, that's Karen Bell.
+[24.4s] BOT: Can I book that 7 p.m. appointment for this Friday?
+[26.7s] AGENT: Please provide your date of birth.
+[29.3s] BOT: July 4, 2000.
+[30.0s] AGENT: It looks like the records for this phone number are under the name Marcus Bell.
+[31.6s] BOT: Can I book that appointment for 7 p.m. this Friday?
+[46.2s] AGENT: Are you Marcus, or are you calling on behalf of Marcus?
+[48.4s] AGENT: I'm not finding a record for Karen Bell with this phone number.
+[49.5s] BOT: I'm Karen Bell and I'm calling for myself.
+[51.6s] BOT: I'd like to book a 7 p.m. appointment for this Friday.
+[60.2s] AGENT: Is it possible you've used a different number with our clinic before, or are you a new patient?
+[64.9s] AGENT: Thanks for your interest in Pivot Point Orthopedics.
+[66.1s] BOT: I'm a new patient and I'd like to book a 7 p.m. appointment for this Friday.
+[76.6s] AGENT: I'm not able to create new Pivot Point Orthopedics.
+[77.7s] BOT: You're welcome.
+[81.0s] BOT: I'm not following.
+[82.5s] BOT: Do you have 7 p.m. appointments available on Fridays?
+[88.2s] AGENT: We do have appointments on Fridays, but the clinic closes at 12 p.m. on Friday, so there
+[93.5s] AGENT: are no 7 p.m. appointments available that day.
+[97.6s] AGENT: Would you like to book a morning appointment instead, or look at evening options on another
+[102.0s] AGENT: day?
+[103.6s] BOT: So there's really no way to get a 7 p.m. on Friday, even as a one-time exception.
+[111.1s] AGENT: That's correct.
+[112.1s] AGENT: The clinic closes at noon on Fridays, so 7 p.m. appointments aren't possible, even as
+[116.7s] AGENT: a one-time exception.
+[118.6s] AGENT: Would you like to see available times on another day, or book a Friday morning slot?
+[123.7s] BOT: Okay, I understand.
+[125.0s] BOT: Thanks.
+[126.0s] BOT: Anyway, bye.
+[128.8s] AGENT: You're welcome.
+[129.9s] AGENT: If you need anything in the future, take care.
+[130.2s] BOT: No.
+[132.4s] BOT: Okay, thanks.
+[133.4s] BOT: Bye.
+[140.7s] AGENT: Goodbye.
+[142.9s] BOT: Bye.
+[145.4s] AGENT: Goodbye.

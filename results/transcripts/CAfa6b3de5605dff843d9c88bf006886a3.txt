@@ -1,0 +1,28 @@
+# Transcribed with small.en. Call CAfa6b3de5605dff843d9c88bf006886a3
+[0.0s] AGENT: This call may be recorded for quality and training purposes.
+[0.0s] BOT: I am, I'm trying to refill my clonidine, it's a blood pressure medication.
+[5.8s] AGENT: Thanks for calling Pivot Point Orthopedics, part of Pretty Good AI. Am I speaking with John?
+[22.5s] AGENT: Please provide your date of birth.
+[25.7s] BOT: July 4th, 2000
+[30.0s] AGENT: Just to confirm you'd like a refill for Clonidine, is that correct?
+[39.7s] BOT: Yes, please.
+[42.6s] AGENT: How many days of Clonidine do you have left? If you are already out, just let me know.
+[47.7s] BOT: I have none left, I was hoping to pick it up today.
+[54.2s] AGENT: I have noted that you are out of Clonidine. What is the best phone number for staff to call you
+[59.3s] AGENT: back about this refill? I have your number as 803-715-5862. Is that correct?
+[67.7s] BOT: Yes, that's correct.
+[73.2s] AGENT: Is there anything else you'd like the staff to know about your refill request?
+[76.7s] BOT: No, thank you.
+[76.8s] AGENT: For example, any symptoms or urgency?
+[79.5s] AGENT: Can you please tell me the name of the pharmacy you want to use for your medication?
+[90.1s] AGENT: If you know the address, city, or any details like cross streets or nearby stores,
+[90.7s] BOT: You are safe.
+[95.3s] AGENT: that would help too. If you have their phone or fax number, please share that as well.
+[96.7s] BOT: I will, I'll talk to you later.
+[103.7s] BOT: Thanks.
+[109.5s] AGENT: I need to confirm your pharmacy to complete the refill, but I can't do that right now.
+[115.2s] AGENT: I'll connect you to our patient support team for help. Please stay on the line.
+[115.7s] BOT: I am.
+[119.7s] AGENT: Connecting you to a representative. Please wait.
+[124.2s] AGENT: Hello. You've reached the Pretty Good AI test line. Goodbye.
+[125.7s] BOT: Hello.

@@ -1,0 +1,97 @@
+# Transcribed with small.en. Call CA92a387d0cf63b982038f3b6261fa43c2
+[0.0s] AGENT: This call may be recorded for quality and training purposes.
+[0.0s] BOT: Hi, there.
+[3.3s] AGENT: Para español, o primaldos.
+[6.1s] AGENT: Thanks for calling Pivot Point Orthopedics, part of Pretty Good AI.
+[7.0s] BOT: It's Karen Bell.
+[9.8s] AGENT: Am I speaking with John?
+[13.0s] BOT: Thank you.
+[15.6s] AGENT: Thanks, Karen.
+[16.8s] AGENT: Are you calling about your own care?
+[18.0s] BOT: Yes, I am calling about my own care. I would like to book a knee appointment with Dr. Lena Sandoval.
+[18.1s] AGENT: Please provide your date of birth.
+[25.0s] BOT: Do you have any openings next week?
+[29.2s] AGENT: Please provide your date of birth.
+[31.0s] BOT: I'm calling about my own care to book a knee appointment with Dr. Lena Sandoval. Do you have any openings next week?
+[38.3s] AGENT: I understand.
+[39.6s] AGENT: Can you please tell me your date of birth?
+[41.0s] BOT: I'm sorry I don't feel comfortable sharing that information.
+[44.0s] AGENT: I just need your date of birth to continue.
+[46.2s] AGENT: Could you please provide it?
+[47.0s] BOT: I'm sorry I don't feel comfortable sharing that information. I would just like to book a knee appointment with Dr. Lena Sandoval.
+[54.0s] BOT: Do you have any openings next week?
+[59.9s] AGENT: I need your date of birth to look up your chart and book the appointment.
+[64.3s] AGENT: Without it, I can't continue.
+[66.8s] AGENT: If you prefer, you can call the clinic directly for help.
+[70.0s] BOT: I understand, but I don't feel comfortable sharing my date of birth. At this moment, I would just like to book a knee appointment with Dr. Lena Sandoval.
+[77.0s] BOT: If you can't help me with that, I'm afraid I'll have to end this call.
+[84.0s] BOT: Okay.
+[85.8s] AGENT: I can help you schedule a knee appointment.
+[87.8s] AGENT: However, I don't see Dr. Lee if you change your mind or need anything else.
+[94.0s] BOT: Okay, I understand. So you can't help me book an appointment with Dr. Lena Sandoval. Can you help me book an appointment with another doctor then?
+[94.4s] AGENT: You can always call us back.
+[104.0s] BOT: Okay, I understand. So you can't help me book an appointment with Dr. Lena Sandoval because you can't find her in the system. Is that correct?
+[106.9s] AGENT: I can help you book an appointment with another doctor, but I still need your date of birth
+[110.9s] AGENT: to look up your chart and schedule a visit.
+[113.7s] AGENT: If you're not comfortable sharing that, you can contact the clinic directly for assistance.
+[124.4s] AGENT: That's correct.
+[126.0s] BOT: Okay, I understand. I'm sorry I don't feel comfortable sharing my date of birth at this moment, but I would just like to book a knee appointment. Okay, I understand.
+[129.0s] AGENT: I don't have a Dr. Lena Sandoval listed at Pivot Point Orthopedics.
+[133.3s] AGENT: If you'd like, I could help you book with one of our available doctors or physical therapists.
+[146.0s] BOT: So you don't have Dr. Lena Sandoval listed in your system. Can you help me book an appointment with another doctor then?
+[154.0s] BOT: Okay, I understand. So you cannot help me book an appointment with Dr. Lena Sandoval, but you can help me book an appointment with another doctor. Can you help me with that? I'm flexible on the day and time as well as the doctor.
+[154.4s] AGENT: Yes, I can help you book a knee appointment with another doctor at Pivot Point Orthopedics.
+[161.9s] AGENT: I just need your date of birth to look up your chart and schedule a visit.
+[165.4s] AGENT: If you're not comfortable sharing that, you can also call the clinic directly for help.
+[180.0s] BOT: Okay, I understand. So you cannot help me book an appointment with Dr. Lena Sandoval, but you can help me book an appointment with another doctor. Can you help me with that? I'm flexible on the day and time as well as the doctor.
+[184.4s] AGENT: Yes, I can help you book an appointment with any of our available doctors.
+[195.3s] AGENT: I just need your date of birth to look up your chart and schedule a visit.
+[199.4s] AGENT: If you're not comfortable sharing that, you can call the clinic directly for assistance.
+[204.0s] BOT: Okay, I understand. I'm sorry I don't feel comfortable sharing my date of birth at this moment, but I would just like to book a knee appointment. I'm flexible on the day and time, I was thinking, next Wednesday morning if that works.
+[218.4s] AGENT: I understand your preference.
+[220.1s] AGENT: To book any appointment, I do need your date of birth to access your chart.
+[224.2s] AGENT: Without it, I can't schedule a visit.
+[225.9s] AGENT: If you'd like, you can call the clinic directly and they can help you without sharing that information here.
+[233.0s] BOT: Okay, I understand. So you cannot help me book an appointment with Dr. Lena Sandoval, but you can help me book an appointment with another doctor. Can you help me with that? I'm flexible on the day and time as well as the doctor, I was thinking, next Wednesday morning if that works.
+[245.0s] BOT: Okay, I understand. So you cannot help me book an appointment with Dr. Lena Sandoval, but you can help me book an appointment with another doctor. Can you help me with that? I'm flexible on the day and time as well as the doctor.
+[255.9s] AGENT: Yes, I can help you book with another doctor next Wednesday morning.
+[256.0s] BOT: I was thinking next Wednesday morning, if that works.
+[265.8s] AGENT: I just need your date of birth to look up your chart and schedule the appointment.
+[270.6s] AGENT: If you're not comfortable sharing that, you can call the clinic directly for help.
+[275.0s] BOT: Okay. I understand. I'm sorry. I don't feel comfortable sharing my date of birth at this moment.
+[280.0s] BOT: But I would just like to book any appointment. I'm flexible on the day and time.
+[284.0s] BOT: I was thinking next Wednesday morning, if that works.
+[286.7s] AGENT: I understand.
+[289.9s] AGENT: Without your date of birth, I can't access your chart or book the appointment.
+[294.7s] AGENT: If you'd like, you can call the clinic directly and they can help you schedule a visit.
+[299.0s] BOT: Okay. I understand. I'm sorry. I don't feel comfortable sharing my date of birth at this moment.
+[304.0s] BOT: But I would just like to book any appointment. I'm flexible on the day and time.
+[308.0s] BOT: I was thinking next Wednesday morning, if that works.
+[313.7s] AGENT: I understand your preference.
+[315.0s] BOT: Okay. I understand. I'm sorry. I don't feel comfortable sharing my date of birth at this moment.
+[315.4s] AGENT: Unfortunately, I need your date of birth to access your chart and book the appointment.
+[319.8s] AGENT: If you'd rather not share it, please contact the clinic directly and they can assist you.
+[320.0s] BOT: But I would just like to book any appointment. I'm flexible on the day and time.
+[324.0s] BOT: I was thinking next Wednesday morning, if that works.
+[339.8s] AGENT: I understand.
+[340.8s] AGENT: I'm unable to book an appointment without your date of birth.
+[344.1s] AGENT: If you'd like, you can call the clinic directly and they can help you schedule your knee appointment.
+[345.0s] BOT: Okay. I understand. So you cannot help me book an appointment with Dr. Lena Sandoval, but you can help me book an appointment with another doctor.
+[352.0s] BOT: Can you help me with that? I'm flexible on the day and time, as well as the doctor I was thinking next Wednesday morning, if that works.
+[358.0s] BOT: Okay. I understand. So you cannot help me book an appointment with Dr. Lena Sandoval, but you can help me book an appointment with another doctor.
+[364.0s] BOT: Can you help me with that? I'm flexible on the day and time, as well as the day and time.
+[369.0s] BOT: book an appointment with another doctor. Can you help me with that? I'm flexible
+[372.5s] BOT: on the day and time as well as the doctor. I was thinking next Wednesday
+[374.1s] AGENT: I understand your request.
+[376.4s] BOT: morning if that works. Okay, I understand. I'm sorry. I don't feel comfortable
+[380.3s] BOT: sharing my date of birth at this moment, but I would just like to book a knee
+[383.8s] BOT: appointment. I'm flexible on the day and time. I was thinking next Wednesday
+[387.7s] BOT: morning if that works.
+[396.2s] AGENT: Without your date of birth, I can't access your chart or book the appointment.
+[399.0s] BOT: Okay, I understand. So you cannot help me book an appointment with Dr. Alina Sandoval, but you can help me book an appointment with another doctor. Can you help me with that? I'm flexible on the day and
+[400.5s] AGENT: Please contact the clinic directly and they can help you schedule your knee appointment.
+[415.8s] BOT: time as well as the doctor. I was thinking next Wednesday morning if that works.
+[421.7s] AGENT: I can help you book with another doctor.
+[423.8s] AGENT: But I do need your date of birth to access your chart and schedule the appointment.
+[428.0s] AGENT: If you'd rather not share it, the clinic can assist you directly.
+[429.0s] BOT: Okay, I understand. So you cannot help me book an appointment with Dr. Alina Sandoval, but you can help me book an appointment with another doctor. Can you help me with that? I'm flexible on the day and time as well as the doctor. I was thinking next Wednesday morning if that works. Okay, I understand. So you cannot help me book an appointment with Dr. Alina Sandoval, but you cannot help me book an appointment with Dr. Alina Sandoval.

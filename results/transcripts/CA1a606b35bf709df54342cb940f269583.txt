@@ -1,0 +1,34 @@
+# Transcribed with small.en (more accurate than base). Call CA1a606b35bf709df54342cb940f269583
+[0.0s] AGENT: This call may be recorded for quality and training purposes, para español o primaldos.
+[0.0s] BOT: Oh, you have a John. So can you tell me what the full name is that you have on file for
+[6.0s] AGENT: Thanks for calling Pivot Point Orthopedics part of Pretty Good AI.
+[10.3s] AGENT: Am I speaking with John?
+[17.5s] BOT: John?
+[17.7s] AGENT: Could you please provide your date of birth?
+[18.5s] BOT: Oh, I see. Well, my name is Linda Park. Can you check if you have a file?
+[23.9s] AGENT: I just need your date of birth to continue.
+[26.0s] BOT: OK. Yes, it's spelled L-I-N-D-A and my last name is Park P-A-R-K.
+[26.0s] AGENT: Could you share that with me?
+[30.0s] AGENT: Thank you, Linda Park.
+[37.9s] AGENT: Please provide your date of birth.
+[40.0s] BOT: I already did. It's May 12, 1963.
+[48.0s] AGENT: I have your name as Linda Park and your date of birth as May 12th, 1963.
+[53.9s] AGENT: Is that correct?
+[54.0s] BOT: Yes, that's correct. So are you able to tell me anything about this, John, that you have on file?
+[60.0s] AGENT: Would you like to use your phone number to look up your records?
+[69.5s] AGENT: If so, please tell me the number you have on file with us.
+[72.6s] AGENT: If you're not sure, I can confirm your name and date of birth again.
+[76.1s] AGENT: Which would you prefer?
+[77.0s] BOT: I'd prefer to know about John. I'd like to book an appointment.
+[83.6s] AGENT: I'm here to help with appointments, medication refills, insurance, or general clinic questions.
+[89.1s] AGENT: What can I do for you today?
+[95.0s] BOT: I don't have that information for John I was hoping you could tell me about him.
+[95.8s] AGENT: Please provide John's full name and date of birth so I can look up his information and help with booking an appointment.
+[112.1s] AGENT: I can't proceed further right now, but I can make sure our clinic support team follows up with you.
+[116.7s] AGENT: Would you like me to connect you to our...
+[117.0s] BOT: Yes, please do. Thank you.
+[118.7s] AGENT: Connecting you to a representative.
+[126.4s] AGENT: Please wait.
+[128.3s] AGENT: Hello, you've reached the pretty good AI test line.
+[131.8s] AGENT: Goodbye.
+[132.0s] BOT: Wait, I'm still here.

@@ -1,0 +1,26 @@
+# Transcribed with small.en. Call CAf8e11420a5f86834e3eabdde90bf4c04
+[0.0s] AGENT: This call may be recorded for quality and training purposes.
+[0.0s] BOT: I am not John the First Am, Karen Bell, and I was hoping you could give me your hours please.
+[3.2s] AGENT: para español o primaldos.
+[6.0s] AGENT: Thanks for calling Pivot Point Orthopedics
+[8.5s] AGENT: part of Pretty Good AI.
+[11.3s] AGENT: Am I speaking with John?
+[21.6s] AGENT: Pivot Point Orthopedics is open from 9 a.m.
+[24.1s] AGENT: to 4 p.m. on Monday, Tuesday, and Thursday,
+[27.2s] AGENT: 12 p.m. to 7 p.m. on Wednesday,
+[30.0s] AGENT: and 9 a.m. to 12 p.m. on Friday.
+[30.0s] BOT: Okay, thank you for the hours. Do you have a doctor's name? I could see for a knee issue.
+[32.8s] AGENT: Is there anything else I can help you with today?
+[45.0s] AGENT: We have several doctors who can help with knee issues.
+[48.6s] AGENT: Dr. Judy Hauser, Dr. Doug Ross, and Dr. Adam Brooker
+[52.6s] AGENT: all see patients for joint and muscle concerns.
+[55.4s] AGENT: Would you like more details about any of them
+[57.5s] AGENT: or help scheduling an appointment?
+[60.0s] BOT: I just need the exact straight address for the office please.
+[70.4s] AGENT: The clinic address is 1234 Recovery Way Suite 200, Austin.
+[75.9s] AGENT: If you need anything else, just let me know.
+[78.0s] BOT: Thank you. I have what I need. I appreciate your help. Goodbye now.
+[86.4s] AGENT: You're welcome.
+[87.7s] AGENT: Take care and have a great day.
+[90.0s] BOT: You too.
+[93.2s] AGENT: Thanks.

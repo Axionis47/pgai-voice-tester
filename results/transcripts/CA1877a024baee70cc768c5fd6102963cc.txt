@@ -1,0 +1,21 @@
+# Transcribed with small.en. Call CA1877a024baee70cc768c5fd6102963cc
+[0.0s] AGENT: This call may be recorded for quality and training purposes.
+[0.0s] BOT: Oh, I'm not John, I'm a patient calling to find out your office hours.
+[3.3s] AGENT: Para español, o primaldos.
+[6.1s] AGENT: Thanks for calling Pivot Point Orthopedics, part of Pretty Good AI.
+[10.2s] AGENT: My meeting with John.
+[19.4s] AGENT: Our clinic is open Monday through Friday.
+[20.0s] BOT: No, that's all right, I appreciate the information.
+[21.8s] AGENT: On Mondays, Tuesdays, and Thursdays, we're open from 9 a.m. to 4 p.m.
+[26.1s] AGENT: Wednesdays, we're open from 12 p.m. to 7 p.m., and Fridays, from 9 a.m. to 12 p.m.
+[32.6s] AGENT: Is there anything else I can...
+[36.0s] BOT: Have a great day.
+[38.7s] AGENT: We're open 9 to 4 on Monday, Tuesday, and Thursday, 12 to 7 on Wednesday, and 9 to 12 on Friday.
+[43.0s] BOT: Thank you.
+[45.1s] AGENT: Let me know if you need anything else.
+[49.0s] BOT: You too.
+[53.0s] AGENT: You're welcome.
+[54.0s] AGENT: Have a great day.
+[55.8s] AGENT: Thank you.
+[57.0s] BOT: Thank you.
+[58.0s] BOT: You too.
