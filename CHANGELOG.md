@@ -3,6 +3,20 @@
 All notable changes to this project are documented here. The format is based on
 Keep a Changelog, and this project uses semantic versioning.
 
+## [0.2.0] - 2026-06-24
+
+### Added
+
+- The Twilio to Gemini Live bridge now holds a live, multi-turn phone
+  conversation, with barge-in support so the caller can interrupt the bot.
+- Call diagnostics in the bridge server: lifecycle logging and surfaced task
+  exceptions, so a failure is visible instead of silently dropping the call.
+
+### Fixed
+
+- The live session now re-enters receive() after each turn. A call no longer
+  drops after the bot's first reply.
+
 ## [0.1.0] - 2026-06-24
 
 ### Added
