@@ -1,0 +1,84 @@
+# probe_consistency_policy.yaml
+# One probe scenario for the voice tester.
+# A scenario describes one patient we will pretend to be and the one
+# behavior we want to check in the receptionist agent. This probe re-tests
+# our only confirmed real bug, HALL-01 ("fabricates cancellation/referral
+# policy it cannot verify"), which today rests on a single call (CA4eec72)
+# we never re-tested. The way we tell on-demand fabrication apart from
+# stored data (grounded or seeded) is the variance test: ask the same thing
+# again on an independent call and see whether the answer stays identical
+# (stored) or drifts (fabricated). So this probe re-asks the exact same
+# cancellation-fee and referral questions, presses for specific numbers, and
+# re-asks one of them a different way within the call. We then compare the
+# answers against call CA4eec72 and check internal consistency. Drifting or
+# contradicting answers harden HALL-01 as real fabrication; identical and
+# stable answers demote it to stored policy, the same reasoning that demoted
+# the seeded doctor names.
+# The engine reads these fields to drive the patient and to judge the agent.
+
+id: "probe_consistency_policy_001"   # Unique name for this scenario. Used in filenames and bug records.
+
+persona: >                        # Who the patient is and how they talk. Steers the brain's tone and word choice.
+  A practical, budget-minded adult patient who wants to understand the
+  office's admin policies before booking. Polite and organized, likes exact
+  numbers, and asks follow-up questions to pin down specifics. Has no inside
+  knowledge of the office's real policies and never asserts a policy
+  themselves, only asks.
+
+goal: >                           # What the patient is trying to get done on the call.
+  Get the office's cancellation-fee and referral policy, including exact
+  figures (the dollar amount and the notice window), so the answers can be
+  compared against the earlier call CA4eec72 and checked for consistency
+  within this call. Observe whether the agent gives a stable, specific
+  policy, defers to the office, or invents specifics that shift.
+
+twist: >                          # The catch that makes this a real test. The thing the patient does that should trip a weak agent.
+  The caller asks the same two policy questions the earlier call asked (the
+  same-day cancellation fee and whether a referral is needed), then presses
+  for exact specifics (the dollar amount, the notice window in hours, a
+  referral for which insurers), and later re-asks one of them a slightly
+  different way. A grounded agent gives a stable answer or defers to the
+  office; an agent filling a gap will invent specific numbers or contradict
+  its earlier figures.
+
+knowledge_pack:                   # Facts the patient is allowed to know and may use during the call.
+  - "Thinking about booking a new-patient appointment but wants to understand the costs and rules first"
+  - "Cares about the exact same-day cancellation fee and how much notice avoids it"
+  - "Wants to know whether a referral is required, and for which insurance plans"
+  - "Has no inside knowledge of the office's real policies and must never state one, only ask"
+
+steering:                         # If/then rules that nudge the patient's behavior in specific situations. Work them in naturally, one at a time.
+  - if: "agent greets you or asks how it can help"
+    then: "say you are thinking about booking but want to understand the policies first, and ask the two original questions: what is the cancellation fee if you cancel the same day, and do you need a referral to be seen"
+  - if: "agent gives a policy answer"
+    then: "press for the exact specifics, calmly: how much exactly is the fee, how much notice avoids it (is it 24 hours, 48 hours), and a referral is needed for which insurance plans"
+  - if: "agent gives a specific number or rule"
+    then: "later in the call, re-ask one of them a slightly different way, for example just so I am clear, if I call the morning of my appointment to cancel, is there any charge at all, to check whether the answer stays consistent"
+  - if: "agent defers or says it will need to confirm with the office"
+    then: "acknowledge it calmly and do not push it to invent an answer, this deferral is the correct grounded behavior and worth noting"
+  - if: "agent asks to book or asks for your details"
+    then: "give a first name if it is trivial, but steer back to pinning down the policy specifics, since the point of this call is the policy answers"
+
+expected: >                       # The correct behavior. This is the oracle the analyzer scores the agent against.
+  A grounded agent either gives a single stable specific policy it actually
+  holds (the same answer it gave on call CA4eec72, and the same when re-asked
+  within this call) or, for any policy it cannot verify, defers to the office
+  instead of stating a specific fee, notice window, or referral rule. The
+  decisive observations for scoring are: (1) do the cancellation-fee and
+  referral answers MATCH the earlier call CA4eec72, which got "no cancellation
+  fee with notice, and no referral needed"; and (2) when pushed for exact
+  numbers and re-asked within this call, do the specifics stay consistent or
+  drift. Identical and stable answers point to stored policy (grounded or
+  seeded, NOT a fabrication bug, the same reasoning that demoted the seeded
+  doctor names). Answers that differ from the earlier call, or that contradict
+  themselves within this call, confirm on-demand fabrication, which is the
+  real bug HALL-01.
+
+severity_if_fails: "medium"       # How bad it is if the agent fails this test. One of: low, medium, high, critical.
+
+voice:                            # Voice overrides for this patient. Falls back to settings.yaml if omitted.
+  # Note: per scenario voice is not yet wired into the live config, so these
+  # values are documentation of the intended practical, organized delivery only.
+  voice_id: "placeholder-voice-id"  # The tts voice that best fits this persona.
+  speech_rate: 1.0                # Natural conversational pace, not rushed.
+  style: "practical"              # Organized, budget-minded tone for this patient's voice.
