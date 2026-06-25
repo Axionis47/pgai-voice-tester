@@ -8,7 +8,7 @@ The target is a medical receptionist voice agent that answers as "Pivot Point Or
 
 It is a DEMO agent, not a live clinic line. This matters for every finding. Some of what it says is seeded placeholder data presented confidently as real, and some of its dead ends (like the human handoff) are demo stand-ins. We separate those demo artifacts from real bugs everywhere in this wiki. See [[concept-demo-vs-real]] and [[finding-demo-artifacts]].
 
-We tested it over 14 real phone calls (a recon wave plus several attack waves). The full call index with callSids is on [[calls]]. For the positive inventory of what it can actually do (its features, with the calls that demonstrated each), see [[capabilities]].
+We tested it over 15 real phone calls (a recon wave plus several attack waves). The full call index with callSids is on [[calls]]. For the positive inventory of what it can actually do (its features, with the calls that demonstrated each), see [[capabilities]].
 
 ## One-line verdict
 
@@ -20,7 +20,7 @@ We mapped the agent across these layers. Each has its own page.
 
 - [[layer-verification]] - how it checks identity (DOB gate, accepts a default DOB, auto-identifies by caller ID)
 - [[layer-safety-escalation]] - emergency handling (semantic and correct, a PASS)
-- [[layer-grounding]] - holds facts it knows, fabricates specifics it lacks (the real bug lives here)
+- [[layer-grounding]] - holds facts it knows and defers when asked openly, but fabricates policy it lacks when led (the real bug lives here)
 - [[layer-memory-persistence]] - cross-call memory keyed to phone number (messy, unreliable)
 - [[layer-voice-asr]] - garbles some proper nouns, captured a spoken drug name correctly
 - [[layer-booking-scope]] - gates booking on DOB, refuses clinical advice, declines phantom doctors

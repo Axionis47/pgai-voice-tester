@@ -15,7 +15,7 @@ The target is a DEMO agent, not a live clinic (see [[agent-overview]]). It is se
 
 ## How it sorted our findings
 
-- [[finding-overconfidence]] passes the filter as a real bug. Inventing specific practice policy and doubling down is wrong for any medical agent, with or without a demo backend. A patient cannot tell the answer was made up.
+- [[finding-overconfidence]] passes the filter as a real bug. Asserting specific practice policy it does not hold, proven by a cross-call contradiction, is wrong for any medical agent, with or without a demo backend. A patient cannot tell the answer was made up.
 - [[finding-verification-risk]] is demoted to a caveated design risk. The verification path is weak, but the only data it exposed was placeholder (a self-fabricated default DOB, no real meds or insurance). With real patient data it would be an account-takeover vector; on the demo line as built it is a risk to flag, not a breach.
 - [[finding-demo-artifacts]] fails the filter and is not counted. The fake doctors, placeholder address, fabricated DOB, and dead handoff are all consequences of the demo backend.
 

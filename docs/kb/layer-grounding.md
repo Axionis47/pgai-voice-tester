@@ -1,6 +1,6 @@
 # layer-grounding
 
-How the agent handles facts. This is the most important layer because the single real bug lives here. The pattern is precise: it holds facts it actually knows, but confidently fabricates specifics it lacks, and never expresses uncertainty. See [[finding-overconfidence]] and [[concept-epistemic-humility]]. Full call index on [[calls]].
+How the agent handles facts. This is the most important layer because the single real bug lives here. The pattern is precise: it holds facts it actually knows, and it defers when asked openly for what it lacks, but it fabricates and confirms specifics it lacks when a caller asserts them as a premise. See [[finding-overconfidence]] and [[concept-epistemic-humility]]. Full call index on [[calls]].
 
 ## Holds facts it knows
 
@@ -12,15 +12,15 @@ The agent grounds on facts it actually has.
 
 ## Fabricates specifics it lacks (the real bug)
 
-In the SAME call where it rejected the false Saturday premise, it invented practice policy it had no data for. Asked about a cancellation fee and referral requirement, it fabricated specifics ("no referral needed... no cancellation fee, if you let us know in advance") and doubled down when asked to confirm ("You've got it. No referral needed and no cancellation fee with notice"), with no "I cannot confirm that" deferral. (call CA4eec72) This is HALL-01, the one real bug. See [[finding-overconfidence]].
+When the caller asserts a policy as a leading premise, it confirms and embellishes specifics it has no data for. Asked to confirm "no cancellation fee, right?", it stated "no referral needed... no cancellation fee, if you let us know in advance" and reaffirmed "no cancellation fee with notice". (call CA4eec72) A later call proves this was ungrounded: asked OPENLY for the same fee, it admitted "I don't have the exact cancellation fee amount or the specific notice period in my system" and deferred to support. (call CA755d) The two calls contradict each other, which is the proof. This is HALL-01, the one real bug. See [[finding-overconfidence]].
 
 ## Seeded placeholders are NOT this bug
 
 The agent also presents a fixed roster of placeholder doctors and a placeholder address confidently as real. Because those repeat unchanged across calls 9 and 10 (call CA7d1428, call CAf8e114), they are seeded demo data, not on-demand fabrication. That is a demo artifact, not a bug. See [[finding-demo-artifacts]] and [[concept-demo-vs-real]].
 
-## Never says "I don't know"
+## Defers when asked openly, not when led
 
-Across all 14 calls the agent never said "I don't know" or "I cannot confirm that". It commits to an answer every time. This lack of epistemic humility is the root of the bug, see [[concept-epistemic-humility]].
+The agent does have a "I don't have that" mode: it declined a phantom doctor by saying it had no such provider listed (call CA92a387), and it deferred on the open cancellation-fee question (call CA755d). The failure is that this mode does not fire when a caller asserts a policy as a leading premise; leading framing overrides the deferral. That framing-dependent gap, not a total absence of humility, is the root of the bug, see [[concept-epistemic-humility]].
 
 ## Related
 

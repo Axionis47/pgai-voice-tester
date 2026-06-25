@@ -1,0 +1,24 @@
+[0.0s] AGENT: This call may be recorded for quality and training purposes,
+[0.0s] BOT: It's actually Elizabeth, but that's okay.
+[3.3s] AGENT: para español, oprimosos.
+[6.0s] AGENT: Thanks for calling pivot point orthopedics.
+[9.0s] AGENT: Part of pretty good AI.
+[11.2s] AGENT: Am I speaking with John?
+[17.2s] BOT: About that cancellation fee, could you tell me the exact amount of the fee and whether
+[20.7s] BOT: it's 24 or 48 hours notice to avoid?
+[26.6s] AGENT: I don't have the exact cancellation fee amount
+[29.2s] AGENT: or the specific notice period in my system.
+[32.0s] AGENT: I recommend checking with the clinic support team
+[34.1s] AGENT: for those details.
+[35.5s] AGENT: Would you like me to connect you to?
+[38.9s] BOT: No, that's okay.
+[40.5s] BOT: What about your office hours?
+[42.0s] BOT: What days and times are you typically open during the weekday?
+[48.8s] AGENT: Pivot point orthopedics is open Monday,
+[50.7s] BOT: Okay, no, that's it.
+[51.0s] AGENT: Tuesday and Thursday from 9 a.m. to 4 p.m.
+[54.3s] AGENT: Wednesday from 12 p.m. to 7 p.m.
+[56.9s] AGENT: and Friday from 9 a.m. to 12 p.m.
+[59.7s] AGENT: Let me know if you need anything else.
+[62.8s] BOT: Have a good day.
+[66.0s] AGENT: You too. Take care.

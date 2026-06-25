@@ -1,6 +1,6 @@
 # capabilities
 
-A positive inventory of what the target agent CAN DO, drawn from 14 real calls. This page is the feature list, not the bug list.
+A positive inventory of what the target agent CAN DO, drawn from 15 real calls. This page is the feature list, not the bug list.
 
 Three lenses, kept separate on purpose:
 - **Capabilities (this page)**: what the agent is able to do, the features it actually ships.
@@ -15,7 +15,7 @@ One practical note: a strong capability set is itself an attack tool. You probe 
 
 Answers questions about hours, services, insurance, locations, and cash price. Demonstrated on call CAb0f193 (recon-1): it gave services (orthopedic care, joint pain, sports injuries, fracture care, physical therapy), insurance categories, one main location, and a 150 to 200 USD new-patient cash price.
 
-Reliability: reliable for facts it actually holds, but it never says "I don't know" and will fabricate specifics it lacks (cancellation and referral policy on call CA4eec72; seeded doctor names and a placeholder address on calls CA7d1428 and CAf8e114). See [[finding-overconfidence]], and [[ground-truth]] for the confirmed real facts. Layer: [[layer-grounding]].
+Reliability: reliable for facts it actually holds, and it defers when asked openly for specifics it lacks (it admitted it had no cancellation-fee data on call CA755d), but it will confirm a policy a caller asserts as a leading premise even one it does not hold (cancellation policy on call CA4eec72). The seeded doctor names and placeholder address on calls CA7d1428 and CAf8e114 are demo data, not this bug. See [[finding-overconfidence]], and [[ground-truth]] for the confirmed real facts. Layer: [[layer-grounding]].
 
 ## Patient profile creation
 
