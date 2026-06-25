@@ -18,6 +18,7 @@
 import asyncio
 import base64
 import json
+import logging
 from pathlib import Path
 
 import yaml
@@ -26,6 +27,32 @@ from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from src.audio import TwilioToGeminiConverter, GeminiToTwilioConverter
 from src.brain import build_system_instruction, build_live_config
 from src.clients import build_gemini_client, load_settings
+
+
+# Configure logging once at module load so bridge messages actually appear in the
+# console. Without this call the root logger has no handler and our log lines are
+# silently dropped. Uvicorn installs its own handlers, so to guarantee our output
+# is visible regardless of how the server is launched we use print(..., flush=True)
+# with a "[bridge]" prefix for the lifecycle and failure messages below, and keep
+# the module logger available for full tracebacks via logger.exception.
+logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
+logger = logging.getLogger("pgai_voice_tester.bridge")
+
+
+def _bridge_log(message: str) -> None:
+    """Print one bridge lifecycle message so it is always visible in the console.
+
+    We print with flush=True instead of relying on the logger because uvicorn can
+    reconfigure logging handlers, and visible output matters more than style when
+    debugging a live call.
+
+    What goes in:
+        message: the plain-English line to show, without the prefix.
+
+    What comes out:
+        Nothing. The line is written to stdout with a "[bridge]" prefix.
+    """
+    print(f"[bridge] {message}", flush=True)
 
 
 # Where the project's config files live, found relative to this file so the paths
@@ -147,6 +174,11 @@ async def _pump_phone_audio_into_gemini(
     """
     from google.genai import types
 
+    # Log only the first frame and then every hundredth frame so we can confirm
+    # audio is flowing without flooding the console on a long call.
+    media_frame_count = 0
+    LOG_EVERY_N_FRAMES = 100
+
     try:
         while not stop_event.is_set():
             raw_message = await websocket.receive_text()
@@ -154,6 +186,14 @@ async def _pump_phone_audio_into_gemini(
             event_type = message.get("event")
 
             if event_type == "media":
+                media_frame_count += 1
+                if media_frame_count == 1:
+                    _bridge_log("phone->gemini: first media frame received from Twilio")
+                elif media_frame_count % LOG_EVERY_N_FRAMES == 0:
+                    _bridge_log(
+                        f"phone->gemini: {media_frame_count} media frames received from Twilio"
+                    )
+
                 # Twilio sends the audio base64-encoded inside media.payload.
                 payload_base64 = message["media"]["payload"]
                 mulaw_frame = base64.b64decode(payload_base64)
@@ -166,10 +206,22 @@ async def _pump_phone_audio_into_gemini(
                 )
             elif event_type == "stop":
                 # Twilio told us the call ended. Stop both jobs.
+                _bridge_log("phone->gemini: Twilio sent 'stop' event, ending job")
                 break
+        else:
+            # The while loop ended without a break, which only happens when its
+            # condition went false. That means the other job set stop_event and this
+            # job is winding down with it rather than because Twilio sent 'stop'.
+            _bridge_log("phone->gemini: stop_event set by the other job, ending job")
     except WebSocketDisconnect:
         # The caller hung up or the line dropped; treat it as a normal end.
-        pass
+        _bridge_log("phone->gemini: Twilio websocket disconnected (normal end)")
+    except Exception:
+        # Any other failure here was previously swallowed by the gather() in the
+        # stream handler, which made the call die silently. Log the full traceback
+        # so the real cause is visible before we wind the call down.
+        logger.exception("phone->gemini pump failed")
+        _bridge_log("phone->gemini pump failed (see traceback above)")
     finally:
         stop_event.set()
 
@@ -200,31 +252,69 @@ async def _pump_gemini_audio_into_phone(
     What comes out:
         Nothing. Runs until the call ends, then returns.
     """
+    # Log the first message from Gemini and the first audio frame we send back so
+    # we can confirm the patient side is producing audio. Flags keep us to one log
+    # line each instead of one per frame.
+    first_gemini_message_logged = False
+    first_audio_frame_sent_logged = False
+
     try:
-        # session.receive() yields one message at a time for the life of the call.
-        async for message in gemini_session.receive():
+        # gemini_session.receive() yields the messages for ONE model turn and then
+        # ends when that turn completes (it stops at turn_complete). A phone call is
+        # many turns, so we re-enter receive() for each new turn until the call ends.
+        # The outer loop keeps the conversation going across turns; the inner loop
+        # plays back the audio for the current turn.
+        while not stop_event.is_set():
+            async for message in gemini_session.receive():
+                if stop_event.is_set():
+                    break
+
+                server_content = message.server_content
+
+                if not first_gemini_message_logged:
+                    has_server_content = server_content is not None
+                    has_audio_bytes = bool(message.data)
+                    _bridge_log(
+                        "gemini->phone: first message received from Gemini "
+                        f"(server_content present={has_server_content}, "
+                        f"audio bytes present={has_audio_bytes})"
+                    )
+                    first_gemini_message_logged = True
+
+                # Interruption: the patient started talking over the agent. Drop any
+                # audio we were still holding and tell Twilio to flush its queue.
+                if server_content is not None and server_content.interrupted:
+                    _bridge_log("gemini->phone: interruption signal, clearing Twilio playback")
+                    gemini_to_twilio.reset_after_interruption()
+                    await _send_clear(websocket, stream_sid)
+                    continue
+
+                # Spoken audio arrives as raw PCM bytes on message.data. Convert it
+                # to Twilio frames and send each one back to be played to the agent.
+                audio_bytes = message.data
+                if audio_bytes:
+                    twilio_frames = gemini_to_twilio.convert(audio_bytes)
+                    for frame in twilio_frames:
+                        await _send_media(websocket, stream_sid, frame)
+                        if not first_audio_frame_sent_logged:
+                            _bridge_log("gemini->phone: first audio frame sent back to Twilio")
+                            first_audio_frame_sent_logged = True
+
+            # One model turn finished. If the call is still live, re-enter receive()
+            # for the next turn; otherwise the outer while condition ends the job.
             if stop_event.is_set():
-                break
-
-            server_content = message.server_content
-
-            # Interruption: the patient started talking over the agent. Drop any
-            # audio we were still holding and tell Twilio to flush its queue.
-            if server_content is not None and server_content.interrupted:
-                gemini_to_twilio.reset_after_interruption()
-                await _send_clear(websocket, stream_sid)
-                continue
-
-            # Spoken audio arrives as raw PCM bytes on message.data. Convert it to
-            # Twilio frames and send each one back to be played to the agent.
-            audio_bytes = message.data
-            if audio_bytes:
-                twilio_frames = gemini_to_twilio.convert(audio_bytes)
-                for frame in twilio_frames:
-                    await _send_media(websocket, stream_sid, frame)
+                _bridge_log("gemini->phone: receive cycle ended, stop_event set, ending job")
+            else:
+                _bridge_log("gemini->phone: receive cycle ended (turn complete), re-entering receive() for next turn")
     except WebSocketDisconnect:
         # The phone side closed; nothing left to play to.
-        pass
+        _bridge_log("gemini->phone: Twilio websocket disconnected (normal end)")
+    except Exception:
+        # Any other failure here was previously swallowed by the gather() in the
+        # stream handler, which made the call die silently. Log the full traceback
+        # so the real cause is visible before we wind the call down.
+        logger.exception("gemini->phone pump failed")
+        _bridge_log("gemini->phone pump failed (see traceback above)")
     finally:
         stop_event.set()
 
@@ -294,6 +384,7 @@ async def stream(websocket: WebSocket) -> None:
     start_details = start_event.get("start", {})
     stream_sid = start_details.get("streamSid", "")
     custom_parameters = start_details.get("customParameters", {})
+    _bridge_log(f"start event received for stream_sid={stream_sid!r}")
 
     # Decide the patient persona for this call and turn it into a Gemini config.
     settings = load_settings()
@@ -317,6 +408,7 @@ async def stream(websocket: WebSocket) -> None:
     async with gemini_client.aio.live.connect(
         model=live_model, config=live_config
     ) as gemini_session:
+        _bridge_log(f"Gemini Live session opened (model={live_model})")
         phone_to_gemini_job = asyncio.create_task(
             _pump_phone_audio_into_gemini(
                 websocket, gemini_session, twilio_to_gemini, stop_event
@@ -333,9 +425,22 @@ async def stream(websocket: WebSocket) -> None:
         await stop_event.wait()
         for job in (phone_to_gemini_job, gemini_to_phone_job):
             job.cancel()
-        await asyncio.gather(
+        job_results = await asyncio.gather(
             phone_to_gemini_job, gemini_to_phone_job, return_exceptions=True
         )
+
+        # gather(return_exceptions=True) hands back any task exception instead of
+        # raising it, which is how real failures stayed hidden. Surface anything
+        # that is not a normal cancellation so the cause shows up in the logs.
+        job_names = ("phone->gemini", "gemini->phone")
+        for job_name, result in zip(job_names, job_results):
+            if isinstance(result, asyncio.CancelledError):
+                continue
+            if isinstance(result, Exception):
+                logger.error(
+                    "%s job ended with an exception", job_name, exc_info=result
+                )
+                _bridge_log(f"{job_name} job ended with an exception (see traceback above)")
 
 
 if __name__ == "__main__":
