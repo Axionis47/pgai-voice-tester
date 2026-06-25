@@ -45,6 +45,6 @@ telephony:
 
 # Paths: where the engine reads and writes files on disk.
 paths:
-  recordings_dir: "data/recordings"      # Directory where call audio recordings are saved.
-  transcripts_dir: "data/transcripts"    # Directory where clean offline transcripts are written.
+  recordings_dir: "results/recordings"   # Directory where call audio recordings are saved.
+  transcripts_dir: "results/transcripts" # Directory where clean offline transcripts are written.
   knowledge_map_file: "config/knowledge_map.yaml"  # The living knowledge map that shapes the next call.

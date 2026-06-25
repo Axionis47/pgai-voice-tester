@@ -91,10 +91,17 @@ def place_call(destination_number: str, public_host: str, scenario_name: str) ->
     twiml = build_stream_twiml(media_stream_url, scenario_name)
 
     twilio_client = build_twilio_client()
+    # record=True asks Twilio to record the call. recording_channels="dual" puts
+    # each side of the conversation on its own audio channel (the agent on one,
+    # our patient bot on the other), which makes a clean two-sided transcript
+    # possible later. The recording finishes processing a few seconds after the
+    # call ends; download it with download_recording.py.
     call = twilio_client.calls.create(
         to=destination_number,
         from_=from_number,
         twiml=twiml,
+        record=True,
+        recording_channels="dual",
     )
     return call.sid
 
@@ -139,6 +146,12 @@ def main() -> None:
 
     call_sid = place_call(arguments.to, arguments.url, arguments.scenario)
     print(f"Call placed. SID: {call_sid}")
+    print(
+        "This call is being recorded (dual channel). The recording becomes "
+        "available a few seconds after the call ends."
+    )
+    print("To download the recording once the call is over, run:")
+    print(f"  python download_recording.py --sid {call_sid}")
 
 
 if __name__ == "__main__":

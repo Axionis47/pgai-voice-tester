@@ -12,3 +12,4 @@ python-dotenv           # Loads secrets and settings from the .env file into the
 websockets              # Low level websocket connection used to stream live call audio.
 fastapi                 # Web framework for the bridge server and its /stream websocket route.
 uvicorn[standard]       # ASGI server that runs the FastAPI bridge (and serves the websocket).
+requests                # Downloads finished call recordings from Twilio (download_recording.py).
