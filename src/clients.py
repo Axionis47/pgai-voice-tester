@@ -8,14 +8,15 @@ import os
 from pathlib import Path
 from typing import Any, Dict
 
-import yaml
 from dotenv import load_dotenv
 
+from src.config_loader import load_settings as _load_settings_from_config
 
-# Where settings.yaml lives, found relative to this file so the path works no
-# matter which directory the program is started from.
+
+# Where the project root is, found relative to this file so the path works no
+# matter which directory the program is started from. load_environment uses it
+# to find the .env file.
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
-SETTINGS_PATH = PROJECT_ROOT / "config" / "settings.yaml"
 
 
 def load_environment() -> None:
@@ -46,20 +47,11 @@ def load_settings() -> Dict[str, Any]:
         A dictionary of every setting in the file (models, voice, telephony,
         and so on). Raises FileNotFoundError if the settings file is missing.
 
-    The client builders below use this to find model ids and the names of the
-    environment variables that hold the project, region, and Twilio number.
+    Config files are read in one place (config_loader), so this delegates there
+    instead of opening the file itself. The no-argument signature is kept because
+    several scripts call load_settings() this way.
     """
-    if not SETTINGS_PATH.exists():
-        raise FileNotFoundError(f"Settings file not found at {SETTINGS_PATH}")
-
-    with open(SETTINGS_PATH, "r", encoding="utf-8") as settings_file:
-        settings = yaml.safe_load(settings_file)
-
-    # An empty YAML file parses to None; hand back an empty dict instead so
-    # callers can always treat the result as a dictionary.
-    if settings is None:
-        return {}
-    return settings
+    return _load_settings_from_config()
 
 
 def _require_env(variable_name: str) -> str:

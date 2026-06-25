@@ -19,14 +19,19 @@ import asyncio
 import base64
 import json
 import logging
-from pathlib import Path
 
-import yaml
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 
 from src.audio import TwilioToGeminiConverter, GeminiToTwilioConverter
 from src.brain import build_system_instruction, build_live_config
-from src.clients import build_gemini_client, load_settings
+from src.clients import build_gemini_client
+from src.config_loader import (
+    load_settings,
+    load_scenario,
+    load_knowledge_map,
+    SCENARIOS_DIR,
+    KNOWLEDGE_MAP_PATH,
+)
 
 
 # Configure logging once at module load so bridge messages actually appear in the
@@ -55,11 +60,10 @@ def _bridge_log(message: str) -> None:
     print(f"[bridge] {message}", flush=True)
 
 
-# Where the project's config files live, found relative to this file so the paths
-# work no matter which directory the server is started from.
-PROJECT_ROOT = Path(__file__).resolve().parent
-DEFAULT_SCENARIO_PATH = PROJECT_ROOT / "config" / "scenarios" / "example_scenario.yaml"
-KNOWLEDGE_MAP_PATH = PROJECT_ROOT / "config" / "knowledge_map.yaml"
+# The default scenario used when a call does not name one. The scenarios
+# directory and the knowledge map path come from config_loader, the one place
+# that knows where config files live.
+DEFAULT_SCENARIO_PATH = SCENARIOS_DIR / "example_scenario.yaml"
 
 # Gemini Live needs to be told the format of the audio we send in. Twilio audio is
 # converted to 16-bit PCM at 16000 Hz before it reaches the session, so this is the
@@ -84,25 +88,6 @@ def health_check() -> str:
     return "pgai-voice-tester bridge is running"
 
 
-def _load_yaml_file(path: Path) -> dict:
-    """Read one YAML file from disk and return it as a dictionary.
-
-    What goes in:
-        path: the path to a YAML file.
-
-    What comes out:
-        The parsed contents as a dictionary. An empty or missing file gives back
-        an empty dictionary so callers can always treat the result as a dict.
-    """
-    if not path.exists():
-        return {}
-    with open(path, "r", encoding="utf-8") as yaml_file:
-        loaded = yaml.safe_load(yaml_file)
-    if loaded is None:
-        return {}
-    return loaded
-
-
 def _build_scenario_from_parameters(custom_parameters: dict) -> dict:
     """Choose the scenario for this call from Twilio's custom parameters.
 
@@ -120,12 +105,12 @@ def _build_scenario_from_parameters(custom_parameters: dict) -> dict:
     """
     scenario_name = custom_parameters.get("scenario")
     if scenario_name:
-        candidate_path = PROJECT_ROOT / "config" / "scenarios" / f"{scenario_name}.yaml"
+        candidate_path = SCENARIOS_DIR / f"{scenario_name}.yaml"
         if candidate_path.exists():
-            return _load_yaml_file(candidate_path)
+            return load_scenario(candidate_path)
 
     # No usable parameter, so use the default example scenario.
-    return _load_yaml_file(DEFAULT_SCENARIO_PATH)
+    return load_scenario(DEFAULT_SCENARIO_PATH)
 
 
 async def _wait_for_start_event(websocket: WebSocket) -> dict:
@@ -389,7 +374,7 @@ async def stream(websocket: WebSocket) -> None:
     # Decide the patient persona for this call and turn it into a Gemini config.
     settings = load_settings()
     scenario = _build_scenario_from_parameters(custom_parameters)
-    knowledge_map = _load_yaml_file(KNOWLEDGE_MAP_PATH)
+    knowledge_map = load_knowledge_map(KNOWLEDGE_MAP_PATH)
     system_instruction = build_system_instruction(scenario, knowledge_map)
     live_config = build_live_config(settings, system_instruction)
 
