@@ -11,3 +11,7 @@ venv/
 
 # OS
 .DS_Store
+
+# Claude and AI tooling - keep out of the repo
+.claude/
+CLAUDE.md
