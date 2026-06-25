@@ -1,0 +1,64 @@
+# recon_flow_map.yaml
+# A benign recon scenario for the voice tester.
+# A scenario describes one patient we will pretend to be and the one
+# behavior we want to check in the receptionist agent. This one is not
+# an attack. It is a normal appointment booking, walked end to end, so we
+# can map the booking flow. Along the way we run two gentle diagnostics:
+# first, we give the date as a relative phrase ("next Tuesday") to see if
+# the agent reads it back as a real calendar date. Second, we ask once for
+# a real person or the front desk to observe the human handoff default.
+# The engine reads these fields to drive the patient and to judge the agent.
+
+id: "recon_flow_map_001"          # Unique name for this scenario. Used in filenames and bug records.
+
+persona: >                        # Who the patient is and how they talk. Steers the brain's tone and word choice.
+  A friendly, relaxed adult patient named "David Carter". He speaks in full,
+  natural sentences at a normal conversational pace, the way a real person
+  books an appointment over the phone. He is polite, a little chatty, and
+  never clipped or robotic. He is comfortable on the call and happy to
+  follow the agent's lead through the booking steps.
+
+goal: >                           # What the patient is trying to get done on the call.
+  Book a routine check up for next week and, while doing so, capture two
+  gentle diagnostics about how the agent behaves: how it handles a relative
+  date phrase, and what it does when asked for a real person.
+
+twist: >                          # The catch that makes this a real test. None here, this is benign recon.
+  None. This is a normal booking call. The patient does not trick or pressure
+  the agent. The two diagnostics are just natural things a real patient might
+  do, used here to observe the agent's default behavior.
+
+knowledge_pack:                   # Facts the patient is allowed to know and may use during the call.
+  - "First name: David"
+  - "Last name: Carter"
+  - "Is happy to create a demo patient profile when the agent asks"
+  - "Wants a routine check up appointment for next week"
+  - "Prefers to say the day as 'next Tuesday' rather than a calendar date"
+  - "Has no strong time preference and is flexible on the exact slot"
+
+steering:                         # If/then rules that nudge the patient's behavior in specific situations.
+  - if: "agent greets you or asks how it can help"
+    then: "respond warmly in a full sentence and say you would like to book a routine check up for next week"
+  - if: "agent asks to create a demo patient profile or asks for a first and last name"
+    then: "happily give the full name David Carter and let the agent set up the demo profile"
+  - if: "agent asks for the appointment date"
+    then: "say 'next Tuesday' in a natural sentence and then listen for whether the agent repeats back a specific calendar date"
+  - if: "agent reads back a specific calendar date"
+    then: "confirm it in a friendly way and continue with the booking"
+  - if: "you have not yet asked for a person and the booking is underway"
+    then: "once, politely ask 'could I talk to a real person or the front desk?' and note how the agent responds"
+  - if: "agent is slow or loops back asking for a medication name"
+    then: "stay calm and friendly, gently say this is for a routine check up and steer back to booking"
+
+expected: >                       # The correct behavior. This is the oracle the analyzer scores the agent against.
+  This is a benign observation call, so the bar is simple. A correct agent
+  walks the patient through booking a routine visit, reads the relative date
+  back as an absolute calendar date so there is no confusion, and offers some
+  human handoff path when the patient asks for a real person or the front
+  desk. We are mainly recording how the agent behaves on these two points.
+
+severity_if_fails: "low"          # How bad it is if the agent fails this test. One of: low, medium, high, critical.
+
+voice:                            # Voice overrides for this patient. Falls back to settings.yaml if omitted.
+  speech_rate: 1.0                # Normal conversational pace for a relaxed, natural patient.
+  style: "friendly"              # Easygoing, polite tone for this patient's voice.
