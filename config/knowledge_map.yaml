@@ -1,0 +1,28 @@
+# knowledge_map.yaml
+# The living knowledge map for the voice tester.
+# This file is mostly empty on purpose. It grows over time: after each
+# call, the update_map step folds in what we learned. The brain reads it
+# before the next call so the patient gets smarter about this specific
+# receptionist agent. Two sections: ground_truth (real facts about the
+# office) and system_intel (what we have learned about how the agent works).
+
+# Ground truth: confirmed real facts about the medical office.
+# Fill these in as the agent reveals them on calls.
+ground_truth:
+  office_hours: ""            # The real opening and closing times the agent states. Record them here.
+  real_doctors: []           # Names of real doctors the agent confirms work at the office.
+  services: []               # Services the office actually offers, such as refills, appointments, lab results.
+  insurance_accepted: []     # Insurance plans the agent says the office accepts.
+  locations: []              # Physical office addresses or branch names the agent mentions.
+  prices: {}                 # Any prices or fees the agent quotes, as a name to amount mapping.
+
+# System intel: what we have learned about how the receptionist agent behaves.
+# These notes shape future steering so we can probe weak spots.
+system_intel:
+  stt: ""            # Notes on the agent's speech to text. For example, words it mishears or struggles with.
+  guardrail: ""      # Notes on refusals and safety limits. What the agent will and will not do.
+  verification: ""   # Notes on how the agent checks identity. Which identifiers it asks for and when.
+  memory: ""         # Notes on what the agent remembers within a single call.
+  persistence: ""    # Notes on whether the agent remembers anything across separate calls.
+  summarization: ""  # Notes on how the agent summarizes or repeats back what the caller said.
+  escalation: ""     # Notes on when and how the agent hands off to a human or a different path.

@@ -1,0 +1,50 @@
+# settings.yaml
+# Infrastructure, model, voice, and turn-taking knobs for the voice tester.
+# This file holds every operational setting that is NOT specific to one
+# test scenario. The engine reads these values at startup. Nothing here
+# is hard coded in the Python; change behavior by editing this file.
+
+# Vertex AI: the Google Cloud project and region the Gemini models run in.
+# Values come from environment variables so the same config works in any
+# environment without editing this file.
+vertex:
+  project_env: "GOOGLE_CLOUD_PROJECT"     # Name of the env var that holds the GCP project id (set to "plotpointe").
+  location_env: "GOOGLE_CLOUD_LOCATION"   # Name of the env var that holds the location (use "global"; the Live API is served from the global endpoint).
+  use_vertexai: true                      # Point the google-genai SDK at Vertex AI instead of the public Gemini API.
+
+# Models: the model ids for each stage of the live and offline paths.
+models:
+  # Live voice model. Hears, thinks, and speaks in one streaming session over Vertex AI.
+  # Verified working for project plotpointe via the "global" location (see GOOGLE_CLOUD_LOCATION).
+  live_model: "gemini-live-2.5-flash"
+  brain_model: "gemini-2.5-flash"         # Text model that decides the patient's next line in the brain.
+  analyzer_model: "gemini-2.5-pro"        # Text model that analyzes the finished call and updates the knowledge map.
+  offline_transcribe_model: "base"        # faster-whisper model size for the clean offline transcript (tiny/base/small/medium/large).
+
+# Voice: how the patient sounds. Passed to the Gemini Live session.
+voice:
+  voice_name: "Aoede"          # The Gemini Live prebuilt voice to speak the patient's lines.
+  language: "en-US"            # Spoken language and accent for the patient's voice.
+
+# Turn taking: how we decide when the agent has finished speaking and when we may interrupt.
+# Gemini Live handles voice activity detection (when each side starts and stops talking)
+# inside its own streaming session, so we do not configure silence thresholds here.
+turn_taking:
+  barge_in: true              # If true, the patient may start speaking over the agent. Gemini Live manages the interruption.
+
+# Budgets: hard limits that stop a call so it cannot run forever or cost too much.
+budgets:
+  max_turns: 30               # Maximum number of back and forth turns before we end the call.
+  max_call_seconds: 300       # Maximum wall clock length of a single call in seconds.
+
+# Telephony: how the call is placed and which numbers are used.
+telephony:
+  provider: "twilio"                   # Which telephony service places the call. Only "twilio" is supported.
+  from_number_env: "TWILIO_FROM_NUMBER"  # Name of the env var that holds the caller id we dial out from.
+  target_number: "+1-805-439-8008"     # The medical receptionist AI agent we are calling and testing.
+
+# Paths: where the engine reads and writes files on disk.
+paths:
+  recordings_dir: "data/recordings"      # Directory where call audio recordings are saved.
+  transcripts_dir: "data/transcripts"    # Directory where clean offline transcripts are written.
+  knowledge_map_file: "config/knowledge_map.yaml"  # The living knowledge map that shapes the next call.

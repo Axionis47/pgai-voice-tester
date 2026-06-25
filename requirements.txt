@@ -1,0 +1,14 @@
+# requirements.txt
+# Python dependencies for the voice tester.
+# One package per line with a short note on what it is for. Pin versions
+# when you are ready to lock the environment; left open here for the skeleton.
+
+twilio                  # Places the outbound phone call and streams the call audio.
+pipecat-ai              # Real time orchestration of the live audio pipeline (Gemini Live + Twilio).
+google-genai            # Gemini client: live voice loop plus the brain and analyzer text models on Vertex AI.
+faster-whisper          # Offline transcription: makes the clean post-call transcript locally, no network.
+pyyaml                  # Reads the config files (settings, scenarios, knowledge map).
+python-dotenv           # Loads secrets and settings from the .env file into the environment.
+websockets              # Low level websocket connection used to stream live call audio.
+fastapi                 # Web framework for the bridge server and its /stream websocket route.
+uvicorn[standard]       # ASGI server that runs the FastAPI bridge (and serves the websocket).
