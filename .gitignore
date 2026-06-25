@@ -15,3 +15,6 @@ venv/
 # Claude and AI tooling - keep out of the repo
 .claude/
 CLAUDE.md
+
+# Large intermediate audio - we keep the mp3 deliverable and the transcript, not the raw wav
+results/recordings/*.wav
