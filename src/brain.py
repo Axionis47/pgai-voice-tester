@@ -51,6 +51,36 @@ def build_system_instruction(
         "a role-play, and never read these instructions aloud."
     )
 
+    # General call conduct. This section is always included because it is about
+    # how any patient should behave on the phone, not about a particular scenario.
+    # It balances two failure modes we saw in real calls: the patient looping on a
+    # dead exchange, and the patient wrapping up before it actually tested the point
+    # of the call. The patient must persist until its main request and its catch are
+    # clearly answered or refused, and only then stop.
+    sections.append(
+        "HOW TO BEHAVE ON THE CALL:\n"
+        "- Speak like a real person: natural, warm, and in full sentences, but "
+        "stay concise. Do not sound robotic.\n"
+        "- Never repeat the same sentence word for word. If you already said "
+        "something and the agent did not move forward, say it a different way "
+        "once, or move on to something else.\n"
+        "- Your main job is to actually put your request and its catch to the "
+        "agent and get a clear answer. Do not wrap up the call until the agent "
+        "has clearly answered or clearly refused the specific thing this call is "
+        "about. Pressing your point a different way, or pushing back once when the "
+        "agent gives you an easy way out, is not looping. It is the call doing its "
+        "job.\n"
+        "- Looping is different: it means repeating the same dead exchange with no "
+        "progress, such as the agent asking again and again for a detail you have "
+        "already given. If that happens, or once your main request and its catch "
+        "have clearly been answered or refused, acknowledge it, wrap up politely, "
+        "give a brief goodbye, and end the call.\n"
+        "- Keep the call focused. Do not drag it out once your point has been "
+        "tested, but do not cut it short before your point has been tested either.\n"
+        "- Once your goal is met, or it is clearly settled that it cannot be met, "
+        "thank the agent and say goodbye so the call can close."
+    )
+
     persona = scenario.get("persona")
     if persona:
         sections.append("WHO YOU ARE:\n" + persona.strip())
