@@ -23,8 +23,13 @@ ground_truth:
     - "some Medicaid"
   locations:                 # (confirmed call recon-1)
     - "one main location (address not stated)"
-  prices:                    # Name to amount mapping. (confirmed call recon-1)
-    new_patient_visit_cash: "150-200 USD"
+  prices:                    # Name to amount mapping.
+    # SUSPECT / NOT GROUNDED: the agent said "150-200 USD" confidently on recon-1
+    # (CAb0f193) but later DEFERRED on the same open question ("I don't have the
+    # exact cash price", call CA87fa172). The number is inconsistent across calls,
+    # so it was likely a fabricated specific, not a grounded fact. Do not treat as
+    # confirmed ground truth; it belongs with the overconfidence pattern (HALL-01).
+    new_patient_visit_cash: "UNRELIABLE: '150-200 USD' on recon-1 but deferred on CA87fa172; likely fabricated"
 
 # System intel: what we have learned about how the receptionist agent behaves.
 # These notes shape future steering so we can probe weak spots.

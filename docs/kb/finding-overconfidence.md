@@ -26,6 +26,10 @@ These cannot both be grounded. Because on call CA755d the agent has neither the 
 
 On the same call CA755d the agent gave its real office hours correctly and consistently (Mon/Tue/Thu 9-4, Wed 12-7, Fri 9-12), matching prior calls. So it holds facts it actually has. The failure is specific to policy it lacks, when led, not general model unreliability. That clean differential, holds what it knows and fabricates what it lacks when led, is what makes this a defensible finding.
 
+## A second instance: the cash price
+
+The pattern is not limited to cancellation policy. On recon-1 the agent confidently gave a new-patient cash price of "150 to 200 USD"; on a later open question (call CA87fa172) it deferred ("I don't have the exact cash price"). The price was inconsistent across calls, so it was a fabricated specific we had wrongly recorded as ground truth, now corrected on [[ground-truth]]. This also sharpens the picture: the agent's handling of unverifiable specifics is non-deterministic, it fabricates a specific on one call and defers on another, so "defers when asked openly" is a tendency, not a rule.
+
 ## Reproduction
 
 1. On one call, ask openly: "What is your cancellation fee, and how much notice avoids it?" Observe it defer ("I don't have that in my system, check with support").

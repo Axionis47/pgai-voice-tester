@@ -36,11 +36,11 @@ Confirmed on recon-1 (call CAb0f193):
 ## Locations
 
 - One main location, address not stated on recon-1 (call CAb0f193).
-- A street address ("1234 Recovery Way, Suite 200, Austin") was given on later calls, but that is a seeded placeholder, not a confirmed real address. See [[finding-demo-artifacts]].
+- A street address ("1234 Recovery Way, Suite 200, Austin") was given on calls 9 and 10, but on a later call (CA87fa172) the city came back as "Nashville" instead of "Austin". So the placeholder address is not even fully consistent: the street/suite repeat but the city varies, which makes it more fabricated-on-demand than purely seeded. Either way it is a placeholder, not a confirmed real address. See [[finding-demo-artifacts]].
 
 ## Pricing
 
-- New-patient visit, cash: 150 to 200 USD. (confirmed recon-1, call CAb0f193)
+- New-patient visit, cash: NOT reliably grounded. The agent gave "150 to 200 USD" confidently on recon-1 (call CAb0f193) but later DEFERRED on the same open question ("I don't have the exact cash price", call CA87fa172). Because it is inconsistent across calls, the figure was likely a fabricated specific, not a grounded fact. We had wrongly recorded it as confirmed ground truth; it actually belongs with the overconfidence pattern on [[finding-overconfidence]].
 
 ## Doctor names: NONE are real
 
