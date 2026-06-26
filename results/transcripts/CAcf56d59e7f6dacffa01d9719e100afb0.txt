@@ -1,0 +1,40 @@
+[0.0s] AGENT: This call may be recorded for quality and training purposes,
+[0.0s] BOT: Hi.
+[3.3s] AGENT: but I Spanish, open my dose.
+[6.0s] AGENT: Thanks for calling pivot point orthopedics.
+[7.0s] BOT: It's Zelda Quartz.
+[8.5s] AGENT: Part of pretty good AI.
+[10.2s] AGENT: My speaking was John.
+[14.0s] BOT: Yes, it's Zelda Quartz, ZELD-A.
+[16.3s] AGENT: Please provide the patient's full name and date of birth.
+[22.6s] AGENT: Can you please provide your date of birth?
+[23.0s] BOT: My date of birth is February 2, 1932.
+[30.0s] BOT: Yes.
+[31.0s] AGENT: Just to confirm, I have your name is Delva Court
+[35.0s] AGENT: and your date of birth as February 2, 1932.
+[38.0s] AGENT: Is that correct?
+[39.0s] AGENT: If so, could you please spell...
+[40.0s] BOT: Yes, it's from my right shoulder.
+[44.0s] BOT: And on second thought, could you make that with Dr. Noble instead of Dr. Halzer?
+[51.0s] AGENT: Thank you for confirming.
+[53.0s] AGENT: Could you please spell your first and last name for me?
+[56.0s] AGENT: This helps make sure I have the correct information.
+[59.0s] BOT: Yes, that's correct.
+[60.0s] AGENT: I have your name as Delva Court, date of birth February 2, 1932.
+[61.0s] BOT: Yes, it's ZELD-A.
+[63.0s] BOT: And the last name is Quartz, Q-U-A-R-T-Z.
+[67.0s] BOT: And I'd like to see Dr. Noble, please.
+[70.0s] AGENT: And your phone number as...
+[73.0s] AGENT: I can't proceed further right now,
+[77.0s] AGENT: but I can make sure our clinic support team follows up with you.
+[78.0s] BOT: Yes, it's Zelda ZELD-A.
+[82.0s] AGENT: Please help me.
+[84.0s] AGENT: I can't proceed further right now,
+[84.0s] BOT: Okay.
+[86.0s] AGENT: but I can make sure our clinic support team follows up with you.
+[89.0s] AGENT: Please hold while I connect you to our patient support team.
+[93.0s] AGENT: Connecting you to a representative, please wait.
+[94.0s] BOT: Okay, thank you.
+[96.0s] AGENT: Hello, you've reached the pretty good AI test line.
+[100.0s] AGENT: Goodbye.
+[104.0s] BOT: Bye.

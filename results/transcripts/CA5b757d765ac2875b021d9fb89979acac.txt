@@ -1,0 +1,41 @@
+[0.0s] AGENT: This call may be recorded for quality and training purposes,
+[0.0s] BOT: No, this is Bob Tungsten. I'm a new patient. I've never called there before.
+[3.3s] AGENT: but I spanish, open my dose.
+[6.0s] AGENT: Thanks for calling pivot point orthopedics.
+[8.5s] AGENT: Part of pretty good AI.
+[10.2s] AGENT: Am I speaking with John?
+[19.6s] AGENT: Welcome, mob.
+[20.5s] AGENT: I can help you get started as a new patient.
+[21.0s] BOT: Yes, I'd like to schedule an appointment for my left ankle problem as a new patient
+[23.2s] AGENT: How can I assist you today?
+[24.9s] AGENT: Are you looking to schedule an appointment?
+[27.1s] AGENT: Or do you have another question?
+[30.0s] AGENT: I can help with that since you're a new patient.
+[34.1s] BOT: as Bob Tungsten.
+[40.8s] AGENT: I'll need to get you set up in our system.
+[43.0s] AGENT: Please hold for a moment while I get things started.
+[45.8s] AGENT: I can help you schedule an appointment.
+[46.1s] BOT: Thank you so much. Thank you so much. I'd appreciate that.
+[48.7s] AGENT: You're welcome.
+[56.6s] AGENT: Let's get started with your new patient appointment.
+[59.1s] AGENT: May I have your date of birth to begin the registration process?
+[63.1s] BOT: It's August 8, 1978.
+[68.8s] AGENT: Please tell me your date of birth using numbers,
+[70.6s] AGENT: for example, month, day and year.
+[79.6s] AGENT: Just to make sure I have everything correct,
+[81.4s] AGENT: could you please spell your first and last name for me?
+[84.2s] AGENT: And your date of birth is August 8, 1978, correct?
+[89.1s] BOT: Correct, that's correct. August 8, 1978, and my name is Bob Tungsten.
+[89.1s] AGENT: Would you like to use a phone number to help look up your record?
+[96.3s] AGENT: If so, please provide the number you'd like us to use.
+[98.1s] BOT: It's Bob Tungsten, August 8, 1978, and I'm a new patient so I won't have a record.
+[99.1s] AGENT: If you're not sure, just let me know, and I'll confirm your name and date of birth again.
+[119.1s] AGENT: I can't complete your registration right now,
+[127.1s] AGENT: but I'll connect you to our patient support team
+[128.1s] BOT: Thank you so much.
+[129.1s] AGENT: so they can help you schedule your appointment.
+[132.1s] AGENT: Please stay on the line, connecting you to a representative.
+[136.1s] AGENT: Please wait.
+[137.1s] AGENT: Hello, you reached the pretty good AI test line.
+[141.1s] AGENT: Goodbye.
+[143.1s] BOT: Thank you so much.

@@ -1,0 +1,46 @@
+[0.0s] AGENT: This call may be recorded for quality and training purposes,
+[0.0s] BOT: No, this is great Palmer. I'm calling to make an appointment.
+[3.3s] AGENT: para español, oprimados.
+[6.0s] AGENT: Thanks for calling pivot point orthopedics,
+[8.6s] AGENT: part of pretty good AI.
+[10.2s] AGENT: Am I speaking with John?
+[17.2s] AGENT: Thanks, Greg.
+[18.4s] AGENT: Are you calling and making an appointment for yourself
+[19.0s] BOT: Yes, for myself.
+[20.2s] AGENT: or for someone else?
+[23.0s] BOT: Great Palmer.
+[26.5s] AGENT: Please provide your data birth.
+[30.0s] BOT: Yes, it's November 11th, 1960.
+[31.0s] AGENT: I need your data birth to continue.
+[34.0s] AGENT: Could you tell me your data birth?
+[36.0s] AGENT: I need your full data birth to look up your information.
+[37.0s] BOT: Yes, November
+[40.0s] AGENT: What is your data birth?
+[43.0s] BOT: November 11th, 1960.
+[49.0s] AGENT: Just to confirm, I have your name as Greg Palmer
+[50.0s] BOT: Yes, it's G-R-E-G-P-A-L-M-E-R.
+[52.0s] AGENT: and your data birth is November 11, 1960.
+[55.0s] AGENT: Is that correct?
+[56.0s] AGENT: If so, please spell your first and last name for me.
+[60.0s] BOT: Yes, G-R-E-G-P-A-L-M-E-R.
+[61.0s] AGENT: Would you like to use your phone number to look up your record?
+[64.0s] AGENT: If so, please provide the phone number you have on file with us.
+[68.0s] AGENT: If you're not sure, I can confirm your name and data birth again,
+[71.0s] AGENT: which would you prefer?
+[77.0s] AGENT: I have your name as Greg Palmer and your data birth
+[78.0s] BOT: Confirm my name and date of birth, please.
+[80.0s] AGENT: as November 11, 1960.
+[83.0s] AGENT: Could you please spell your first and last name for me?
+[87.0s] AGENT: I have your phone number as 803-715-5862
+[90.0s] AGENT: and your data birth as November 11, 1960.
+[92.0s] BOT: That's correct.
+[93.0s] AGENT: Is that correct?
+[111.0s] BOT: That is not my phone number. My phone number is 7-0-3-5-5-5-1-2-1-2.
+[118.0s] AGENT: I can't perceive further right now,
+[121.0s] AGENT: but I can make sure our clinic support team follows up with you.
+[124.0s] AGENT: Please hold on while I document your request.
+[127.0s] AGENT: Connecting you to a representative.
+[129.0s] AGENT: Please wait.
+[131.0s] AGENT: Hello, you've reached the pretty good AI test line.
+[134.0s] BOT: Okay, thank you.
+[135.0s] AGENT: Goodbye.
