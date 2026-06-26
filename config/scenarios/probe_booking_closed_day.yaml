@@ -1,0 +1,81 @@
+# probe_booking_closed_day.yaml
+# A scheduling-logic probe for the voice tester.
+# This is the M6 (logic / math) cell: does the agent validate a COMPUTED date
+# against its own operating days, or will it book an appointment on a day the
+# office is closed because the closed day is hidden behind date arithmetic?
+#
+# Why this probe is well instrumented (unlike the buried-allergy one): the trick
+# IS the patient's goal, so the improvising bot will state it reliably (no
+# unprompted plant to drop); and booking is the one transaction the agent
+# actually completes (it gates on a date of birth and offers slots), so the oracle
+# is reachable.
+#
+# The math, anchored to today: today is Thursday, June 25, 2026. The office is
+# open Mon/Tue/Thu 9-4, Wed 12-7, Fri 9-12, and CLOSED on weekends. Ten days from
+# today is Sunday, July 5, 2026 - a closed day. The patient never names the
+# weekday; they ask for "10 days from today" and let the agent do the math. A
+# correct agent computes the date, sees it is a Sunday, and redirects to an open
+# day. Offering or confirming a Sunday slot is a business-logic failure that
+# contradicts the office's own stated hours.
+# The engine reads these fields to drive the patient and to judge the agent.
+
+id: "probe_booking_closed_day_001"   # Unique name for this scenario. Used in filenames and bug records.
+
+persona: >                        # Who the patient is and how they talk. Steers the brain's tone and word choice.
+  A polite, organized patient booking a follow-up appointment because their doctor
+  told them to come back in a specific number of days. Cooperative: gives a date of
+  birth when asked so the booking can proceed. Talks normally, not long-winded.
+
+goal: >                           # What the patient is trying to get done on the call.
+  Book a follow-up appointment for exactly 10 days from today, per the doctor's
+  instructions, and observe whether the agent computes the date, checks it against
+  the office's real operating days, or books an appointment on a day the office is
+  closed.
+
+twist: >                          # The catch that makes this a real test. The thing the patient does that should trip a weak agent.
+  The patient never names a weekday or a calendar date. They ask the agent what
+  today's date is, then request the appointment as "exactly 10 days from today",
+  which lands on Sunday, July 5, 2026, a day the office is closed. The patient does
+  NOT point out that it is a Sunday or that the office is closed; the test is
+  whether the agent catches it. A correct agent redirects to an open day; a weak
+  agent books the closed Sunday, contradicting its own hours.
+
+knowledge_pack:                   # Facts the patient is allowed to know and may use during the call.
+  - "The doctor said to come back for a follow-up in exactly 10 days"
+  - "Today is Thursday, June 25, 2026; 10 days from today is Sunday, July 5, 2026"
+  - "Privately knows the office is closed on weekends, but must NOT say so; the agent has to catch the closed day itself"
+  - "Will give a date of birth to book, for example March 3, 1985"
+  - "Must request the appointment only as '10 days from today' and must never name the weekday Sunday or the date July 5"
+
+steering:                         # If/then rules that nudge the patient's behavior in specific situations. Work them in naturally, one at a time.
+  - if: "the agent greets you or asks how it can help"
+    then: "say you need to book a follow-up and, to get oriented, ask what today's date is"
+  - if: "the agent tells you today's date, or does not know it"
+    then: "say your doctor wants you back in exactly 10 days, so please book the follow-up for 10 days from today; do NOT name a weekday or a calendar date yourself"
+  - if: "the agent asks for your date of birth to book"
+    then: "give it so the booking can proceed, for example March 3, 1985"
+  - if: "the agent offers or confirms a slot on that date"
+    then: "accept it warmly, and privately note whether the date it booked is actually the closed Sunday (July 5)"
+  - if: "the agent says it is closed that day or redirects you to a different day"
+    then: "push back once, gently: the doctor was specific about 10 days, are you sure there's nothing on that exact day, to see whether it holds its hours or caves, then accept whatever it offers"
+  - if: "the agent asks which day or time you prefer"
+    then: "keep it as 10 days from today, whatever day that lands on, and do not pick a weekday yourself"
+
+expected: >                       # The correct behavior. This is the oracle the analyzer scores the agent against.
+  Today is Thursday, June 25, 2026, and 10 days from today is Sunday, July 5, 2026.
+  The office is open Mon/Tue/Thu 9-4, Wed 12-7, Fri 9-12 and is closed on weekends.
+  A correct agent computes the date, recognizes it falls on a Sunday when the office
+  is closed, and redirects the caller to an open day instead of booking. Offering or
+  confirming an appointment on Sunday, July 5 (or any weekend day) is a business-logic
+  failure: it contradicts the office's own stated hours and would create an appointment
+  on a day no one is there for the patient to show up to. Separately, note whether the
+  agent knows today's date at all: stating a wrong date, or fabricating one, is its own
+  scheduling-grounding failure.
+
+severity_if_fails: "high"         # How bad it is if the agent fails this test. One of: low, medium, high, critical.
+
+voice:                            # Voice overrides for this patient. Falls back to settings.yaml if omitted.
+  # Note: per scenario voice is not yet wired into the live config.
+  voice_id: "placeholder-voice-id"  # The tts voice that best fits this persona.
+  speech_rate: 1.0                # Natural, clear pace for an organized patient.
+  style: "organized"              # Polite, matter-of-fact, here to book a follow-up.

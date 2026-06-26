@@ -1,0 +1,71 @@
+# probe_date_arithmetic.yaml
+# A pure date-arithmetic probe for the voice tester.
+# The two booking calls were confounded: the 10-day call mislabeled the date AND
+# involved closed-day handling, and the 7-day call was blocked by cross-call memory
+# surfacing the prior booking. This probe strips all of that away and tests ONLY the
+# agent's calendar math: it asks, with no booking and no date of birth, what date is
+# 7 days from today and what date is 10 days from today. Because nothing is being
+# booked, there is no reason for the agent to "bump" off a closed Sunday, so a wrong
+# answer here is an unambiguous arithmetic error, not closed-day handling.
+#
+# The truth, anchored to today (Thursday, June 25, 2026):
+#   7 days from today  = Thursday, July 2, 2026  (an open day)
+#   10 days from today = Sunday,   July 5, 2026  (a closed day)
+# If the agent says July 6 for "10 days", with no booking involved, the off-by-one
+# arithmetic error is real (case A). If it says July 5, its math is sound and the
+# earlier booking's "July 6" was a closed-day bump it mislabeled as "10 days" (case B).
+# The engine reads these fields to drive the patient and to judge the agent.
+
+id: "probe_date_arithmetic_001"   # Unique name for this scenario. Used in filenames and bug records.
+
+persona: >                        # Who the patient is and how they talk. Steers the brain's tone and word choice.
+  A friendly, organized patient who is planning ahead and just wants to work out
+  some dates before they decide anything. Talks normally and stays on topic. They
+  are NOT trying to book right now, they only want the agent to tell them what the
+  dates are.
+
+goal: >                           # What the patient is trying to get done on the call.
+  Get the agent to say what calendar date is 7 days from today and what date is 10
+  days from today, so we can check the agent's date arithmetic. No booking, no date
+  of birth, just the two dates.
+
+twist: >                          # The catch that makes this a real test. The thing the patient does that should trip a weak agent.
+  The patient asks pure calendar-math questions and explicitly does NOT want to book
+  anything yet, so the agent has no reason to avoid a closed day. The correct answers
+  are Thursday, July 2 (for 7 days) and Sunday, July 5 (for 10 days). Any other date,
+  for example July 6 for 10 days, is a plain arithmetic error.
+
+knowledge_pack:                   # Facts the patient is allowed to know and may use during the call.
+  - "Is planning ahead and only wants to know what two future dates are, not to book yet"
+  - "Wants the date that is 7 days from today, and the date that is 10 days from today"
+  - "Today is Thursday, June 25, 2026; 7 days from today is Thursday July 2; 10 days from today is Sunday July 5"
+  - "Must NOT ask to book and must NOT name any of the target dates or weekdays itself; the agent has to compute them"
+
+steering:                         # If/then rules that nudge the patient's behavior in specific situations. Work them in naturally, one at a time.
+  - if: "the agent greets you or asks how it can help"
+    then: "say you are just planning ahead and want to work out a couple of dates first; ask what today's date is"
+  - if: "the agent tells you today's date, or does not know it"
+    then: "ask, just so you can plan, what calendar date would be 7 days from today"
+  - if: "the agent answers the 7-day question"
+    then: "thank them, then ask what date would be 10 days from today"
+  - if: "the agent tries to book an appointment or asks for your date of birth"
+    then: "politely say you are not booking yet, you just want to know the two dates so you can plan, and steer back to the date question"
+  - if: "the agent gives you the dates"
+    then: "note exactly which dates it named, thank it, and wrap up; do not correct it"
+
+expected: >                       # The correct behavior. This is the oracle the analyzer scores the agent against.
+  Today is Thursday, June 25, 2026. Seven days from today is Thursday, July 2, 2026,
+  and ten days from today is Sunday, July 5, 2026. A correct agent states those two
+  dates. Because nothing is being booked, there is no closed-day handling to confuse
+  the result: any wrong date is a pure arithmetic error. In particular, answering
+  July 6 for "10 days from today" (instead of July 5) confirms the off-by-one
+  arithmetic error seen in the booking call was real, not a closed-day mislabel.
+  Separately, stating a wrong today's date is its own grounding failure.
+
+severity_if_fails: "high"         # How bad it is if the agent fails this test. One of: low, medium, high, critical.
+
+voice:                            # Voice overrides for this patient. Falls back to settings.yaml if omitted.
+  # Note: per scenario voice is not yet wired into the live config.
+  voice_id: "placeholder-voice-id"  # The tts voice that best fits this persona.
+  speech_rate: 1.0                # Natural, clear pace for an organized planner.
+  style: "organized"              # Polite, matter-of-fact, just working out dates.
