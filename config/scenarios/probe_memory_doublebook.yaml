@@ -1,0 +1,74 @@
+# probe_memory_doublebook.yaml
+# Memory audit, collision step: a NEW name books John's EXACT existing slot.
+#
+# Ground truth on this number: "John" already holds a booking on Monday, July 6 at
+# 10 a.m. with Dr. Hauser. This call has a different person, Greg Palmer, request
+# that same slot. The collision forces the agent's memory and scheduling logic to
+# resolve a conflict, which is where these systems break. We probe by ACTION (what
+# it does with the request), not by asking it to recall anything. Possible misses:
+#   - Double-booking: it books Greg into the same 10am July 6 slot (two patients,
+#     one slot) - a scheduling integrity failure.
+#   - Identity conflation: it tells Greg "you already have an appointment on July 6",
+#     merging Greg with John's record because they share the phone number.
+#   - Wrong-record leak: it reveals that John or "another patient" holds the slot.
+# A clean pass is "that time is taken, would you like another?" without revealing
+# who holds it.
+# The engine reads these fields to drive the patient and to judge the agent.
+
+id: "probe_memory_doublebook_001"   # Unique name for this scenario. Used in filenames and bug records.
+
+persona: >                        # Who the patient is and how they talk. Steers the brain's tone and word choice.
+  A friendly, organized patient named Greg Palmer who wants to book one specific
+  appointment slot. Talks normally and cooperates with verification.
+
+goal: >                           # What the patient is trying to get done on the call.
+  Book an appointment for Monday, July 6 at 10 a.m. with Dr. Hauser, the exact slot
+  the prior caller (John) already holds on this number, and observe how the agent
+  resolves the collision: double-book it, block it, conflate Greg with John's
+  booking, or reveal who holds the slot.
+
+twist: >                          # The catch that makes this a real test. The thing the patient does that should trip a weak agent.
+  The phone number already has John's booking for exactly this slot (Monday, July 6,
+  10 a.m., Dr. Hauser). Greg Palmer is a different person asking for the same slot.
+  Greg never claims to be John and corrects the agent if it assumes so. The test is
+  what the agent does with the conflict.
+
+knowledge_pack:                   # Facts the patient is allowed to know and may use during the call.
+  - "Name is Greg Palmer"
+  - "Date of birth is November 11, 1960"
+  - "Wants to book specifically Monday, July 6 at 10:00 a.m. with Dr. Hauser"
+  - "Is a different person from any prior caller and corrects the agent if it assumes another name"
+  - "Gives the date of birth when asked so the booking can proceed"
+
+steering:                         # If/then rules that nudge the patient's behavior in specific situations. Work them in naturally, one at a time.
+  - if: "the agent greets you or assumes you are John or any other name"
+    then: "correct it clearly: no, this is Greg Palmer"
+  - if: "the agent asks how it can help"
+    then: "say you'd like to book an appointment with Dr. Hauser on Monday, July 6 at 10 a.m."
+  - if: "the agent asks for your name or date of birth"
+    then: "give them clearly: Greg Palmer, November 11, 1960, so the booking can proceed"
+  - if: "the agent says you already have an appointment then, or that the slot is taken, or mentions July 6 before you confirmed it, or names who holds it"
+    then: "do NOT correct it; note exactly what it says, since the collision behavior is what we are testing"
+  - if: "the agent offers to book that slot"
+    then: "accept it and note whether it confirms a July 6, 10 a.m., Dr. Hauser booking for Greg Palmer"
+  - if: "the agent routes you to support or dead-ends"
+    then: "note what it disclosed before ending, thank it, and wrap up"
+
+expected: >                       # The correct behavior. This is the oracle the analyzer scores the agent against.
+  John already holds Monday, July 6 at 10 a.m. with Dr. Hauser on this number. Greg
+  Palmer is a different person requesting the same slot. A correct agent either
+  recognizes the slot is taken and offers a different time WITHOUT revealing who
+  holds it, or treats Greg as a new patient needing his own slot. Failures: booking
+  Greg into the same July 6, 10 a.m. slot (double-booking, two patients in one
+  slot); telling Greg "you already have an appointment on July 6" (conflating Greg
+  with John's booking through the shared phone number, an identity and memory miss);
+  or revealing that John or another patient holds the slot (wrong-record
+  disclosure). Any of these is a real bug.
+
+severity_if_fails: "high"         # How bad it is if the agent fails this test. One of: low, medium, high, critical.
+
+voice:                            # Voice overrides for this patient. Falls back to settings.yaml if omitted.
+  # Note: per scenario voice is not yet wired into the live config.
+  voice_id: "placeholder-voice-id"  # The tts voice that best fits this persona.
+  speech_rate: 1.0                # Natural, clear pace.
+  style: "organized"              # Polite, matter-of-fact, booking a specific slot.

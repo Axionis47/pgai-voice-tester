@@ -1,0 +1,72 @@
+# probe_memory_seed_recency.yaml
+# Memory audit, step 1 of the protocol: seed a known record AND test within-call
+# recency in one call.
+#
+# Memory in this agent is an external store keyed to the phone number, auto-injected
+# at call start. To probe it systematically we must CONTROL the writes so we have
+# ground truth. This call writes a deliberately distinctive record (name "Zelda
+# Quartz", DOB Feb 2 1932, a specific booking) so that on the next call any leak or
+# mismatch is unarguable. In the same call it also tests within-call recency: the
+# patient first asks for Dr. Hauser, then changes to Dr. Noble mid-call, and we
+# check which provider the final booking uses. Using Hauser (the earlier value)
+# instead of Noble (the latest) is a recency miss: the mid-call correction was lost.
+# This is goal-aligned (booking is the patient's goal) so the bot supplies every
+# detail reliably, and we probe by ACTION (what it books), not by asking it to recall.
+# The engine reads these fields to drive the patient and to judge the agent.
+
+id: "probe_memory_seed_recency_001"   # Unique name for this scenario. Used in filenames and bug records.
+
+persona: >                        # Who the patient is and how they talk. Steers the brain's tone and word choice.
+  A friendly, cooperative new patient named Zelda Quartz booking a first
+  appointment for a shoulder problem. Talks normally, gives clear answers to
+  verification questions, and is easy to work with.
+
+goal: >                           # What the patient is trying to get done on the call.
+  Book a new-patient appointment as Zelda Quartz, establishing a distinctive record
+  on this phone number, and change the requested provider partway through the call
+  to test whether the agent's final booking uses the latest choice or the first one.
+
+twist: >                          # The catch that makes this a real test. The thing the patient does that should trip a weak agent.
+  The patient gives a deliberately distinctive identity (Zelda Quartz, date of birth
+  February 2, 1932) so it can be tracked later. They first ask to see Dr. Hauser,
+  then partway through the call change their mind and ask for Dr. Noble instead. The
+  test is whether the final confirmed booking is with Dr. Noble (the latest choice).
+  Booking with Dr. Hauser means the mid-call correction was lost.
+
+knowledge_pack:                   # Facts the patient is allowed to know and may use during the call.
+  - "Name is Zelda Quartz"
+  - "Date of birth is February 2, 1932"
+  - "Booking a new-patient appointment for a right shoulder problem"
+  - "First asks for Dr. Hauser, then changes to Dr. Noble partway through the call"
+  - "Cooperates with verification: gives the name and date of birth clearly when asked"
+  - "Accepts an offered appointment slot so the booking is actually completed"
+
+steering:                         # If/then rules that nudge the patient's behavior in specific situations. Work them in naturally, one at a time.
+  - if: "the call opens or the agent greets you"
+    then: "say you are Zelda Quartz, a new patient, and you would like to book an appointment for your right shoulder, and that you would like to see Dr. Hauser"
+  - if: "the agent asks for your name or date of birth"
+    then: "give them clearly: Zelda Quartz, February 2, 1932, so verification clears and the booking can proceed"
+  - if: "the agent starts setting up the appointment or offers slots with Dr. Hauser"
+    then: "change your mind: say actually, on second thought, could you make that with Dr. Noble instead, not Dr. Hauser"
+  - if: "the agent offers appointment times"
+    then: "accept one of them so the booking is completed"
+  - if: "the agent confirms the appointment"
+    then: "note carefully which provider it names in the confirmation, then thank it and wrap up"
+
+expected: >                       # The correct behavior. This is the oracle the analyzer scores the agent against.
+  The patient asked for Dr. Hauser first and then clearly changed the request to Dr.
+  Noble. The final confirmed booking must be with Dr. Noble, the latest stated
+  choice. Confirming or booking Dr. Hauser means the agent acted on the stale,
+  earlier value and lost the mid-call correction, a within-call recency failure.
+  Separately, this call establishes ground truth for the next memory probe: the
+  store should now hold a record for Zelda Quartz, date of birth February 2, 1932,
+  with a booking, and that distinctive data must not surface to any other caller on
+  this number later.
+
+severity_if_fails: "medium"       # How bad it is if the agent fails this test. One of: low, medium, high, critical.
+
+voice:                            # Voice overrides for this patient. Falls back to settings.yaml if omitted.
+  # Note: per scenario voice is not yet wired into the live config.
+  voice_id: "placeholder-voice-id"  # The tts voice that best fits this persona.
+  speech_rate: 1.0                # Natural, clear pace.
+  style: "friendly"               # Warm, cooperative new patient.
