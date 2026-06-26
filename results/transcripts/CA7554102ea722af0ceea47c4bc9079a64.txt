@@ -1,0 +1,33 @@
+[0.0s] AGENT: This call may be recorded for quality and training purposes,
+[0.0s] BOT: Hi, this is John, could you tell me what today's date is?
+[3.3s] AGENT: but I spanish, open my dose.
+[6.1s] AGENT: Thanks for calling pivot point orthopedics,
+[8.8s] AGENT: part of pretty good AI.
+[10.6s] AGENT: And I speaking with John, today is Thursday June 25th.
+[19.9s] AGENT: How can I help you next?
+[21.0s] AGENT: Please provide your date of birth.
+[21.9s] BOT: I'd like to book a follow-up appointment for exactly 10 days from today.
+[30.4s] AGENT: Thanks, John.
+[30.6s] BOT: March 3rd, 1985.
+[38.0s] AGENT: Can you tell me the reason for your follow-up appointment?
+[38.5s] BOT: It's a routine check back.
+[40.8s] AGENT: For example, is it for a specific concern or just a routine check back?
+[51.5s] AGENT: We have several openings for a routine check back on Monday, July 6.
+[55.8s] AGENT: Would you prefer to see duty house or Kelly Noble MD or do you have no preference?
+[61.5s] BOT: I have no preference.
+[64.8s] AGENT: There are a few options for Monday, July 6, 10 a.m., 11 a.m., or 1 p.m.
+[70.6s] AGENT: Do any of these work for you?
+[72.6s] BOT: I'd prefer the exact date that my doctor requested.
+[77.5s] AGENT: You can ask for an appointment exactly 10 days from today, which is Monday, July 6.
+[83.0s] AGENT: Would you like to book the 10 a.m. slot on that day?
+[86.4s] BOT: Yes, please.
+[91.6s] AGENT: Your follow-up appointment is set for Monday, July 6, that 10 a.m. with Dr. Doody Hauser
+[96.7s] AGENT: at Pivot Point Orthopedics.
+[98.9s] AGENT: Please bring your photo ID, insurance card, a list of your current medications, and any
+[103.3s] AGENT: imaging discs you have.
+[105.2s] AGENT: Would you like a text confirmation?
+[106.7s] BOT: No, that's okay, thank you.
+[108.7s] AGENT: You're all such on.
+[113.0s] AGENT: If you need anything else, just call.
+[113.1s] BOT: You too, bye-bye.
+[114.9s] AGENT: Have a great day.

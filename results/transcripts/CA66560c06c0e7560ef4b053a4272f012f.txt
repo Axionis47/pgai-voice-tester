@@ -1,0 +1,21 @@
+[0.0s] AGENT: This call may be recorded for quality and training purposes, but I spainol, oprima e dos.
+[0.0s] BOT: No, this is not John.
+[6.0s] AGENT: Thanks for calling Pivot Point Orthopedics, part of Pretty Good AI.
+[10.2s] AGENT: Am I speaking with John?
+[16.5s] AGENT: Nice for letting me know.
+[17.5s] BOT: I'm calling on back.
+[18.0s] AGENT: Are you calling on behalf?
+[20.0s] AGENT: Got it.
+[23.0s] BOT: So today is June 25th, 2026.
+[26.2s] BOT: Can you tell me what date it would be seven days from today?
+[31.0s] AGENT: Seven days from today, June 25th would be July 2nd.
+[37.2s] BOT: Okay, so July 2nd, thank you, and what about ten days from today?
+[44.0s] AGENT: Ten days from today, June 25th would be July 5th.
+[50.2s] BOT: So July 5th and July 2nd.
+[52.2s] BOT: Okay, I think that's all I need for now.
+[55.2s] BOT: Thank you so much.
+[58.0s] AGENT: You're welcome.
+[59.0s] AGENT: If you need anything else from Pivot Point Orthopedics, just give us a call.
+[63.0s] AGENT: Have a great day.
+[66.2s] BOT: You too.
+[67.2s] BOT: Bye-bye.
