@@ -20,6 +20,7 @@ Deeper detail lives in:
 - `SUBMISSION.md` the ten curated calls submitted for review, with recordings and transcripts
 - `docs/BUG_REPORT.md` the findings: two real bugs plus a caveated design risk
 - `docs/ARCHITECTURE.md` how the system fits together and what each file does
+- `docs/SCENARIOS.md` how to write a scenario YAML and run a particular one
 - `docs/STRATEGY.md` the red-team method and how we plan attacks
 - `docs/PROBE_PLAYBOOK.md` the library of probes and bugs to test
 - `CODING_STANDARDS.md` the code rules every contributor follows
