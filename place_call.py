@@ -116,6 +116,9 @@ def main() -> None:
     What comes out:
         Nothing is returned. Prints the Twilio call SID so you can track the call.
     """
+    # Load the .env file before building the parser, so the --to default below can
+    # read TARGET_NUMBER from the environment.
+    load_environment()
     parser = argparse.ArgumentParser(
         description="Place an outbound Twilio call wired to the Gemini Live bridge."
     )
