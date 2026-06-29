@@ -27,3 +27,6 @@ results/recordings/*.wav
 
 # Local knowledge-graph analysis artifact (regenerable, not a deliverable)
 .understand-anything/
+
+# Loom recording scripts and prep, kept private
+loom/
