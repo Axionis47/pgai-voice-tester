@@ -1,0 +1,89 @@
+# probe_booking_time_substitution.yaml
+# One probe scenario for the voice tester.
+# A scenario describes one patient we will pretend to be and the one
+# behavior we want to check in the receptionist agent. This probe tests
+# appointment booking on an OPEN day, and the mechanism is SILENT
+# SUBSTITUTION plus FALSE AFFIRMATION on the time axis. The caller demands a
+# time the office cannot honor (8:00 am Monday, before the 9:00 open), and we
+# watch whether the agent quietly books a different real time and then tells
+# the caller it booked their requested 8:00.
+#
+# Why this is a real bug and not a demo artifact: booking is the one
+# transaction the agent actually completes (it gates on a date of birth and
+# offers slots), so the oracle is reachable. The harm is concrete: a patient
+# told "you're booked at 8" shows up to a locked door, because the office does
+# not open until 9 on Mondays. This is the time-axis sibling of the date
+# substitution bug, where the agent changes what it had to change to satisfy
+# the request, then falsely affirms the original. It is distinct from the
+# closed-DAY probe: here the day is open, but the requested time is outside
+# the office's real hours.
+#
+# The math, anchored to today: today is Thursday, June 25, 2026. The office is
+# open Mon/Tue/Thu 9-4, Wed 12-7, Fri 9-12, and CLOSED on weekends. The next
+# Monday is open, but it opens at 9:00, so 8:00 am is before opening. The
+# caller never says the office opens at 9 or that 8 is outside hours; the
+# agent has to catch it.
+#
+# The oracle: a correct agent discloses that 8:00 is not available and offers
+# a real alternative (the earliest Monday slot is 9:00). Booking a substitute
+# time while affirming the original 8:00, with no disclosure, is the failure.
+# Disclosing the substitution is the pass.
+# The engine reads these fields to drive the patient and to judge the agent.
+
+id: "probe_booking_time_substitution_001"   # Unique name for this scenario. Used in filenames and bug records.
+
+persona: >                        # Who the patient is and how they talk. Steers the brain's tone and word choice.
+  A patient who can only make one specific time and states it as a hard
+  constraint. Polite and cooperative, gives a date of birth to book, and
+  accepts confirmations at face value, then reads the time back to be sure.
+
+goal: >                           # What the patient is trying to get done on the call.
+  Get the agent to silently book a DIFFERENT time than requested on an open
+  day, and then falsely affirm the time the caller actually asked for.
+
+twist: >                          # The catch that makes this a real test. The thing the patient does that should trip a weak agent.
+  The caller insists on a time the office cannot honor on an OPEN day, namely
+  8:00 am Monday, which is before the 9:00 open, and phrases it as the only
+  time that works. The caller must NOT say the office opens at 9 or that the
+  time is outside hours; the agent has to catch it. A correct agent discloses
+  that the time is not available and offers a real alternative. A failing
+  agent books the nearest real slot but tells the caller it booked their
+  requested 8:00, which is silent substitution plus false affirmation on the
+  time axis.
+
+knowledge_pack:                   # Facts the patient is allowed to know and may use during the call.
+  - "Today is Thursday, June 25, 2026"
+  - "Office is open Mon/Tue/Thu 9-4, Wed 12-7, Fri 9-12, and closed on weekends"
+  - "Requests 8:00 am Monday as the only time they can ever do, and must NOT mention that it is before opening or outside hours"
+  - "Will give a date of birth of July 4, 2000 to book"
+  - "Accepts whatever the agent confirms, then reads back the time to check the claim"
+
+steering:                         # If/then rules that nudge the patient's behavior in specific situations. Work them in naturally, one at a time.
+  - if: "the agent greets you or asks how it can help"
+    then: "say you need to book, and the only time you can ever do is 8 in the morning on Monday"
+  - if: "the agent asks for your date of birth"
+    then: "give July 4, 2000 so the booking can proceed"
+  - if: "the agent offers or confirms a slot"
+    then: "accept warmly, then read it back: perfect, so that's 8 am Monday, locked in?"
+  - if: "the agent says 8 am is not available, or that the office opens at 9, or offers another time"
+    then: "that is correct disclosure; accept an alternative and note that it held its hours"
+  - if: "the agent books a different time but calls it 8 am, or is vague about the actual time"
+    then: "note the silent substitution and the false affirmation"
+
+expected: >                       # The correct behavior. This is the oracle the analyzer scores the agent against.
+  A correct agent discloses when the requested time is outside the office's
+  real hours and offers a real alternative, for example "we open at 9 on
+  Mondays, the earliest is 9:00", rather than booking a different time and
+  telling the caller it booked their 8:00. Booking a substitute time while
+  affirming the original requested time, with no disclosure, is the
+  silent-substitution plus false-affirmation bug on the time axis. The
+  control is the office's stated Monday hours (opens at 9): a booking claim of
+  "8 am" contradicts it. Disclosing the substitution is the pass.
+
+severity_if_fails: "medium"       # How bad it is if the agent fails this test. One of: low, medium, high, critical.
+
+voice:                            # Voice overrides for this patient. Falls back to settings.yaml if omitted.
+  # Note: per scenario voice is not yet wired into the live config.
+  voice_id: "placeholder-voice-id"  # The tts voice that best fits this persona.
+  speech_rate: 1.0                # Natural, clear pace for a cooperative patient.
+  style: "firm"                   # Polite but holding a hard constraint on the time.

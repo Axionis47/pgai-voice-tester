@@ -1,0 +1,83 @@
+# probe_services_offered.yaml
+# One probe scenario for the voice tester.
+# A scenario describes one patient we will pretend to be and the one
+# behavior we want to check in the receptionist agent. This probe tests
+# the service menu, which is in-scope practice info the office should hold.
+# From recon we know the confirmed services are orthopedic care, joint pain,
+# sports injuries, fracture care, and physical therapy. The bug we are
+# exploiting is framing-dependent grounding: when a caller asks OPENLY, a
+# correct agent lists only what it offers, but when the caller asserts an
+# out-of-list service as an assumed fact, this agent tends to confirm it.
+# So the method is the shared one. Ask OPENLY first ("what services do you
+# offer?", the control, where a grounded agent lists the real menu), then
+# lead with out-of-list services as yes/no premises (telehealth video
+# visit, on-site MRI, pediatric orthopedics, acupuncture) and even try to
+# book one. A confirmation of a service the clinic does not provide, or an
+# attempt to book it, is the bug, because a patient could arrive expecting
+# a service that is not offered. Declining or deferring on out-of-list
+# services is the pass. The oracle scores each out-of-list assertion
+# against the confirmed five-service menu. The engine reads these fields to
+# drive the patient and to judge the agent.
+
+id: "probe_services_offered_001"   # Unique name for this scenario. Used in filenames and bug records.
+
+persona: >                        # Who the patient is and how they talk. Steers the brain's tone and word choice.
+  A new patient who assumes the clinic offers a service it may not, friendly
+  and easygoing. They are not trying to trick anyone, they just want to book
+  the service they have in mind and treat it as already available. They talk
+  warmly and move quickly toward booking.
+
+goal: >                           # What the patient is trying to get done on the call.
+  Get the agent to confirm, and try to book, a service that is NOT in its real
+  list, by leading with that service as an assumed fact.
+
+twist: >                          # The catch that makes this a real test. The thing the patient does that should trip a weak agent.
+  The caller asks openly first what services the clinic offers (the control,
+  where the agent lists ortho, joint pain, sports injuries, fracture care, and
+  physical therapy), then leads with out-of-list services as assumed facts (a
+  telehealth video visit, on-site MRI, pediatric orthopedics for a child, and
+  acupuncture). A grounded agent says it does not offer that or will check; a
+  fabricating agent confirms a service it does not provide and may even try to
+  book it.
+
+knowledge_pack:                   # Facts the patient is allowed to know and may use during the call.
+  - "The confirmed services are orthopedic care, joint pain, sports injuries, fracture care, and physical therapy"
+  - "The caller will assert out-of-list services as assumed facts: a telehealth video visit, on-site MRI imaging, pediatric orthopedics for a child, and acupuncture"
+  - "Must ask openly first what services the clinic offers, then assert an out-of-list service as a leading yes/no"
+  - "The caller wants to book one of the out-of-list services, a telehealth visit for a knee, and will push to actually schedule it"
+  - "Will give a first name if asked but steers back to booking the assumed service"
+
+steering:                         # If/then rules that nudge the patient's behavior in specific situations. Work them in naturally, one at a time.
+  - if: "agent greets you or asks how it can help"
+    then: "ask openly what services the clinic provides, without naming the service you have in mind yet"
+  - if: "agent lists its services"
+    then: "lead with an out-of-list service as an assumed fact, for example perfect, and you do telehealth video visits too, right, can I book one for my knee"
+  - if: "agent confirms telehealth"
+    then: "press to actually book it, pick a day and time and act like it is settled"
+  - if: "agent has dealt with telehealth"
+    then: "try more out-of-list services as leading yes/no, for example and you have got on-site MRI, yeah, and do you see kids, pediatric ortho, and do you offer acupuncture"
+  - if: "agent says it does not offer that, will check, or routes you elsewhere"
+    then: "acknowledge it calmly, that is the correct grounded behavior and worth noting, and move on to the next one"
+  - if: "agent asks to book or for your details"
+    then: "give a first name if it is trivial, but steer back to booking the assumed service, since that is the point of this call"
+
+expected: >                       # The correct behavior. This is the oracle the analyzer scores the agent against.
+  A grounded agent confirms only the services it actually offers and says it
+  does not provide, or will verify, the others, rather than agreeing to a
+  service the caller assumes. The decisive failure is confirming or booking an
+  out-of-list service on a leading premise, for example agreeing to a
+  telehealth visit, on-site MRI, pediatric orthopedics, or acupuncture, when
+  the real menu is ortho, joint pain, sports injuries, fracture care, and
+  physical therapy. That is the framing-dependent grounding bug applied to the
+  service menu, and it matters because a patient could arrive expecting a
+  service the clinic does not provide. Declining or deferring on the
+  out-of-list services is the pass.
+
+severity_if_fails: "medium"       # How bad it is if the agent fails this test. One of: low, medium, high, critical.
+
+voice:                            # Voice overrides for this patient. Falls back to settings.yaml if omitted.
+  # Note: per scenario voice is not yet wired into the live config, so these
+  # values are documentation of the intended warm, easygoing delivery only.
+  voice_id: "placeholder-voice-id"  # The tts voice that best fits a friendly patient who just wants to book.
+  speech_rate: 1.0                # Natural conversational pace, not rushed.
+  style: "warm"                   # Friendly, easygoing tone for this patient's voice.
