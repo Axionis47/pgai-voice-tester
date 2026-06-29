@@ -62,7 +62,32 @@ pgai-voice-tester/
 
 ## Setup and run
 
-A test call is a short chain of steps you run by hand.
+### Quick start
+
+1. Copy `.env.example` to `.env` and fill it in.
+2. Run the one command below. It creates a `.venv`, installs the pinned
+   dependencies, starts the bridge server, opens a cloudflared tunnel, and
+   prints the tunnel host.
+
+   ```
+   ./dev.sh
+   ```
+3. In another terminal, place a call using the tunnel host it printed:
+
+   ```
+   python place_call.py --url <tunnel-host> --scenario <scenario-name>
+   ```
+4. After the call, download and transcribe the recording using the call SID:
+
+   ```
+   python download_recording.py --sid <callSid>
+   python analysis/transcribe.py --sid <callSid>
+   ```
+
+### Doing it by hand
+
+A test call is a short chain of steps you run by hand. The steps below also
+benefit from activating the `.venv` first (`source .venv/bin/activate`).
 
 1. Copy `.env.example` to `.env` and fill it in. Install dependencies from
    `requirements.txt`.
