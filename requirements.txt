@@ -1,15 +1,14 @@
 # requirements.txt
 # Python dependencies for the voice tester.
-# One package per line with a short note on what it is for. Pin versions
-# when you are ready to lock the environment; left open here for the skeleton.
+# Pinned to known-good versions. One package per line with a short note on
+# what it is for.
 
-twilio                  # Places the outbound phone call and streams the call audio.
-pipecat-ai              # Real time orchestration of the live audio pipeline (Gemini Live + Twilio).
-google-genai            # Gemini client: live voice loop plus the brain and analyzer text models on Vertex AI.
-faster-whisper          # Offline transcription: makes the clean post-call transcript locally, no network.
-pyyaml                  # Reads the config files (settings, scenarios, knowledge map).
-python-dotenv           # Loads secrets and settings from the .env file into the environment.
-websockets              # Low level websocket connection used to stream live call audio.
-fastapi                 # Web framework for the bridge server and its /stream websocket route.
-uvicorn[standard]       # ASGI server that runs the FastAPI bridge (and serves the websocket).
-requests                # Downloads finished call recordings from Twilio (download_recording.py).
+twilio==9.10.9          # Places the outbound phone call and streams the call audio.
+google-genai==1.68.0    # Gemini client: live voice loop plus the brain and analyzer text models on Vertex AI.
+faster-whisper==1.2.1   # Offline transcription: makes the clean post-call transcript locally, no network.
+pyyaml==6.0.3           # Reads the config files (settings, scenarios, knowledge map).
+python-dotenv==1.0.0    # Loads secrets and settings from the .env file into the environment.
+websockets==16.0        # Low level websocket connection used to stream live call audio.
+fastapi==0.129.0        # Web framework for the bridge server and its /stream websocket route.
+uvicorn[standard]==0.41.0  # ASGI server that runs the FastAPI bridge (and serves the websocket).
+requests==2.32.5        # Downloads finished call recordings from Twilio (download_recording.py).
