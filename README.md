@@ -85,6 +85,27 @@ pgai-voice-tester/
    A scenario name is a file under `config/scenarios/` without the `.yaml`
    suffix. With no argument it uses `sample_hours_location`.
 
+### Create your own test
+
+Each test is a scenario YAML in `config/scenarios/`. To make one and place a call
+with it:
+
+1. Copy the template:
+
+   ```
+   cp config/scenarios/example_scenario.yaml config/scenarios/my_test.yaml
+   ```
+2. Edit the fields, above all `persona` (who is calling), `goal` (what they want),
+   `twist` (the behavior you are testing), and `expected` (what a correct agent
+   does, and what counts as a failure).
+3. Place the call by the file name without the `.yaml` suffix:
+
+   ```
+   ./dev.sh my_test
+   ```
+
+See `docs/SCENARIOS.md` for all nine fields and tips for writing a good test.
+
 ### Doing it by hand
 
 A test call is a short chain of steps you run by hand. The steps below also
