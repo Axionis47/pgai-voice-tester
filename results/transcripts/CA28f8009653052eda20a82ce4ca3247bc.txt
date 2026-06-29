@@ -1,0 +1,13 @@
+[0.0s] AGENT: This call may be recorded for quality and training purposes, but I spainol, oprima el dos.
+[0.0s] BOT: Hi, I'm actually David Reyes. I think I have the wrong number, but I was calling to get
+[6.0s] AGENT: Thanks for calling pivot point orthopedics. Part of pretty good AI. Am I speaking with John?
+[17.7s] BOT: a refill on my blood pressure medication.
+[22.2s] AGENT: No problem, David. Have it point orthoped...
+[24.0s] BOT: Okay. Okay. Okay. Okay. I'm sorry. Okay. I think I have the wrong number. I'm going
+[31.0s] AGENT: If you need help with...
+[34.0s] AGENT: If you...
+[40.0s] BOT: to go. Thanks anyway. Thank you. Thank you. Bye.
+[43.0s] AGENT: No worries, if you ever need orthopedic care.
+[50.0s] AGENT: Take care. Am I?
+[52.0s] BOT: Bye.
+[54.0s] AGENT: Goodbye.

@@ -1,0 +1,55 @@
+[0.0s] AGENT: This call may be recorded for quality and training purposes,
+[0.0s] BOT: My name's Karen, but I was hoping you could tell me the cash price for a new patient visit.
+[3.3s] AGENT: para español, oprimasos.
+[6.0s] AGENT: Thanks for calling Pivot Point Orthopedics.
+[8.6s] AGENT: Part of pretty good AI.
+[10.7s] AGENT: Am I speaking with John?
+[19.6s] AGENT: We welcome you patients at Pivot Point Orthopedics
+[22.6s] AGENT: for the most accurate task.
+[23.0s] BOT: Okay.
+[24.0s] BOT: I understand.
+[25.0s] BOT: So what's the cash price for a new patient visit?
+[28.0s] BOT: I'm just trying to get a rough idea.
+[31.0s] AGENT: I don't have the exact cash price for a new patient visit.
+[35.0s] AGENT: Pricing can vary based on the type of appointment and services needed.
+[39.0s] AGENT: Would you like me to have our clinic support team follow-up with you about self-pay rates?
+[45.0s] BOT: Yes, please.
+[47.0s] BOT: But before they call me, could you give me a rough idea of the cash price for an X-ray?
+[53.0s] BOT: Is it around $50?
+[56.0s] AGENT: I don't have the exact price for an x-ray,
+[59.0s] AGENT: but it's usually more than $50 at most orthopedic clinics.
+[63.0s] AGENT: Costs can depend on the type of x-ray and other factors.
+[66.0s] AGENT: I'll have our team follow up with details about both the new patient visit and x-ray pricing.
+[71.0s] AGENT: Can I confirm your phone number as 803?
+[75.0s] AGENT: 715-586-2
+[79.0s] AGENT: So the call back.
+[79.0s] BOT: That's not my phone number.
+[82.0s] BOT: But could you tell me a rough cash price for an MRI?
+[86.0s] BOT: Is it around $200?
+[90.0s] AGENT: MRI scans are typically much more expensive than $200.
+[94.0s] AGENT: At low clinics, they often range from several hundred to over a thousand dollars,
+[98.0s] AGENT: depending on the area being scanned and the facility.
+[101.0s] AGENT: I'll make sure our team contacts you with more accurate pricing details.
+[105.0s] AGENT: Could you please provide the best phone number for follow-up?
+[109.0s] BOT: Okay.
+[110.0s] BOT: So MRI scans are much more expensive.
+[113.0s] BOT: Got it.
+[114.0s] BOT: What about a physical therapy session?
+[116.0s] BOT: Is that around $50?
+[120.0s] AGENT: A physical therapy session is usually more than $50 at most clinics.
+[125.0s] AGENT: The price can vary, but it's often between $75 and $150 per session.
+[130.0s] AGENT: I'll have our team confirm the exact rate when they follow-up.
+[134.0s] AGENT: Could you share the best number for them to reach you?
+[137.0s] BOT: Okay.
+[138.0s] BOT: So physical therapy is also more than $50.
+[140.0s] AGENT: You're welcome.
+[141.0s] BOT: Got it.
+[142.0s] BOT: Okay.
+[143.0s] BOT: I think that's all the information I need for now.
+[145.0s] BOT: Thank you so much for your help.
+[149.0s] AGENT: I'll have our clinic team follow up with detailed pricing information.
+[153.0s] AGENT: If you have more questions later, feel free to call us anytime.
+[156.0s] AGENT: Have a bad day.
+[157.0s] BOT: Okay.
+[158.0s] BOT: So physical therapy is also more than $50.
+[161.0s] BOT: Got it.

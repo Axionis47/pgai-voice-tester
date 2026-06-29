@@ -1,0 +1,41 @@
+[0.0s] AGENT: This call may be recorded for quality and training purposes,
+[0.0s] BOT: Oh, I'm sorry. I don't know who Sean is. I'm just looking to book an appointment.
+[3.3s] AGENT: para español, oprimados.
+[6.0s] AGENT: Thanks for calling pivot point orthopedics.
+[8.4s] AGENT: Part of pretty good AI.
+[10.6s] AGENT: Am I speaking with John?
+[21.1s] AGENT: No problem.
+[22.1s] AGENT: Please provide the patient's full name and date of birth.
+[23.0s] BOT: Okay, my name is Sarah Mitchell and my date of birth is March 14, 1986.
+[30.0s] AGENT: Just to confirm, I have your name is Sarah Mitchell and your date of birth as March 14, 1986.
+[40.0s] AGENT: Is that correct?
+[41.0s] AGENT: If so, could you please spell your first and last name for me?
+[46.0s] BOT: Yes, that's correct. My first name is Sarah, S-A-R-A-H, and my last name is Mitchell, M-I-T.
+[48.0s] AGENT: Could you please spell your last name for me, Sarah?
+[54.0s] AGENT: And just to confirm, your date of birth is March 14.
+[59.0s] AGENT: Is March 14, 1986, correct?
+[64.0s] BOT: Yes, that's correct. It's March 14, 1980. Yes, M-I-T-C-H-E-L-L.
+[66.0s] AGENT: Please spell your last name for me.
+[70.0s] AGENT: Could you please spell out your last name letter by letter?
+[76.0s] AGENT: Go ahead and spell your last name for me, please.
+[79.0s] BOT: Okay, M-I-T-C-H-E-L. Yes, that's correct.
+[82.0s] AGENT: Am I the one you are?
+[83.0s] AGENT: Please spell your last name.
+[93.0s] AGENT: I have your last name as Mitchell, spelled M-I-T.
+[103.0s] AGENT: I can't proceed further right now, but I can make sure our clinic support team follows up with you.
+[108.0s] AGENT: Would you like me to connect you to our patient support team?
+[110.0s] BOT: No, I don't want to connect to support. I just want to book an appointment for my knee pain.
+[118.0s] AGENT: I'm unable to book the appointment directly right now, but I'll let our clinic support...
+[125.0s] BOT: Yes, I would like to book an appointment for my knee pain.
+[129.0s] AGENT: I'm unable to book the appointment directly right now due to a system issue.
+[133.0s] AGENT: I recommend connecting with our patient support team so they can help you right away.
+[137.0s] AGENT: Would you like me to transfer you now?
+[140.0s] BOT: So, I can't book an appointment then today.
+[145.0s] AGENT: At the moment, I can't book the appointment directly due to a system issue.
+[149.0s] AGENT: If you'd like, I can connect you to our patient support team right now, and they can help you schedule your visit.
+[155.0s] AGENT: Would you like to be transferred?
+[158.0s] AGENT: Connecting you to a representative.
+[158.0s] BOT: Yes, I just wanted to book an appointment.
+[160.0s] AGENT: Please wait.
+[162.0s] AGENT: Hello, you've reached the pretty good AI test line.
+[165.0s] AGENT: Goodbye.
