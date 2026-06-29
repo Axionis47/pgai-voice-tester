@@ -12,6 +12,9 @@ venv/
 # OS
 .DS_Store
 
+# Runtime logs written by dev.sh
+*.log
+
 # Claude and AI tooling - keep out of the repo
 .claude/
 CLAUDE.md
