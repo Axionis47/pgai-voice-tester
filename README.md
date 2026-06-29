@@ -65,24 +65,24 @@ pgai-voice-tester/
 ### Quick start
 
 1. Copy `.env.example` to `.env` and fill it in.
-2. Run the one command below. It creates a `.venv`, installs the pinned
-   dependencies, starts the bridge server, opens a cloudflared tunnel, and
-   prints the tunnel host.
+2. Run the one command below. It sets up the `.venv`, installs the pinned
+   dependencies, starts the bridge server and a cloudflared tunnel, places a
+   call to the target agent, waits for the call to finish, downloads and
+   transcribes it, prints the transcript path, and shuts everything down.
 
    ```
    ./dev.sh
    ```
-3. In another terminal, place a call using the tunnel host it printed:
+
+   You can pass a scenario name to run a different test:
 
    ```
-   python place_call.py --url <tunnel-host> --scenario <scenario-name>
+   ./dev.sh sample_hours_location
+   ./dev.sh probe_price_multiservice
    ```
-4. After the call, download and transcribe the recording using the call SID:
 
-   ```
-   python download_recording.py --sid <callSid>
-   python analysis/transcribe.py --sid <callSid>
-   ```
+   A scenario name is a file under `config/scenarios/` without the `.yaml`
+   suffix. With no argument it uses `sample_hours_location`.
 
 ### Doing it by hand
 
