@@ -21,3 +21,6 @@ CHALLENGE.md
 
 # Large intermediate audio - we keep the mp3 deliverable and the transcript, not the raw wav
 results/recordings/*.wav
+
+# Local knowledge-graph analysis artifact (regenerable, not a deliverable)
+.understand-anything/
