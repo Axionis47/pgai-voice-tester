@@ -373,7 +373,7 @@ def transcript_output_path(wav_path: Path) -> Path:
 
 
 def save_transcript(transcript: Transcript, output_path: Path) -> None:
-    """Write a transcript's labeled text to disk for humans and the analyzer.
+    """Write a transcript's labeled text to disk for humans and later analysis.
 
     Args:
         transcript: The transcript to save.

@@ -120,9 +120,9 @@ mostly empty at the start of a campaign and grows every call. The loop is:
    teen-versus-ty numbers, the patient leans on that seam. If the map says verification decays
    over long calls, the patient front-loads rapport before the payload.
 
-3. After the call, update_map.py folds in what was learned. New ground_truth (a confirmed
-   doctor name, a quoted price, the real hours) and new system_intel (the agent's refusal
-   style, its STT weak spots, its persistence behavior) get written back.
+3. After the call, what was learned gets folded into the map by hand. New ground_truth (a
+   confirmed doctor name, a quoted price, the real hours) and new system_intel (the agent's
+   refusal style, its STT weak spots, its persistence behavior) get written back.
 
 4. The updated map picks the next probe. The branching logic reads the map state to decide the
    next node. A map that now contains a recovered DOB unlocks the identity-exploit subtree. A

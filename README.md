@@ -10,9 +10,10 @@ Built for the Pretty Good AI engineering challenge. Test line: +1-805-439-8008.
 
 The bot places a real phone call, listens to the agent, decides what a realistic
 patient would say next, and speaks back. Each call follows a scenario defined in a
-config file. After the call, an offline step transcribes the recording and checks
-the agent's behavior against what a correct agent should have done. Findings are
-written to a living knowledge map that shapes the next call.
+config file. After the call, an offline step transcribes the recording into a clean
+labeled transcript. Judging the transcript against what a correct agent should have
+done is currently done by hand, with help from an LLM, and the findings are recorded
+by hand.
 
 Deeper detail lives in:
 
@@ -29,25 +30,20 @@ pgai-voice-tester/
   CODING_STANDARDS.md      the code contract every subagent follows
   requirements.txt         python dependencies
   .env.example             required environment variables (no secrets)
-  runner.py                entry point: runs one full test call start to end
   config/
     settings.yaml          infra, voice, and turn-taking knobs
     knowledge_map.yaml      living intel about the target, grows every call
     scenarios/
       example_scenario.yaml a sample test case (persona, goal, steering, expected)
     personas/              reusable patient personas
+  server.py                live bridge: runs the call, converting Twilio audio to and from the Gemini Live session
   src/
     config_loader.py       read the external config files
     clients.py             build the Gemini, Twilio, and Whisper clients
-    telephony.py           bridge Twilio call audio to and from the live session
+    audio.py               convert audio between Twilio and the Gemini Live session
     brain.py               the patient: build and drive the Gemini Live session
-    pipeline.py            orchestrate one call until a stop condition is met
-    recorder.py            save the call audio
-    tracer.py              structured per-call event log
   analysis/
     transcribe.py          offline transcription of the recording (Whisper)
-    analyzer.py            compare the call against expected behavior, find bugs
-    update_map.py          fold findings into the living knowledge map
   docs/
     ARCHITECTURE.md        how the system fits together
   results/
@@ -64,12 +60,41 @@ pgai-voice-tester/
 
 ## Setup and run
 
-Copy `.env.example` to `.env` and fill in the keys. Install dependencies from
-`requirements.txt`. Then run a single test call:
+A test call is a short chain of steps you run by hand.
 
-```
-python runner.py --scenario config/scenarios/example_scenario.yaml
-```
+1. Copy `.env.example` to `.env` and fill it in. Install dependencies from
+   `requirements.txt`.
+2. Optional connectivity check:
+
+   ```
+   python scripts/check_services.py
+   ```
+3. Start the bridge server. It listens on port 8080.
+
+   ```
+   python server.py
+   ```
+4. Start a public tunnel and copy the host it prints.
+
+   ```
+   cloudflared tunnel --url http://localhost:8080
+   ```
+5. Place a call. Omit `--to` to dial the target agent. `--scenario` takes the
+   name of a file under `config/scenarios` without the `.yaml`.
+
+   ```
+   python place_call.py --url <tunnel-host> --scenario <scenario-name>
+   ```
+6. After the call, download the recording using the call SID:
+
+   ```
+   python download_recording.py --sid <callSid>
+   ```
+7. Transcribe the recording:
+
+   ```
+   python analysis/transcribe.py --sid <callSid>
+   ```
 
 ## Status
 
