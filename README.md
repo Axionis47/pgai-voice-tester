@@ -17,10 +17,12 @@ by hand.
 
 Deeper detail lives in:
 
+- `SUBMISSION.md` the ten curated calls submitted for review, with recordings and transcripts
+- `docs/BUG_REPORT.md` the findings: two real bugs plus a caveated design risk
 - `docs/ARCHITECTURE.md` how the system fits together and what each file does
-- `docs/STRATEGY.md` the red-team method and how we plan attacks (generated next)
-- `docs/PROBE_PLAYBOOK.md` the library of probes and bugs to test (generated next)
-- `CODING_STANDARDS.md` the code rules every subagent follows
+- `docs/STRATEGY.md` the red-team method and how we plan attacks
+- `docs/PROBE_PLAYBOOK.md` the library of probes and bugs to test
+- `CODING_STANDARDS.md` the code rules every contributor follows
 
 ## Project layout
 
@@ -98,5 +100,7 @@ A test call is a short chain of steps you run by hand.
 
 ## Status
 
-Skeleton stage. Every file is a documented stub that explains its job. The logic is
-filled in next, by subagents, following `CODING_STANDARDS.md`.
+Working. The live bridge places real calls and holds a natural patient
+conversation, the offline path produces clean labeled transcripts, and a red-team
+campaign of more than thirty recorded calls produced the findings in
+`docs/BUG_REPORT.md`. The curated set submitted for review is in `SUBMISSION.md`.
