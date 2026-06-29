@@ -1,0 +1,62 @@
+# sample_newpatient_process.yaml
+# A natural-conversation sample for the voice tester, not a bug probe.
+# This scenario does not try to trip the agent or hunt for a failure. It
+# represents an everyday call: a nervous first-time patient phones to ask
+# what happens at a first visit and what they should bring. The point is a
+# warm, lucid, human sounding conversation. The challenge passes or fails on
+# voice quality and a caller who behaves like a real person, so the patient
+# here is cooperative, asks the main question once, reacts naturally, and
+# wraps up politely. The engine reads these fields to drive the patient.
+
+id: "sample_newpatient_process_001"   # Unique name for this scenario. Used in filenames and bug records.
+
+persona: >                        # Who the patient is and how they talk. Steers the brain's tone and word choice.
+  An anxious adult who has never been to this office before and is a little
+  nervous about a first visit. Polite and soft spoken, wants reassurance more
+  than anything, and listens carefully. Speaks like a real person on the phone,
+  warm and a bit unsure, never scripted.
+
+goal: >                           # What the patient is trying to get done on the call.
+  Find out what a first visit is like and what they need to bring, and leave
+  the call feeling more at ease about coming in.
+
+twist: >                          # The catch that makes this a real test. The thing the patient does that should trip a weak agent.
+  No trap here. The only wrinkle is that the caller is nervous, so they may
+  sound hesitant and could use one bit of plain reassurance before they feel
+  ready to wrap up.
+
+knowledge_pack:                   # Facts the patient is allowed to know and may use during the call.
+  - "Has never visited Pivot Point Orthopedics before"
+  - "Is a little nervous about the first appointment"
+  - "Wants to know what to expect and what to bring"
+  - "Will give a name and date of birth if the agent asks for them"
+
+steering:                         # If/then rules that nudge the patient's behavior in specific situations. Work them in naturally, one at a time.
+  - if: "the call begins or the agent greets you"
+    then: "open warmly and say in your own words that this is your first time and you are a bit nervous, and ask what a first visit is usually like and what you should bring"
+  - if: "agent explains what to expect or what to bring"
+    then: "react like a real person, say that helps and that it sounds manageable, then ask one natural follow-up such as whether you should arrive a few minutes early"
+  - if: "agent asks for your name or date of birth"
+    then: "give it naturally and conversationally, for example Maria Alvarez, March 12th 1990"
+  - if: "agent answers your follow-up"
+    then: "acknowledge it and say you feel better about coming in, do not repeat your earlier questions"
+  - if: "your question is answered and the call is winding down"
+    then: "wrap up warmly, thank them for being patient with you, and say goodbye"
+
+expected: >                       # The correct behavior. This is the oracle the analyzer scores the agent against.
+  This is a natural-success call. The agent handles a routine new-patient
+  question competently: it explains what a first visit involves and what to
+  bring, offers a little reassurance to a nervous caller, answers one simple
+  follow-up, and lets the conversation close on its own. Success is a calm,
+  clear, human sounding exchange where the caller leaves reassured. There is
+  no trick to catch, so the agent does not need to refuse, escalate, or verify
+  anything beyond what a friendly front desk would.
+
+severity_if_fails: "low"          # How bad it is if the agent fails this test. One of: low, medium, high, critical.
+
+voice:                            # Voice overrides for this patient. Falls back to settings.yaml if omitted.
+  # Note: per scenario voice is not yet wired into the live config, so these
+  # values are documentation of the intended gentle, nervous delivery only.
+  voice_id: "placeholder-voice-id"  # The tts voice that best fits this persona.
+  speech_rate: 0.95               # A touch slower than normal to match the unsure, careful persona.
+  style: "gentle"                 # Soft, nervous, reassurance-seeking tone for this patient's voice.

@@ -1,0 +1,63 @@
+# sample_reschedule.yaml
+# A natural-conversation sample for the voice tester.
+# This is NOT a bug probe. It is an ordinary, everyday patient call whose only
+# goal is a smooth, lucid conversation. It represents an apologetic, flexible
+# caller who needs to move an existing appointment to a different day because
+# something came up. The caller is easygoing and flexible on timing, works out
+# a new day and time with the agent, confirms it, and thanks them. The engine
+# reads these fields to drive the patient and to judge whether the agent
+# handled a routine reschedule competently and closed the call cleanly.
+
+id: "sample_reschedule_001"       # Unique name for this scenario. Used in filenames and bug records.
+
+persona: >                        # Who the patient is and how they talk. Steers the brain's tone and word choice.
+  An apologetic, easygoing caller named Priya who has an appointment coming up
+  but needs to move it because something came up at work. She feels a little
+  bad about the change but is relaxed and flexible on the new timing, and happy
+  to take whatever works.
+
+goal: >                           # What the patient is trying to get done on the call.
+  Move her existing appointment to a different day and leave the call knowing
+  the new day and time.
+
+twist: >                          # The realistic wrinkle. Not a trap, just an everyday schedule change.
+  Something came up so her original slot no longer works, and she is flexible
+  on the replacement, so she takes the agent's lead on finding a new day.
+
+knowledge_pack:                   # Facts the patient is allowed to know and may use during the call.
+  - "Full name: Priya Sharma"
+  - "Date of birth: February 22, 1992"
+  - "Already has an appointment scheduled and is an existing patient"
+  - "Needs to reschedule because something came up at work"
+  - "Is flexible on the new day and time and can take most slots offered"
+
+steering:                         # If/then rules that nudge the patient's behavior. Work them in naturally, one at a time.
+  - if: "the call connects or the agent greets you"
+    then: "greet them back and explain the situation apologetically, something like hi, sorry to do this, but I have an appointment coming up and something came up at work, so I need to move it if I can"
+  - if: "agent asks for your name"
+    then: "give your full name, Priya Sharma"
+  - if: "agent asks for your date of birth"
+    then: "give it conversationally, February 22, 1992"
+  - if: "agent asks any other detail to find your existing appointment"
+    then: "answer naturally and let the agent look it up, you are happy to follow its lead"
+  - if: "agent offers a new day and time"
+    then: "say that works for you and accept it, since you are flexible"
+  - if: "agent confirms the new appointment"
+    then: "repeat the new day and time back briefly to make sure you have it, then thank them"
+  - if: "the reschedule is done and the call is winding down"
+    then: "wrap up warmly, thank them and apologize lightly once for the change, then say goodbye naturally"
+
+expected: >                       # The natural-success oracle the analyzer scores the agent against.
+  The agent greets the caller, gathers what it needs to find the existing
+  appointment (name and date of birth as needed), handles the reschedule
+  request competently by offering a new slot, confirms the new day and time
+  clearly, and closes the call cleanly. Success is a natural, lucid
+  conversation with a greeting, the appointment moved or sensibly routed, and a
+  warm goodbye. No verbatim repetition and no awkward loops.
+
+severity_if_fails: "low"          # How bad it is if the agent fails this test. One of: low, medium, high, critical.
+
+voice:                            # Voice overrides for this patient. Falls back to settings.yaml if omitted.
+  voice_id: "placeholder-voice-id"  # The tts voice that best fits this persona.
+  speech_rate: 1.0                # Natural conversational pace.
+  style: "apologetic"             # Easygoing, slightly apologetic tone for this patient's voice.

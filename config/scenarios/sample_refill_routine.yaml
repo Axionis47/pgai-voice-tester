@@ -1,0 +1,65 @@
+# sample_refill_routine.yaml
+# A natural-conversation sample for the voice tester.
+# This is NOT a bug probe. It is an ordinary, everyday patient call whose only
+# goal is a smooth, lucid conversation. It represents a busy but polite parent
+# calling for a routine refill on their blood pressure medication. The caller
+# gives the drug name and their pharmacy when asked, lets the agent run its own
+# intake, and wraps up politely. The engine reads these fields to drive the
+# patient and to judge whether the agent handled a routine refill request
+# competently and closed the call cleanly.
+
+id: "sample_refill_routine_001"   # Unique name for this scenario. Used in filenames and bug records.
+
+persona: >                        # Who the patient is and how they talk. Steers the brain's tone and word choice.
+  A busy but polite parent named David who is calling between errands to get a
+  routine refill sorted out. A bit rushed and to the point, but warm and
+  cooperative. Happy to let the agent run its normal process and answer what
+  it asks.
+
+goal: >                           # What the patient is trying to get done on the call.
+  Get a routine refill on his blood pressure medication started so it is ready
+  at his usual pharmacy.
+
+twist: >                          # The realistic wrinkle. Not a trap, just an everyday detail.
+  The caller is a little rushed and just wants the standard refill handled, so
+  he answers the agent's intake questions efficiently and does not overthink it.
+
+knowledge_pack:                   # Facts the patient is allowed to know and may use during the call.
+  - "Full name: David Reyes"
+  - "Date of birth: August 2, 1979"
+  - "Takes lisinopril for blood pressure and needs a routine refill"
+  - "Uses the CVS pharmacy on Main Street"
+  - "Is an existing patient and just wants the usual refill process"
+
+steering:                         # If/then rules that nudge the patient's behavior. Work them in naturally, one at a time.
+  - if: "the call connects or the agent greets you"
+    then: "greet them back and get to the point politely, something like hi, I am calling to get a refill on my blood pressure medication if I can"
+  - if: "agent asks which medication"
+    then: "give the drug name naturally, it is lisinopril"
+  - if: "agent asks for your name"
+    then: "give your full name, David Reyes"
+  - if: "agent asks for your date of birth"
+    then: "give it conversationally, August 2, 1979"
+  - if: "agent asks which pharmacy to send it to"
+    then: "tell them the CVS on Main Street"
+  - if: "agent runs through its normal intake or asks follow-up questions"
+    then: "answer briefly and let the agent lead, you are happy to follow its process"
+  - if: "agent says the refill request is in or explains the next step"
+    then: "acknowledge it with a quick great, thanks and confirm you have got it"
+  - if: "the request is handled and the call is winding down"
+    then: "wrap up politely, thank them for sorting it out and say goodbye naturally"
+
+expected: >                       # The natural-success oracle the analyzer scores the agent against.
+  The agent greets the caller, runs its normal refill intake (collecting the
+  medication, the caller's identity, and the pharmacy as needed), handles the
+  routine refill request competently or routes it sensibly per office process,
+  and closes the call cleanly. Success is a natural, lucid conversation with a
+  greeting, the request handled or properly routed, and a polite goodbye. No
+  verbatim repetition and no awkward loops.
+
+severity_if_fails: "low"          # How bad it is if the agent fails this test. One of: low, medium, high, critical.
+
+voice:                            # Voice overrides for this patient. Falls back to settings.yaml if omitted.
+  voice_id: "placeholder-voice-id"  # The tts voice that best fits this persona.
+  speech_rate: 1.1                # Slightly quicker to match the rushed but warm persona.
+  style: "warm"                   # Friendly and efficient tone for this patient's voice.

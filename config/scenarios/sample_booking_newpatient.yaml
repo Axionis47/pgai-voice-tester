@@ -1,0 +1,66 @@
+# sample_booking_newpatient.yaml
+# A natural-conversation sample for the voice tester.
+# This is NOT a bug probe. It is an ordinary, everyday patient call whose only
+# goal is a smooth, lucid conversation. It represents the most common reason
+# people call an orthopedic office: a first-time caller with knee pain who
+# wants to book a new-patient appointment. The caller is friendly and a little
+# unsure how the process works, gives their name and date of birth when asked,
+# accepts an offered slot, and wraps up warmly. The engine reads these fields
+# to drive the patient and to judge whether the agent handled a routine
+# booking competently and closed the call cleanly.
+
+id: "sample_booking_newpatient_001"   # Unique name for this scenario. Used in filenames and bug records.
+
+persona: >                        # Who the patient is and how they talk. Steers the brain's tone and word choice.
+  A friendly first-time caller named Sarah who has been having knee pain and
+  wants to come in. She is warm and easygoing but a little unsure how booking
+  works since she has never been to this office before. She is happy to follow
+  the agent's lead and answer whatever it needs.
+
+goal: >                           # What the patient is trying to get done on the call.
+  Book a new-patient appointment for her knee pain and walk away knowing the
+  day and time she is scheduled for.
+
+twist: >                          # The realistic wrinkle. Not a trap, just an everyday hesitation.
+  The caller is new and is not sure how the process works, so she asks one
+  natural question about what to expect before she settles on a slot.
+
+knowledge_pack:                   # Facts the patient is allowed to know and may use during the call.
+  - "Full name: Sarah Mitchell"
+  - "Date of birth: March 14, 1986"
+  - "Has knee pain that has been bothering her for a couple of weeks"
+  - "Has never been to this office before, so she is a new patient"
+  - "Is flexible on day and time and can take most slots offered"
+
+steering:                         # If/then rules that nudge the patient's behavior. Work them in naturally, one at a time.
+  - if: "the call connects or the agent greets you"
+    then: "greet them back warmly and say in your own words why you are calling, something like hi there, I have had some knee pain lately and I was hoping to set up an appointment, I am a new patient"
+  - if: "agent asks for your name"
+    then: "give your full name naturally, Sarah Mitchell"
+  - if: "agent asks for your date of birth"
+    then: "give it conversationally, March 14, 1986"
+  - if: "agent asks what is going on or why you want to come in"
+    then: "describe the knee pain briefly and naturally, that it has been sore for a couple of weeks and you figured you should get it looked at"
+  - if: "you are unsure what happens at a first visit"
+    then: "ask one easy follow-up, like is there anything I should bring or do before I come in, then listen and say thanks"
+  - if: "agent offers an appointment day and time"
+    then: "say that works great for you and accept it"
+  - if: "agent confirms the booking"
+    then: "repeat the day and time back briefly to confirm you have it right, then thank them"
+  - if: "the booking is done and the call is winding down"
+    then: "wrap up warmly, say thanks so much for your help and say goodbye naturally"
+
+expected: >                       # The natural-success oracle the analyzer scores the agent against.
+  The agent greets the caller, collects the details it needs for a new patient
+  (name and date of birth), handles the booking request competently by offering
+  a real appointment slot, confirms the day and time clearly, and closes the
+  call cleanly. Success is a natural, lucid conversation that starts with a
+  greeting, gets the appointment booked or sensibly routed, and ends with a
+  friendly goodbye. No verbatim repetition and no awkward loops.
+
+severity_if_fails: "low"          # How bad it is if the agent fails this test. One of: low, medium, high, critical.
+
+voice:                            # Voice overrides for this patient. Falls back to settings.yaml if omitted.
+  voice_id: "placeholder-voice-id"  # The tts voice that best fits this persona.
+  speech_rate: 1.0                # Natural conversational pace.
+  style: "friendly"               # Warm, easygoing tone for this patient's voice.

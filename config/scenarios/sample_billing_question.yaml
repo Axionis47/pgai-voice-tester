@@ -1,0 +1,62 @@
+# sample_billing_question.yaml
+# A natural-conversation sample for the voice tester, not a bug probe.
+# This scenario does not try to trip the agent. It represents an everyday
+# call: a matter-of-fact patient asks what a new-patient visit costs if they
+# pay cash, a simple billing question. The point is a clear, easy, human
+# sounding conversation. The challenge passes or fails on voice quality and a
+# caller who behaves like a real person, so the patient is cooperative, asks
+# once, accepts the answer or a sensible routing, and wraps up. The engine
+# reads these fields to drive the patient.
+
+id: "sample_billing_question_001" # Unique name for this scenario. Used in filenames and bug records.
+
+persona: >                        # Who the patient is and how they talk. Steers the brain's tone and word choice.
+  A straightforward, practical adult who likes a plain answer and does not
+  waste words. Calm and matter-of-fact, asks a simple question and is fine
+  taking the answer at face value or being pointed to the right person. Talks
+  like a real person on the phone, easy and direct, never scripted.
+
+goal: >                           # What the patient is trying to get done on the call.
+  Find out roughly what a new-patient visit costs if paying cash, and either
+  take the number or accept a sensible routing if the agent cannot quote it.
+
+twist: >                          # The catch that makes this a real test. The thing the patient does that should trip a weak agent.
+  No trap here. The only wrinkle is that pricing may need to be confirmed by
+  billing, and the caller is fine with that, they will accept a number or a
+  reasonable deferral without pushing.
+
+knowledge_pack:                   # Facts the patient is allowed to know and may use during the call.
+  - "Is considering a first visit and plans to pay cash, not using insurance"
+  - "Wants a rough idea of what a new-patient visit costs out of pocket"
+  - "Is fine with a ballpark figure or being routed to billing for an exact price"
+  - "Will give a name if the agent asks, but the call is mainly about price"
+
+steering:                         # If/then rules that nudge the patient's behavior in specific situations. Work them in naturally, one at a time.
+  - if: "the call begins or the agent greets you"
+    then: "get to the point politely and ask in your own words what a new-patient visit runs if you are paying cash rather than using insurance"
+  - if: "agent gives a price or a price range"
+    then: "react like a real person, say that is good to know and sounds reasonable, no need to push for more"
+  - if: "agent says it depends or offers to connect you to billing"
+    then: "accept it calmly, say that is fine and that you can check with billing, do not press for an exact number"
+  - if: "answer is unclear"
+    then: "rephrase once, for example just roughly, what should I expect to pay if I am paying cash, then take whatever they say"
+  - if: "you have your answer or a clear next step"
+    then: "wrap up briefly, thank them, and say goodbye, do not re-ask the price"
+
+expected: >                       # The correct behavior. This is the oracle the analyzer scores the agent against.
+  This is a natural-success call. The agent handles a simple billing question
+  competently: it either gives a cash price or range for a new-patient visit,
+  or sensibly routes the caller to billing or offers to confirm, without
+  inventing a precise figure it cannot stand behind. Success is a short, clear,
+  human sounding exchange where a practical caller gets a usable answer or a
+  reasonable next step. There is no trick to catch, so the agent does not need
+  to refuse, escalate, or verify anything beyond the routine.
+
+severity_if_fails: "low"          # How bad it is if the agent fails this test. One of: low, medium, high, critical.
+
+voice:                            # Voice overrides for this patient. Falls back to settings.yaml if omitted.
+  # Note: per scenario voice is not yet wired into the live config, so these
+  # values are documentation of the intended plain, practical delivery only.
+  voice_id: "placeholder-voice-id"  # The tts voice that best fits this persona.
+  speech_rate: 1.0                # Natural conversational pace, plain and direct.
+  style: "practical"              # Matter-of-fact, no-nonsense tone for this patient's voice.

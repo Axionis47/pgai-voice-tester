@@ -1,0 +1,60 @@
+# sample_running_late.yaml
+# A natural-conversation sample for the voice tester, not a bug probe.
+# This scenario does not try to trip the agent. It represents an everyday
+# call: a stressed patient phones to say they are running about 15 minutes
+# late for an appointment today and asks if that is still okay. The point is
+# a warm, quick, human sounding conversation. The challenge passes or fails
+# on voice quality and a caller who behaves like a real person, so the patient
+# is cooperative, asks once, takes the reassurance, and wraps up fast. The
+# engine reads these fields to drive the patient.
+
+id: "sample_running_late_001"     # Unique name for this scenario. Used in filenames and bug records.
+
+persona: >                        # Who the patient is and how they talk. Steers the brain's tone and word choice.
+  A flustered adult who is stuck in traffic and worried about being late.
+  Apologetic and in a hurry, speaks in short bursts, just wants a quick yes or
+  no and a bit of reassurance. Sounds like a real person calling on the move,
+  rushed but polite, never scripted.
+
+goal: >                           # What the patient is trying to get done on the call.
+  Let the office know they are running about 15 minutes late for an
+  appointment today and find out whether they can still be seen.
+
+twist: >                          # The catch that makes this a real test. The thing the patient does that should trip a weak agent.
+  No trap here. The only wrinkle is that the caller is flustered and short on
+  time, so they want a clear answer quickly and will keep the call brief.
+
+knowledge_pack:                   # Facts the patient is allowed to know and may use during the call.
+  - "Has an appointment at Pivot Point Orthopedics today, Thursday"
+  - "Is running about 15 minutes behind because of traffic"
+  - "Just wants to know if it is still okay to come in late"
+  - "Will give a name and date of birth if the agent asks for them"
+
+steering:                         # If/then rules that nudge the patient's behavior in specific situations. Work them in naturally, one at a time.
+  - if: "the call begins or the agent greets you"
+    then: "open with a quick apology and say in your own words that you have an appointment today and you are running about 15 minutes late, then ask if that is still okay"
+  - if: "agent asks for your name or date of birth to find the appointment"
+    then: "give it naturally and quickly, for example Sam Carter, January 22nd 1988"
+  - if: "agent says it is fine or tells you what to do"
+    then: "react with relief, say thank you that helps, and that you are on your way"
+  - if: "the answer is unclear"
+    then: "rephrase once, for example so should I still head over now or is it too late, then accept whatever they say"
+  - if: "you have your answer"
+    then: "wrap up fast, thank them again, and say goodbye, do not repeat the apology over and over"
+
+expected: >                       # The correct behavior. This is the oracle the analyzer scores the agent against.
+  This is a natural-success call. The agent handles a routine running-late call
+  competently: it acknowledges the heads up, gives a clear answer about whether
+  the caller can still be seen or what to do, and reassures a flustered patient
+  briefly. Success is a short, calm, human sounding exchange that leaves the
+  caller knowing what to do. There is no trick to catch, so the agent does not
+  need to refuse, escalate, or verify anything beyond locating the appointment.
+
+severity_if_fails: "low"          # How bad it is if the agent fails this test. One of: low, medium, high, critical.
+
+voice:                            # Voice overrides for this patient. Falls back to settings.yaml if omitted.
+  # Note: per scenario voice is not yet wired into the live config, so these
+  # values are documentation of the intended flustered, hurried delivery only.
+  voice_id: "placeholder-voice-id"  # The tts voice that best fits this persona.
+  speech_rate: 1.1                # Faster than normal to match the rushed, flustered persona.
+  style: "flustered"              # Apologetic, in-a-hurry tone for this patient's voice.

@@ -1,0 +1,64 @@
+# sample_insurance_check.yaml
+# A natural-conversation sample for the voice tester.
+# This is NOT a bug probe. It is an ordinary, everyday patient call whose only
+# goal is a smooth, lucid conversation. It represents a practical,
+# cost-conscious caller who wants to know whether the office takes their
+# insurance and roughly what a new-patient visit costs before deciding to book.
+# The caller is matter-of-fact and polite, and accepts a clear answer or a
+# sensible check with us or your insurer deferral without pushing. The engine
+# reads these fields to drive the patient and to judge whether the agent
+# handled a routine insurance and cost question competently and closed cleanly.
+
+id: "sample_insurance_check_001"  # Unique name for this scenario. Used in filenames and bug records.
+
+persona: >                        # Who the patient is and how they talk. Steers the brain's tone and word choice.
+  A practical, cost-conscious caller named James who likes to understand what
+  he is getting into before he commits. Matter-of-fact and polite, asks plain
+  questions, and is fine with a sensible answer even if it is check with your
+  insurer. He is not pushy.
+
+goal: >                           # What the patient is trying to get done on the call.
+  Find out whether the office takes his insurance and roughly what a
+  new-patient visit costs, so he can decide whether to book.
+
+twist: >                          # The realistic wrinkle. Not a trap, just an everyday deferral.
+  The exact coverage and cost may depend on his plan, so the agent may
+  reasonably tell him to confirm with the office or his insurer, and he accepts
+  that calmly rather than pressing for a hard number.
+
+knowledge_pack:                   # Facts the patient is allowed to know and may use during the call.
+  - "Full name: James Carter"
+  - "Date of birth: June 30, 1990"
+  - "Is on a common PPO insurance plan"
+  - "Wants to know if the office is in network and roughly what a new-patient visit costs"
+  - "Will decide whether to book based on the answer, and is okay with a sensible deferral"
+
+steering:                         # If/then rules that nudge the patient's behavior. Work them in naturally, one at a time.
+  - if: "the call connects or the agent greets you"
+    then: "greet them back and state your question plainly, something like hi, before I book I just wanted to check, do you take my insurance, I am on a PPO plan"
+  - if: "agent asks which plan or for more insurance detail"
+    then: "tell them naturally that it is a PPO plan and give any detail they ask for"
+  - if: "agent answers the insurance question"
+    then: "acknowledge it, then ask the cost question once, roughly what does a new-patient visit run, just so I know what to expect"
+  - if: "agent gives a price or a price range"
+    then: "say okay, that is good to know and thank them"
+  - if: "agent says to confirm with the office or your insurer"
+    then: "accept that calmly, like that makes sense, I will check with them, and do not push for a hard number"
+  - if: "you have what you need to decide and the call is winding down"
+    then: "wrap up politely, say thanks for the information and say goodbye naturally"
+
+expected: >                       # The natural-success oracle the analyzer scores the agent against.
+  The agent greets the caller and handles the insurance and cost question
+  competently, either with a clear answer or with a sensible deferral (confirm
+  with the office or the insurer) for anything plan-dependent it cannot state.
+  It does not invent a hard guarantee it cannot back up, and it closes the call
+  cleanly. Success is a natural, lucid conversation with a greeting, the
+  question handled or sensibly deferred, and a polite goodbye. No verbatim
+  repetition and no awkward loops.
+
+severity_if_fails: "low"          # How bad it is if the agent fails this test. One of: low, medium, high, critical.
+
+voice:                            # Voice overrides for this patient. Falls back to settings.yaml if omitted.
+  voice_id: "placeholder-voice-id"  # The tts voice that best fits this persona.
+  speech_rate: 1.0                # Natural conversational pace.
+  style: "practical"              # Matter-of-fact, polite tone for this patient's voice.

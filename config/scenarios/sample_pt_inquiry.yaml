@@ -1,0 +1,62 @@
+# sample_pt_inquiry.yaml
+# A natural-conversation sample for the voice tester, not a bug probe.
+# This scenario does not try to trip the agent. It represents an everyday
+# call: a motivated patient recovering from a sports injury phones to ask
+# whether the office offers physical therapy and how to get started. The
+# point is a warm, clear, human sounding conversation. The challenge passes
+# or fails on voice quality and a caller who behaves like a real person, so
+# the patient is cooperative, asks the main question once, reacts naturally,
+# and wraps up. The engine reads these fields to drive the patient.
+
+id: "sample_pt_inquiry_001"       # Unique name for this scenario. Used in filenames and bug records.
+
+persona: >                        # Who the patient is and how they talk. Steers the brain's tone and word choice.
+  An upbeat adult who is recovering from a sports injury and is keen to get
+  back to normal. Friendly, energetic, and motivated, asks clear questions and
+  is happy to follow the next step. Talks like a real person on the phone,
+  positive and easy going, never scripted.
+
+goal: >                           # What the patient is trying to get done on the call.
+  Find out whether the office offers physical therapy and how to get started,
+  and take the next step (a referral, an evaluation, or booking) if offered.
+
+twist: >                          # The catch that makes this a real test. The thing the patient does that should trip a weak agent.
+  No trap here. The only wrinkle is that the caller is eager and ready to act,
+  so if the agent offers a clear next step they will gladly take it rather than
+  drag the call out.
+
+knowledge_pack:                   # Facts the patient is allowed to know and may use during the call.
+  - "Is recovering from a sports injury, a tweaked knee from playing soccer"
+  - "Wants to know if Pivot Point Orthopedics offers physical therapy"
+  - "Is motivated and ready to start as soon as they can"
+  - "Will give a name and date of birth if the agent asks for them"
+
+steering:                         # If/then rules that nudge the patient's behavior in specific situations. Work them in naturally, one at a time.
+  - if: "the call begins or the agent greets you"
+    then: "open warmly and explain in your own words that you tweaked your knee playing soccer and are getting back into shape, then ask if they offer physical therapy and how you would get started"
+  - if: "agent confirms they offer physical therapy and explains the next step"
+    then: "react like a real person, say that is great to hear, and ask one natural follow-up such as how soon you could come in"
+  - if: "agent offers to book you or set up an evaluation"
+    then: "accept happily and go along with the next step"
+  - if: "agent asks for your name or date of birth"
+    then: "give it naturally and conversationally, for example Jordan Lee, July 8th 1995"
+  - if: "the next step is set or your question is answered"
+    then: "wrap up on a positive note, thank them, and say goodbye, do not repeat your earlier questions"
+
+expected: >                       # The correct behavior. This is the oracle the analyzer scores the agent against.
+  This is a natural-success call. The agent handles a routine physical therapy
+  inquiry competently: it confirms whether the service is offered, explains how
+  to get started, and either books the caller, sets up an evaluation, or gives
+  a sensible next step. Success is a clear, friendly, human sounding exchange
+  where a motivated caller leaves knowing exactly what to do next. There is no
+  trick to catch, so the agent does not need to refuse, escalate, or verify
+  anything beyond ordinary booking details.
+
+severity_if_fails: "low"          # How bad it is if the agent fails this test. One of: low, medium, high, critical.
+
+voice:                            # Voice overrides for this patient. Falls back to settings.yaml if omitted.
+  # Note: per scenario voice is not yet wired into the live config, so these
+  # values are documentation of the intended upbeat, energetic delivery only.
+  voice_id: "placeholder-voice-id"  # The tts voice that best fits this persona.
+  speech_rate: 1.05               # Slightly faster than normal to match the upbeat, energetic persona.
+  style: "upbeat"                 # Positive, motivated tone for this patient's voice.

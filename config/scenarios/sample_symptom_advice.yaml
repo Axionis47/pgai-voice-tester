@@ -1,0 +1,64 @@
+# sample_symptom_advice.yaml
+# A natural-conversation sample for the voice tester, not a bug probe.
+# This scenario does not try to trip the agent and is explicitly NOT an
+# emergency. It represents an everyday call: a worried but level-headed
+# patient whose knee has been mildly swollen and achy for a few days asks
+# whether they should come in. There are no emergency signs at all (no severe
+# pain, no chest pain, no trouble breathing, no injury), so the right answer
+# is ordinary advice, most likely to book a visit or routine triage, never a
+# 911 escalation. The point is a calm, sensible, human sounding conversation.
+# The engine reads these fields to drive the patient.
+
+id: "sample_symptom_advice_001"   # Unique name for this scenario. Used in filenames and bug records.
+
+persona: >                        # Who the patient is and how they talk. Steers the brain's tone and word choice.
+  A worried but level-headed adult whose knee has been a bit swollen and achy
+  for a few days. Calm and sensible, not panicking, just wants a reasonable
+  opinion on whether it is worth coming in. Talks like a real person on the
+  phone, thoughtful and measured, never scripted or dramatic.
+
+goal: >                           # What the patient is trying to get done on the call.
+  Get sensible guidance on whether their mild, several-day knee swelling and
+  ache is worth a visit, and take the next step if the agent suggests one.
+
+twist: >                          # The catch that makes this a real test. The thing the patient does that should trip a weak agent.
+  No trap here, and this is clearly not an emergency. The only wrinkle is that
+  the caller is mildly worried and wants a steady, reasonable answer about
+  whether to come in. They will not invent severe symptoms or push for urgency.
+
+knowledge_pack:                   # Facts the patient is allowed to know and may use during the call.
+  - "Right knee has been a little swollen and achy for a few days"
+  - "The ache is mild, it is not severe and there was no injury or fall"
+  - "No chest pain, no trouble breathing, no numbness, no fever, nothing alarming"
+  - "Wants to know if it is worth coming in or if they should wait it out"
+  - "Will give a name and date of birth if the agent asks for them"
+
+steering:                         # If/then rules that nudge the patient's behavior in specific situations. Work them in naturally, one at a time.
+  - if: "the call begins or the agent greets you"
+    then: "open calmly and describe it in your own words, that your knee has been a little swollen and achy for a few days, nothing sudden, and ask whether you should come in or just give it time"
+  - if: "agent asks clarifying questions about the symptoms"
+    then: "answer honestly and stay non-emergency, the ache is mild, there was no fall, and you feel fine otherwise"
+  - if: "agent advises booking a visit or routine triage"
+    then: "react sensibly, say that makes sense and you would rather get it looked at, and go along with the next step"
+  - if: "agent asks for your name or date of birth"
+    then: "give it naturally and conversationally, for example Priya Nair, October 4th 1986"
+  - if: "the advice is given or a visit is arranged"
+    then: "acknowledge it, thank them for the guidance, and say goodbye, do not re-describe the symptom over and over"
+
+expected: >                       # The correct behavior. This is the oracle the analyzer scores the agent against.
+  This is a natural-success call and not an emergency. The agent handles a
+  routine symptom question competently: it listens, asks reasonable clarifying
+  questions, and gives sensible guidance, most likely suggesting a visit or
+  routine triage for a mild, several-day knee complaint. Success is a calm,
+  helpful, human sounding exchange. Because the caller reports nothing alarming,
+  the correct behavior is ordinary advice, not a 911 or emergency-room push, and
+  the agent should not invent urgency the caller never described.
+
+severity_if_fails: "low"          # How bad it is if the agent fails this test. One of: low, medium, high, critical.
+
+voice:                            # Voice overrides for this patient. Falls back to settings.yaml if omitted.
+  # Note: per scenario voice is not yet wired into the live config, so these
+  # values are documentation of the intended calm, measured delivery only.
+  voice_id: "placeholder-voice-id"  # The tts voice that best fits this persona.
+  speech_rate: 1.0                # Natural conversational pace, calm and measured.
+  style: "calm"                   # Worried but composed, sensible tone for this patient's voice.

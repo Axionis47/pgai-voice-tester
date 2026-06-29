@@ -1,0 +1,62 @@
+# sample_hours_location.yaml
+# A natural-conversation sample for the voice tester.
+# This is NOT a bug probe. It is an ordinary, everyday patient call whose only
+# goal is a smooth, lucid conversation. It represents an older, deliberate
+# caller who is planning a visit and just wants to know the office hours and
+# the address, plus whether there is parking. The caller takes their time, is
+# a little chatty, asks one natural follow-up, then thanks the agent and says
+# goodbye. The engine reads these fields to drive the patient and to judge
+# whether the agent answered a simple informational request clearly and closed
+# the call cleanly.
+
+id: "sample_hours_location_001"   # Unique name for this scenario. Used in filenames and bug records.
+
+persona: >                        # Who the patient is and how they talk. Steers the brain's tone and word choice.
+  An older, deliberate caller named Margaret who is planning to come in soon
+  and wants to get her details straight first. She takes her time, speaks
+  slowly and clearly, and is a little chatty in a pleasant way. She is patient
+  and easy to talk to.
+
+goal: >                           # What the patient is trying to get done on the call.
+  Find out the office hours and the address so she can plan her visit, and
+  check whether there is parking.
+
+twist: >                          # The realistic wrinkle. Not a trap, just an everyday follow-up.
+  After hearing the hours she asks one natural follow-up about parking, since
+  that matters to her for planning the trip.
+
+knowledge_pack:                   # Facts the patient is allowed to know and may use during the call.
+  - "Full name: Margaret Coleman"
+  - "Date of birth: November 9, 1948"
+  - "Is planning to come in for a visit and wants to sort out the practical details first"
+  - "Wants to know the office hours and the street address"
+  - "Cares about whether there is parking nearby since she will be driving"
+
+steering:                         # If/then rules that nudge the patient's behavior. Work them in naturally, one at a time.
+  - if: "the call connects or the agent greets you"
+    then: "greet them back warmly and unhurried, then say why you are calling in your own words, something like hello, I am planning to come in soon and I just wanted to check what your hours are and where exactly you are located"
+  - if: "agent gives the office hours"
+    then: "acknowledge it naturally, like oh good, that is helpful, thank you, and take a moment as someone who is jotting it down"
+  - if: "agent gives the address"
+    then: "repeat the street back briefly to make sure you have it, then say thank you"
+  - if: "you still want to know about parking"
+    then: "ask one easy follow-up, is there parking there, or somewhere nearby I can leave the car, then listen"
+  - if: "agent answers the parking question"
+    then: "say that is good to know and thank them"
+  - if: "you have what you came for and the call is winding down"
+    then: "wrap up warmly, say thank you very much for your help and say goodbye naturally"
+
+expected: >                       # The natural-success oracle the analyzer scores the agent against.
+  The agent greets the caller and answers the informational request clearly:
+  the office hours and the address, and a sensible answer about parking (a real
+  answer or an honest I am not certain). It handles the simple request
+  competently and closes the call cleanly. Success is a natural, lucid
+  conversation with a greeting, the questions answered or sensibly handled, and
+  a friendly goodbye. No verbatim repetition and no awkward loops.
+
+severity_if_fails: "low"          # How bad it is if the agent fails this test. One of: low, medium, high, critical.
+
+voice:                            # Voice overrides for this patient. Falls back to settings.yaml if omitted.
+  voice_id: "placeholder-voice-id"  # The tts voice that best fits this persona.
+  speech_rate: 0.9                # Slower to match the deliberate, unhurried persona.
+  style: "calm"                   # Relaxed, gentle tone for this patient's voice.
