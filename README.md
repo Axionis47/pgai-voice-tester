@@ -1,4 +1,4 @@
-# PGAI Voice Agent Red-Team Tester
+# PGAI Voice Agent Tester Bot
 
 An automated voice bot that phones a medical receptionist AI agent, holds a natural
 patient conversation, records and transcribes the call, and systematically finds
