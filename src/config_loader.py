@@ -68,8 +68,9 @@ def load_scenario(scenario_path: Path) -> Dict[str, Any]:
         scenario_path: path to a file under config/scenarios/.
 
     What comes out:
-        A plain dictionary with the scenario fields: id, persona, goal, twist,
-        knowledge_pack, steering, expected, severity_if_fails, and voice.
+        A plain dictionary with the scenario fields: id, persona, opening_line,
+        goal, twist, knowledge_pack, steering, expected, severity_if_fails, and
+        voice.
 
     A named scenario is required, so a missing file raises FileNotFoundError and
     leaves any fallback decision to the caller.

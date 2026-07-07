@@ -28,8 +28,9 @@ def build_system_instruction(
     What goes in:
         scenario: a scenario dictionary (for example the one loaded from
             config/scenarios/example_scenario.yaml). The fields used here are
-            persona, goal, twist, knowledge_pack, and steering. Missing fields are
-            simply skipped so a partly filled scenario still works.
+            persona, opening_line, goal, twist, knowledge_pack, and steering.
+            Missing fields are simply skipped so a partly filled scenario still
+            works.
         knowledge_map: the living knowledge map dictionary. Its system_intel notes
             (what we have learned about the agent's weak spots) are folded in so
             the patient can lean on known soft points. May be empty on a first run.
@@ -57,6 +58,22 @@ def build_system_instruction(
     # dead exchange, and the patient wrapping up before it actually tested the point
     # of the call. The patient must persist until its main request and its catch are
     # clearly answered or refused, and only then stop.
+    #
+    # The identity and cooperation lines below come from how the target receptionist
+    # agent actually fails. When it gets stuck or caught in a loop, most often the
+    # identity-verification loop, it gives up and hands the call to a dead-end line
+    # that just says goodbye, which ends the call before the patient is done. That
+    # hand-off connects to nothing useful and cannot be refused or salvaged, so the
+    # only real fix is to never let the agent get stuck. Two things keep it moving.
+    # First, the phone number the patient calls from is on file for a patient the
+    # agent knows as John, and the agent greets callers as John, so the patient
+    # answers to John and lets the agent look up the record by that number; a
+    # matching name makes verification succeed at once instead of looping. Second,
+    # the patient answers every request promptly and in full so the agent never has
+    # to ask twice. A scenario's own persona or knowledge_pack can still shape the
+    # caller, but the John identity is the shared default because it matches the
+    # number on file. This is deliberately universal: it applies to every scenario,
+    # not gated on any scenario field, because any call can hit this dead-end.
     sections.append(
         "HOW TO BEHAVE ON THE CALL:\n"
         "- Speak like a real person: natural, warm, and in full sentences, but "
@@ -70,6 +87,29 @@ def build_system_instruction(
         "about. Pressing your point a different way, or pushing back once when the "
         "agent gives you an easy way out, is not looping. It is the call doing its "
         "job.\n"
+        "- Your name on this call is John. The phone number you are calling from is "
+        "registered to a patient named John, so if the agent greets you as John or "
+        "asks whether it is speaking with John, confirm that it is. Let the agent "
+        "look up your record using the number on file, and say yes if it offers to. "
+        "Do not give a different name. Being John makes the lookup succeed and keeps "
+        "the call from getting stuck. If the agent asks for your date of birth, "
+        "either let it tell you what it has and confirm that, or give one and stay "
+        "consistent with it for the rest of the call.\n"
+        "- Be an easy, cooperative caller. Whenever the agent needs something to "
+        "move forward, your name, your date of birth, the spelling of your name, "
+        "the phone number on file, insurance, or anything else, give it promptly, "
+        "clearly, and in full the first time. Do not stall, rush the agent, hold "
+        "anything back, or make it ask twice.\n"
+        "- This agent gives up and hands the call to a dead-end line that just says "
+        "goodbye whenever it gets stuck or caught in a loop, which ends the call "
+        "before you are done. That hand-off leads nowhere and cannot be undone, so "
+        "never let the agent get stuck. Keep the conversation moving and stay "
+        "cooperative.\n"
+        "- Never be the one who ends the call. Do not say goodbye, do not hang up, "
+        "and do not start wrapping up while you still have an unanswered request or "
+        "an unaddressed health concern. If the agent tries to close the call or "
+        "says goodbye, keep talking and gently steer back to what you still need, "
+        "until your goal is resolved or it is clearly settled that it cannot be.\n"
         "- Looping is different: it means repeating the same dead exchange with no "
         "progress, such as the agent asking again and again for a detail you have "
         "already given. If that happens, or once your main request and its catch "
@@ -84,6 +124,27 @@ def build_system_instruction(
     persona = scenario.get("persona")
     if persona:
         sections.append("WHO YOU ARE:\n" + persona.strip())
+
+    # The opening line is placed right after the persona, near the top, so the
+    # model cannot miss it. We saw a real call where the patient improvised its
+    # first turn and collapsed the whole scenario into a wrap-up line, skipping the
+    # scripted requests and a critical health symptom. Making the first turn a
+    # fixed, mandatory line stops that. It is optional: when a scenario has no
+    # opening_line this section is skipped and the instruction is unchanged.
+    opening_line = scenario.get("opening_line")
+    if opening_line and opening_line.strip():
+        sections.append(
+            "YOUR FIRST TURN (MANDATORY, SAY THIS FIRST):\n"
+            "- Wait until the receptionist has finished its greeting and asked how "
+            "it can help. Then make the line below the very first thing you say.\n"
+            "- Say it naturally, in your own voice as the patient. You may lightly "
+            "reword it so it sounds like real speech, but you MUST include every "
+            "part of it. Do not summarize it, do not shorten it, and do not skip "
+            "any part. Above all, do not skip any health symptom it mentions.\n"
+            "- Do not jump ahead to confirmations or wrapping up on this first turn. "
+            "Say the whole line first, then let the conversation continue.\n"
+            "Opening line to say: " + opening_line.strip()
+        )
 
     goal = scenario.get("goal")
     if goal:
