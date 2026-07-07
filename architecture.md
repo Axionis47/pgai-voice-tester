@@ -605,6 +605,24 @@ which is the call doing its job.
 
 ## 8. Configuration and artifacts
 
+Configuration is split across three files, each with its own job. Operational
+config, per-test scenario config, and learned state are kept apart on purpose,
+and all behavior comes from config, not from code:
+
+- `config/settings.yaml` holds the operational settings that are not tied to any
+  one test: the Vertex project and location (read from env), the model ids, the
+  patient voice, turn taking, budgets, and the telephony numbers.
+- `config/scenarios/<name>.yaml` is one file per test. Each file describes the
+  patient persona and the single agent behavior being probed. The behavior lives
+  here, never hard coded in Python.
+- `config/knowledge_map.yaml` is the living intel learned about the agent across
+  calls. It is folded into the patient prompt by `build_system_instruction`.
+
+The three files map to three concerns: how the tester runs, what one test does,
+and what we have learned so far. Keeping them separate is why a new test is a new
+scenario file and nothing else, and why nothing about a patient is written in the
+Python.
+
 ### config/settings.yaml
 
 `config/settings.yaml` holds every operational setting that is not specific to
@@ -629,6 +647,25 @@ files are parsed). The sections:
   caller id), and `target_number` (the agent under test).
 - `paths`: `recordings_dir`, `transcripts_dir`, and `knowledge_map_file`.
 
+### config/scenarios/<name>.yaml
+
+Each file in `config/scenarios/` is one test. It describes the patient persona
+and the one agent behavior being probed. The fields, loaded by
+`load_scenario(...)` and read by `build_system_instruction(...)`, are `id`,
+`persona`, `opening_line`, `goal`, `twist`, `knowledge_pack`, `steering`,
+`expected`, `severity_if_fails`, and `voice` (Chapter 7 covers what each one
+does). Because the behavior lives in these fields, adding a test means adding a
+scenario file, and no patient behavior is hard coded in the Python.
+
+### config/knowledge_map.yaml
+
+`config/knowledge_map.yaml` is the living intel learned about the agent across
+calls. It has two sections: `ground_truth` (confirmed real facts about the
+office) and `system_intel` (what we have learned about how the agent behaves).
+It starts nearly empty and grows as calls reveal more. Before each call,
+`build_system_instruction` folds its `system_intel` notes into the patient
+prompt, so the patient can lean on the agent's known soft spots.
+
 ### Where files land
 
 - Call recordings: `results/recordings/<callSid>.wav` (dual channel) and
@@ -639,3 +676,12 @@ files are parsed). The sections:
 
 Both directories come from `settings.paths`, so changing where files land is a
 config edit, not a code edit.
+
+### Where the submission artifacts live
+
+The ten submission scenarios are the `config/scenarios/probe_*.yaml` files that
+drove the campaign calls. Each call's recording is at
+`results/recordings/<callSid>.mp3`; the dual-channel WAV stays local only, per
+`.gitignore`, so only the mixed mono MP3 is committed. Each call's clean
+transcript is at `results/transcripts/<callSid>.txt`. `README.md` carries the
+front-page index that links all three together, one row per call.
