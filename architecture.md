@@ -95,6 +95,20 @@ The rest of this document walks each box in that diagram.
 This chapter covers `place_call.py` and `download_recording.py`, plus the parts
 of Twilio Media Streams you need to know to follow the rest.
 
+```
+place_call.py
+   |  twilio.calls.create(to=agent, twiml=..., record=True, dual channel)
+   v
+Twilio  --dials-->  AGENT (+1-805-439-8008)
+   |  runs the TwiML:
+   |    <Connect><Stream url="wss://<tunnel>/stream">
+   |      <Parameter name="scenario" value="probe_x"/>
+   v
+media-stream websocket  ---->  server.py  /stream
+   mulaw 8 kHz, 20 ms base64 frames
+   events: start (has customParameters), media, stop, clear
+```
+
 ### What you need to know about Twilio Media Streams
 
 Twilio Media Streams is how Twilio hands the raw audio of a live call to your
@@ -198,6 +212,17 @@ default.
 `server.py` is the heart of the live path. It is a FastAPI app with one
 websocket endpoint, `/stream`, and a small health-check route at `/`. It runs on
 port 8080 (see the `uvicorn.run(...)` call at the bottom).
+
+```
+   PHONE (Twilio ws)                         GEMINI LIVE session
+        |   mulaw 8k 20ms                          |
+        |=== phone->gemini pump ==================>|  to_gemini: mulaw 8k -> PCM 16k
+        |                                          |  session.send_realtime_input
+        |<== gemini->phone pump ===================|  from_gemini: PCM 24k -> mulaw 8k 20ms
+        |   mulaw 8k 20ms                          |
+   both pumps run at once (asyncio.gather); leftover bytes are
+   parked until they fill a full 20 ms frame
+```
 
 ### The /stream handler
 
@@ -307,6 +332,17 @@ helpers that build the exact JSON shape Twilio wants.
 The patient is one Gemini Live session. It runs on Vertex AI, using the model
 `gemini-live-2.5-flash`.
 
+```
+scenario.yaml + knowledge_map
+        |  build_system_instruction
+        v
+ system_instruction --> Gemini Live (gemini-live-2.5-flash, Vertex global)
+        agent audio in  -->  [ hear -> think -> speak ]  --> patient audio out
+ read replies with session.receive():
+   message.data            = patient audio bytes (PCM 24k)
+   message.server_content  = turn info, incl. interrupted
+```
+
 ### Where it runs
 
 `build_gemini_client()` in `src/clients.py` builds the `google-genai` client
@@ -374,6 +410,17 @@ Live decides when the patient talks over the agent, using its own voice activity
 detection inside the session. `config/settings.yaml` sets `turn_taking.barge_in:
 true` to allow this; we do not configure silence thresholds ourselves because
 the Live session manages that.
+
+```
+patient starts talking over the agent
+        |
+Gemini sets server_content.interrupted = True
+        |
+   reset_after_interruption()  -> drop the parked leftover mulaw
+   _send_clear(ws, streamSid)  -> tell Twilio to flush buffered audio
+        |
+   the agent stops hearing the cancelled reply at once
+```
 
 When barge-in happens, there is a cleanup problem to solve. At the moment the
 patient interrupts, two buffers hold stale audio from the patient's previous,
@@ -475,6 +522,21 @@ independent timelines. Both use the same clock: timestamps are measured from the
 start of the call, because both channels came from the same recording. That
 shared clock is what makes the merge possible.
 
+```
+   dual-channel WAV
+      |  split_stereo_wav_to_mono_files
+      +--> LEFT  (one voice)  --Whisper-->  segments: (start,end,text)...
+      +--> RIGHT (one voice)  --Whisper-->  segments: (start,end,text)...
+                                   |  assign_speakers (disclaimer? else spoke-first)
+                                   v
+      merge_channels_into_timeline: all segments in one list,
+      sorted by start time on the shared call clock
+                                   |
+                                   v
+      [12.3s] AGENT: ...
+      [14.8s] BOT: ...        (one ordered AGENT/BOT script)
+```
+
 `merge_channels_into_timeline(left_segments, left_speaker, right_segments,
 right_speaker)` does the interleave. It turns every `(start, end, text)` tuple
 into a `TranscriptSegment` tagged with its channel's speaker label, puts all the
@@ -506,6 +568,17 @@ The patient's behavior is not written in Python. It comes entirely from a
 scenario YAML file plus a shared knowledge map, which `src/brain.py` turns into
 the Gemini Live system instruction. `brain.py` is the only file that talks to an
 LLM, and it holds no hard-coded patient behavior of its own.
+
+```
+config/scenarios/<name>.yaml            config/knowledge_map.yaml
+  persona, opening_line, goal,            learned intel about the agent
+  twist, knowledge_pack, steering                |
+                \                               /
+                 build_system_instruction (src/brain.py)
+                              |
+                              v
+                 patient system prompt --> Gemini Live plays the patient
+```
 
 ### The scenario YAML schema
 
@@ -622,6 +695,17 @@ The three files map to three concerns: how the tester runs, what one test does,
 and what we have learned so far. Keeping them separate is why a new test is a new
 scenario file and nothing else, and why nothing about a patient is written in the
 Python.
+
+```
+config/settings.yaml      operational knobs (models, voice, budgets, numbers)
+config/scenarios/*.yaml   one patient and one probed behavior per test
+config/knowledge_map.yaml learned intel across calls
+        |   all behavior comes from config, not code
+        v
+   a call produces:
+     results/recordings/<callSid>.mp3   (mixed mono; .wav is local only)
+     results/transcripts/<callSid>.txt  (AGENT / BOT, time ordered)
+```
 
 ### config/settings.yaml
 
