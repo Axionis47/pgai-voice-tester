@@ -1,153 +1,121 @@
-# PGAI Voice Agent Tester Bot
+# PGAI Voice Tester
 
-An automated voice bot that phones a medical receptionist AI agent, holds a natural
-patient conversation, records and transcribes the call, and systematically finds
-bugs in the agent's behavior.
+A voice red-teaming bot. It phones a medical receptionist AI, plays a realistic
+patient on a live call, records the call on two separate audio channels, and
+turns that recording into a clean, speaker-labeled transcript you can read and
+judge. Each call follows a scenario defined in a YAML file, so you control who
+the patient is and which agent behavior you are testing. Test line:
++1-805-439-8008.
 
-Built for the Pretty Good AI engineering challenge. Test line: +1-805-439-8008.
+## Architecture
 
-## How it works (short version)
-
-The bot places a real phone call, listens to the agent, decides what a realistic
-patient would say next, and speaks back. Each call follows a scenario defined in a
-config file. After the call, an offline step transcribes the recording into a clean
-labeled transcript. Judging the transcript against what a correct agent should have
-done is currently done by hand, with help from an LLM, and the findings are recorded
-by hand.
-
-Deeper detail lives in:
-
-- `SUBMISSION.md` the ten curated calls submitted for review, with recordings and transcripts
-- `docs/BUG_REPORT.md` the findings: two real bugs plus a caveated design risk
-- `docs/ARCHITECTURE.md` how the system fits together and what each file does
-- `docs/SCENARIOS.md` how to write a scenario YAML and run a particular one
-- `docs/STRATEGY.md` the red-team method and how we plan attacks
-- `docs/PROBE_PLAYBOOK.md` the library of probes and bugs to test
-- `CODING_STANDARDS.md` the code rules every contributor follows
-
-## Project layout
+The system has two paths. The LIVE path is the phone call: Twilio dials the
+target agent and opens a websocket back to our bridge server (`server.py`). The
+bridge holds one Gemini Live session that hears the agent and speaks as the
+patient, converting audio between Twilio's phone format and Gemini's format in
+both directions at once. The OFFLINE path runs after the call: we download the
+dual-channel recording, transcribe each channel on its own with Whisper, decide
+which channel is the agent and which is our bot, and merge the two into one
+time-ordered transcript.
 
 ```
-pgai-voice-tester/
-  README.md                project overview
-  CODING_STANDARDS.md      the code contract every subagent follows
-  requirements.txt         python dependencies
-  .env.example             required environment variables (no secrets)
-  config/
-    settings.yaml          infra, voice, and turn-taking knobs
-    knowledge_map.yaml      living intel about the target, grows every call
-    scenarios/
-      example_scenario.yaml a sample test case (persona, goal, steering, expected)
-    personas/              reusable patient personas
-  server.py                live bridge: runs the call, converting Twilio audio to and from the Gemini Live session
-  src/
-    config_loader.py       read the external config files
-    clients.py             build the Gemini, Twilio, and Whisper clients
-    audio.py               convert audio between Twilio and the Gemini Live session
-    brain.py               the patient: build and drive the Gemini Live session
-  analysis/
-    transcribe.py          offline transcription of the recording (Whisper)
-  docs/
-    ARCHITECTURE.md        how the system fits together
-  results/
-    recordings/            saved call audio
-    transcripts/           saved transcripts
+  place_call.py --> Twilio --> AGENT under test
+                       |
+        Media Streams websocket (mulaw 8 kHz, 20 ms frames)
+                       |
+                  server.py (the bridge)
+             phone -> Gemini  |  Gemini -> phone
+                       |
+             Gemini Live session = the PATIENT (our bot)
+
+  after the call:
+  download_recording.py --> analysis/transcribe.py --> results/transcripts/*.txt
+     (dual-channel WAV)        (split, Whisper, merge)     (AGENT / BOT, ordered)
 ```
 
-## Stack
+For the full detail, file by file and function by function, read
+[architecture.md](architecture.md).
 
-- Telephony: Twilio
-- Live voice loop: Gemini Live on Vertex AI (model `gemini-live-2.5-flash`, served from the global location). One streaming session hears the agent, decides what the patient says, and speaks the reply.
-- Offline transcription: Whisper (faster-whisper), run after the call ends
-- Analysis: Gemini
+## Prerequisites
 
-## Setup and run
+- Python 3.11 or newer.
+- `cloudflared` (the Cloudflare tunnel client), so Twilio can reach your local
+  server over a public URL.
+- A Google Cloud project with the Vertex AI API enabled, and Application Default
+  Credentials set up (run `gcloud auth application-default login`, or point
+  `GOOGLE_APPLICATION_CREDENTIALS` at a service account key file).
+- A Twilio account with a phone number to dial out from.
+- A `.env` file. Copy `.env.example` to `.env` and fill it in. The variables the
+  code actually reads are:
+  - `GOOGLE_CLOUD_PROJECT`: the GCP project id that hosts the models.
+  - `GOOGLE_CLOUD_LOCATION`: the model location. Use `global` (the Gemini Live
+    API is served from the global endpoint).
+  - `GOOGLE_GENAI_USE_VERTEXAI`: set to `true` to use Vertex AI.
+  - `TWILIO_ACCOUNT_SID`: your Twilio account id.
+  - `TWILIO_AUTH_TOKEN`: your Twilio auth token.
+  - `TWILIO_FROM_NUMBER`: the Twilio number to dial out from.
+  - `TARGET_NUMBER`: the agent under test (defaults the `--to` for a call).
 
-### Quick start
+## Run it locally
 
-1. Copy `.env.example` to `.env` and fill it in.
-2. Run the one command below. It sets up the `.venv`, installs the pinned
-   dependencies, starts the bridge server and a cloudflared tunnel, places a
-   call to the target agent, waits for the call to finish, downloads and
-   transcribes it, prints the transcript path, and shuts everything down.
+### One command
 
-   ```
-   ./dev.sh
-   ```
+```
+./dev.sh <scenario-name>
+```
 
-   You can pass a scenario name to run a different test:
+`dev.sh` does the whole test end to end. It sets up the `.venv` and installs
+dependencies, starts the bridge server, opens a cloudflared tunnel, places one
+recorded call to the target agent using the chosen scenario, waits for the call
+to finish, then downloads and transcribes the recording, and shuts the server
+and tunnel down on exit. A scenario name is a file under `config/scenarios/`
+without the `.yaml` suffix. With no argument it uses `sample_hours_location`.
 
-   ```
-   ./dev.sh sample_hours_location
-   ./dev.sh probe_price_multiservice
-   ```
+### Manual steps
 
-   A scenario name is a file under `config/scenarios/` without the `.yaml`
-   suffix. With no argument it uses `sample_hours_location`.
+Run the steps yourself when you want more control. Activating the `.venv` first
+(`source .venv/bin/activate`) helps.
 
-### Create your own test
-
-Each test is a scenario YAML in `config/scenarios/`. To make one and place a call
-with it:
-
-1. Copy the template:
-
-   ```
-   cp config/scenarios/example_scenario.yaml config/scenarios/my_test.yaml
-   ```
-2. Edit the fields, above all `persona` (who is calling), `goal` (what they want),
-   `twist` (the behavior you are testing), and `expected` (what a correct agent
-   does, and what counts as a failure).
-3. Place the call by the file name without the `.yaml` suffix:
-
-   ```
-   ./dev.sh my_test
-   ```
-
-See `docs/SCENARIOS.md` for all nine fields and tips for writing a good test.
-
-### Doing it by hand
-
-A test call is a short chain of steps you run by hand. The steps below also
-benefit from activating the `.venv` first (`source .venv/bin/activate`).
-
-1. Copy `.env.example` to `.env` and fill it in. Install dependencies from
-   `requirements.txt`.
-2. Optional connectivity check:
+1. Optional connectivity check:
 
    ```
-   python scripts/check_services.py
+   python3 scripts/check_services.py
    ```
-3. Start the bridge server. It listens on port 8080.
+2. Start the bridge server. It listens on port 8080.
 
    ```
    python server.py
    ```
-4. Start a public tunnel and copy the host it prints.
+3. Start a public tunnel and copy the host it prints.
 
    ```
    cloudflared tunnel --url http://localhost:8080
    ```
-5. Place a call. Omit `--to` to dial the target agent. `--scenario` takes the
-   name of a file under `config/scenarios` without the `.yaml`.
+4. Place a call. Omit `--to` to dial the target agent. `--scenario` is a file
+   name under `config/scenarios/` without the `.yaml`.
 
    ```
    python place_call.py --url <tunnel-host> --scenario <scenario-name>
    ```
-6. After the call, download the recording using the call SID:
+5. After the call, download the recording using the call SID printed above.
 
    ```
    python download_recording.py --sid <callSid>
    ```
-7. Transcribe the recording:
+6. Transcribe the recording.
 
    ```
    python analysis/transcribe.py --sid <callSid>
    ```
 
-## Status
+## Where things land
 
-Working. The live bridge places real calls and holds a natural patient
-conversation, the offline path produces clean labeled transcripts, and a red-team
-campaign of more than thirty recorded calls produced the findings in
-`docs/BUG_REPORT.md`. The curated set submitted for review is in `SUBMISSION.md`.
+- Call recordings: `results/recordings/<callSid>.wav` (dual channel, used by the
+  transcriber) and `results/recordings/<callSid>.mp3` (mixed mono).
+- Clean transcripts: `results/transcripts/<callSid>.txt`, labeled AGENT and BOT
+  and ordered by timestamp.
+
+## Findings
+
+The bugs found by the red-team campaign are written up in
+[BUG_REPORT.md](BUG_REPORT.md).
