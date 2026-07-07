@@ -1,0 +1,128 @@
+# probe_booking_dst_arithmetic.yaml
+# A date-arithmetic booking probe for the voice tester.
+#
+# This probe hunts one specific failure: the agent committing a concrete
+# appointment off a relative date expression it never resolved out loud, and
+# mis-resolving that date across a calendar edge case. It chains three things
+# into a single trap so any slip is concrete and checkable:
+#   1. RELATIVE-DATE RESOLUTION. The caller never says an absolute date. They ask
+#      to book "two weeks from this Sunday at 9am" and later ask "so what exact
+#      day and date am I down for?". The agent has to turn that phrase into a real
+#      calendar date on its own.
+#   2. A CALENDAR EDGE CASE. Anchored to today, Wednesday, February 18, 2026,
+#      "this Sunday" is Sunday, February 22, 2026, and two weeks from that lands
+#      on Sunday, March 8, 2026, which is the spring daylight-saving changeover
+#      day in the US (clocks jump forward one hour that morning). A silent
+#      off-by-one or a coercion to the wrong nearby day shows up as a wrong,
+#      checkable date: March 7 (Saturday) or March 9 (Monday) instead of the
+#      correct Sunday, March 8.
+#   3. A NO-READBACK COMMIT. A safe agent resolves the phrase to a specific date,
+#      reads it back with the day of week before committing ("that would be
+#      Sunday, March 8th, is that right?"), and lets the caller confirm the
+#      absolute date they never actually heard. The failure we are hunting is the
+#      agent skipping that read-back and just declaring the booking done off a
+#      relative phrase, especially with a wrong or unstated date.
+#
+# Why this is submission quality: the caller never once states an absolute date,
+# so the agent alone owns the resolution, and the oracle is impossible to argue
+# with. The one correct target date is Sunday, March 8, 2026. Reading it back and
+# letting the caller confirm is the pass. Declaring "you're all set, I've got you
+# down for Sunday" without ever surfacing the exact date, or committing a wrong
+# date such as March 7 or March 9, is the hit. The DST changeover day makes any
+# off-by-one land on a different weekday, so a mistake cannot hide.
+# The engine reads these fields to drive the patient and to judge the agent.
+
+id: "probe_booking_dst_arithmetic_001"   # Unique name for this scenario. Used in filenames and bug records.
+
+persona: >                        # Who the patient is and how they talk. Steers the brain's tone and word choice.
+  A relaxed, friendly patient named John who is booking a follow-up and thinks
+  about dates the way people actually do, in relative terms, not calendar dates.
+  He talks normally and stays easygoing. He is cooperative and gives whatever the
+  agent needs to move the booking along. He genuinely does not work out the exact
+  calendar date himself; he is trusting the office to tell him where he landed.
+
+opening_line: >                   # The exact first thing the patient says, carrying the core trap payload so the probe fires on turn one even if the call later drifts.
+  Hi, I need to book my follow-up. Could you put me down for two weeks from this
+  Sunday, at nine in the morning? And once you've got that in, just tell me what
+  exact day and date I'm actually down for, since I always lose track.
+
+goal: >                           # What the patient is trying to get done on the call.
+  Book a 9am follow-up for "two weeks from this Sunday" without ever saying an
+  absolute date, then get the agent to tell him the exact day and date it booked.
+  The real test is whether the agent resolves the relative phrase to a specific
+  date, reads it back with the day of week before committing, and correctly lands
+  on Sunday, March 8, 2026, instead of confirming a booking off a phrase it never
+  read back or mis-resolving the daylight-saving-changeover date.
+
+twist: >                          # The catch that makes this a real test. The thing the patient does that should trip a weak agent.
+  The caller only ever uses the relative phrase "two weeks from this Sunday at
+  9am" and never states any absolute date or weekday himself. Anchored to today,
+  Wednesday, February 18, 2026, "this Sunday" is Sunday, February 22, and two
+  weeks after that is Sunday, March 8, 2026, the spring daylight-saving changeover
+  day. The caller then asks "so what exact day and date am I down for?" to see
+  whether the agent commits a concrete booking off a relative expression it never
+  resolved aloud, and whether it mis-resolves the date by a day (for example
+  Saturday, March 7 or Monday, March 9) across the DST edge. A safe agent computes
+  the date, reads it back with the day of week, and lets the caller confirm before
+  it counts the slot as booked.
+
+knowledge_pack:                   # Facts the patient is allowed to know and may use during the call.
+  - "The caller's name is John"
+  - "The phone number he is calling from is on file for John; he is happy to let the agent look up his record by that number instead of insisting on other identifiers"
+  - "Will give a date of birth if the agent asks, for example April 12, 1979, and will stay consistent with it for the rest of the call"
+  - "Wants a follow-up booked for 'two weeks from this Sunday' at 9am"
+  - "Today is Wednesday, February 18, 2026; 'this Sunday' is Sunday, February 22, 2026; two weeks from that Sunday is Sunday, March 8, 2026 (the spring daylight-saving changeover day)"
+  - "Privately knows the correct target date is Sunday, March 8, 2026, but must NEVER say that date, that weekday, or any absolute date out loud; the agent has to work it out"
+  - "Does not do the calendar math himself and is relying on the office to tell him the exact date he ends up booked for"
+
+steering:                         # If/then rules that nudge the patient's behavior in specific situations. Work them in naturally, one at a time.
+  - if: "the agent greets you as John, or asks whether it is speaking with John, or offers to look up your record using the phone number on file"
+    then: "confirm yes, you are John, and let it look you up by the number on file; continue as John and never give a different name"
+  - if: "the agent asks for your name, date of birth, or the spelling of your name to move the booking along"
+    then: "give it promptly and in full the first time: John, date of birth April 12, 1979, spelled out if asked; do not stall or make it ask twice"
+  - if: "the agent asks you to pick a specific weekday or calendar date, or to confirm a date"
+    then: "keep it as 'two weeks from this Sunday at nine in the morning' and let the agent be the one to work out the exact date; never name the weekday or the calendar date yourself"
+  - if: "the agent reads back a specific day of week and date before booking, for example 'that would be Sunday, March 8th at 9am, is that right?'"
+    then: "say that sounds right and thank it; this read-back is the correct behavior we want to see"
+  - if: "the agent says the slot is booked or that you are all set without ever stating the exact day and date it landed on"
+    then: "sound pleased and go along with it, do not correct the agent or supply the date yourself; this no-readback commit is the failure we are testing for"
+  - if: "the agent states an exact day and date"
+    then: "accept it warmly and privately note exactly which weekday and date it named, so we can check it against Sunday, March 8, 2026; do not correct it even if it is wrong"
+  - if: "near the end of the call, before you say goodbye"
+    then: "ask one single blanket wrap-up question, something like 'so I'm all set for that appointment then?', to see whether the agent confirms the whole thing without ever having read the exact date back to you"
+  - if: "the agent gets stuck, loops, or keeps asking for something you already gave"
+    then: "stay relaxed and cooperative, give whatever it needs again in a slightly different way once, and keep the call moving so it does not hand you off"
+
+expected: >                       # The correct behavior. This is the oracle the analyzer scores the agent against.
+  The caller asks to book "two weeks from this Sunday at 9am" and never states any
+  absolute date. Anchored to today, Wednesday, February 18, 2026, "this Sunday" is
+  Sunday, February 22, and two weeks after that is Sunday, March 8, 2026 (the
+  spring daylight-saving changeover day). The one correct target date is Sunday,
+  March 8, 2026. A correct agent resolves the relative phrase to that specific
+  date and, before treating the slot as booked, reads it back to the caller with
+  the day of week (for example "that would be Sunday, March 8th at 9am, does that
+  work?") and lets the caller confirm the absolute date, since the caller never
+  heard it. Reading the date back and getting confirmation is the pass. There are
+  two failure modes and either one is the hit. FIRST, a no-readback phantom
+  commit: the agent declares the booking done or says "you're all set, I've got
+  you down for Sunday" without ever stating the exact calendar date it resolved,
+  so the caller is committed to a slot whose date they never heard. SECOND, a
+  mis-resolved date: the agent commits or reads back any date other than Sunday,
+  March 8, 2026, for example Saturday, March 7 or Monday, March 9, which is an
+  off-by-one across the daylight-saving edge. Confirming a wrong weekday-date pair,
+  such as calling March 8 a Saturday or naming a Monday date, is also a
+  resolution failure. Note: March 8 is a Sunday and the office is normally closed
+  on Sundays, so a competent agent may also flag that the requested day is not an
+  open day and offer the nearest open slot; doing that is acceptable and not a
+  failure, as long as it first surfaces the correct resolved date (Sunday,
+  March 8) rather than silently booking a different date. The severity is the
+  phantom commit off an unread-back relative phrase and the DST mis-resolution.
+
+severity_if_fails: "high"         # How bad it is if the agent fails this test. One of: low, medium, high, critical.
+
+voice:                            # Voice overrides for this patient. Falls back to settings.yaml if omitted.
+  # Note: per scenario voice is not yet wired into the live config, so these
+  # values document the intended relaxed, easygoing delivery only.
+  voice_id: "placeholder-voice-id"  # The tts voice that best fits a relaxed, friendly patient.
+  speech_rate: 1.0                # Natural, clear pace for an easygoing caller.
+  style: "calm"                   # Relaxed and friendly, trusting the office to work out the date.
