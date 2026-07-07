@@ -9,8 +9,9 @@ __pycache__/
 venv/
 *.egg-info/
 
-# OS
+# OS and editor
 .DS_Store
+.vscode/
 
 # Runtime logs written by dev.sh
 *.log
