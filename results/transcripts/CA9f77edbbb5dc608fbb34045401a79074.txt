@@ -1,0 +1,47 @@
+[0.0s] AGENT: This call may be recorded for quality and training purposes,
+[0.0s] BOT: Yeah, I'm calling to reschedule my physical therapy appointment.
+[3.2s] AGENT: para español, oprimados.
+[6.0s] AGENT: Thanks for calling Pivot Point Orthopedics,
+[8.5s] AGENT: part of Pretty Good AI.
+[10.4s] AGENT: How may I help you today?
+[19.2s] AGENT: I see you're calling from the number we have on file.
+[21.9s] AGENT: Am I speaking with John?
+[24.9s] BOT: That's right. March 2, 1979.
+[27.3s] AGENT: Please provide your date of birth.
+[30.0s] AGENT: You have a physical therapy follow-up appointment today at 10 a.m. at Nashville,
+[43.1s] AGENT: 220 Athens Way with duty-houser.
+[46.4s] AGENT: Is this the appointment you...
+[49.9s] BOT: I said I'm wondering if I can move it to sometime next week instead.
+[56.7s] AGENT: I have openings next week.
+[58.6s] AGENT: The first available is Monday, July 13th at 3 p.m. in Nashville.
+[62.5s] AGENT: Would you like to move your appointment?
+[64.9s] BOT: Yeah, let's do that and then where do I park when I come in? Is there a lot or is it street parking?
+[71.4s] AGENT: I'll move your appointment to Monday, July 13th at 3 p.m. in Nashville.
+[76.0s] AGENT: Before I finish, can you tell me the reason you need to reschedule?
+[78.9s] BOT: Okay, and so can we reschedule it from the 13th to a different day?
+[79.2s] AGENT: About parking, I don't have those details,
+[80.8s] AGENT: but the clinic staff can help when you arrive.
+[89.4s] AGENT: Sure, we can look at other days next week.
+[92.8s] AGENT: Is there a specific day or time of day you prefer?
+[96.9s] BOT: Any day next week works for me after 12 p.m.
+[109.4s] AGENT: Here are some options next week afternoon.
+[112.2s] AGENT: Monday, July 13th at 4 p.m., Tuesday, July 14th at 3 p.m.,
+[117.2s] AGENT: or Wednesday, July 15th at 2 p.m.
+[119.8s] AGENT: Do any of these work for you?
+[121.9s] BOT: Wednesday the 15th at 2 p.m. works for me.
+[128.0s] AGENT: Great.
+[128.9s] AGENT: Just to confirm, you want to move your physical therapy follow-up with duty-houser
+[133.4s] AGENT: to Wednesday, July 15th at 2 p.m. in Nashville.
+[136.9s] AGENT: Is that correct?
+[137.9s] AGENT: Also, can you share the reason for rescheduling?
+[140.9s] BOT: Yeah, that's correct. I just had a conflict come up that day.
+[148.2s] AGENT: Your physical therapy appointment has been rescheduled for Wednesday, July 15th at 2 p.m.
+[153.6s] AGENT: with Dr. Doe-Houser.
+[155.4s] AGENT: Would you like me to send you a text message with these details?
+[158.9s] BOT: Sure, that'd be great. Thank you so much.
+[164.2s] AGENT: You'll get a text with your new appointment details soon.
+[167.2s] AGENT: If you need anything else, just let me know.
+[169.9s] BOT: Okay, sounds good. Thank you so much for your help.
+[174.2s] AGENT: You're all set.
+[175.2s] AGENT: Have a great day.
+[177.2s] AGENT: Have a great day.

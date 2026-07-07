@@ -1,0 +1,64 @@
+[0.0s] AGENT: This call may be recorded for quality and training purposes,
+[0.0s] BOT: Yeah, I just wanted to confirm all those things I just rattled off are still good to go
+[3.3s] AGENT: para español, oprimados.
+[6.0s] AGENT: Thanks for calling Pivot Point Orthopedics.
+[8.4s] AGENT: Part of pretty good AI.
+[10.9s] AGENT: How may I help you today?
+[17.6s] BOT: before I book an appointment. That's me. It's February 1st, 1982. I just want to make
+[22.6s] AGENT: I see you're calling from the number we have on file.
+[25.6s] AGENT: Am I speaking with John?
+[28.8s] AGENT: Please provide your data first.
+[36.7s] AGENT: The birthday doesn't match our records,
+[38.2s] AGENT: but for demo purposes, I'll accept it.
+[40.8s] AGENT: What would you like to confirm before booking your appointment?
+[43.3s] AGENT: Just to clarify, our Friday hours are from 9 a.m. to 12 p.m.,
+[45.1s] BOT: sure that everything I said earlier is correct. So the Friday hours till 8 and that Dr.
+[50.2s] BOT: Okafore is taking new patients at the downtown suite and there's no fee for same day cancellation.
+[62.9s] AGENT: not until 8 p.m.
+[64.5s] AGENT: Also, we do not have a Dr. Okafore at Pivot Point Orthopedics.
+[68.5s] AGENT: Our providers are Dr. Dovey Hauser, Dr. Doug Roth,
+[72.2s] AGENT: Dr. Adam Bricker, Lynn Anderson, and Carl Men.
+[75.1s] BOT: Okay, so there is a cancellation fee. Got it. You just can't tell me what it is. Is that
+[75.7s] AGENT: The clinic is located at 1234 Recovery Way, Suite 200 Austin.
+[82.0s] AGENT: If you have questions about cancellation fees
+[84.3s] AGENT: or want to book with a specific provider,
+[86.7s] AGENT: let me know how you'd like to.
+[95.2s] BOT: right? Okay, so let's book with Dr. Roth, then I'll figure out the cancellation fee later.
+[103.2s] AGENT: You'd like to book an appointment with Dr. Doug Roth.
+[106.1s] BOT: It's just a general checkup and a physical
+[106.7s] AGENT: What is the main reason for your visit today?
+[109.4s] AGENT: For example, is this a routine checkup,
+[111.7s] AGENT: a follow-up, or something urgent?
+[117.0s] BOT: checkup. Yes, that's exactly.
+[119.6s] AGENT: So you'd like to schedule a general office visit
+[121.7s] AGENT: and physical with Dr. Doug Roth.
+[124.2s] AGENT: Is that correct?
+[132.2s] AGENT: Let me check available times with Dr. Doug Roth
+[141.0s] AGENT: for your general checkup and physical one moment.
+[145.3s] BOT: Okay, so if I wanted to book with Dr. Okakey at 10 a.m. on July 13th, is there a cancellation
+[148.4s] AGENT: Dr. Doug Roth does not have opening,
+[150.9s] AGENT: but I can offer you appointments with Dr. Zabignou Lukoski
+[154.4s] AGENT: or Dr. Kelly Noble on Monday, July 13th.
+[157.6s] AGENT: Would you like 10 a.m., 10 30 a.m., or 11 a.m.?
+[169.0s] BOT: fee there?
+[172.2s] AGENT: I don't have details about the cancellation fee
+[174.4s] AGENT: for Dr. Lukoski's appointment.
+[176.6s] AGENT: You can confirm the policy with the clinic staff
+[178.9s] AGENT: when you arrive or by calling the front desk.
+[182.0s] AGENT: Would you like to book the 10 a.m. slot
+[183.5s] AGENT: with Dr. Lukoski on Monday, July 13th?
+[187.3s] BOT: Yes, I do.
+[187.6s] AGENT: Your appointment is set for Monday, July 13th at 10 a.m.
+[196.8s] AGENT: with Dr. Zabignou Lukoski at Pivot Point or Sepedix.
+[199.0s] BOT: Yes, please.
+[201.3s] AGENT: Please bring your photo ID, insurance card,
+[203.7s] AGENT: a list of your current medications,
+[205.3s] AGENT: and any imaging discs you have.
+[207.6s] AGENT: Would you like a text message with these details?
+[209.9s] AGENT: You should get a text with your appointment details soon.
+[219.2s] AGENT: Is there anything else I can help you with today?
+[222.5s] BOT: I'm all set. Thanks so much.
+[227.2s] AGENT: You're all set.
+[228.3s] AGENT: Have a great day.
+[228.8s] BOT: I'm all set. You too.
+[233.5s] AGENT: Take care.

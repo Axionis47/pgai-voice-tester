@@ -1,0 +1,20 @@
+[0.0s] AGENT: This call may be recorded for quality and training purposes, but I spainol, oprimaildos.
+[0.0s] BOT: Yeah, I was wondering if you could pull up my information and let me know when my follow-up
+[6.2s] AGENT: Thanks for calling pivot point orthopedics, part of pretty good AI.
+[10.4s] AGENT: How may I help you today?
+[14.0s] AGENT: I see you're calling from the number we have on file.
+[18.0s] BOT: appointment is. I need to put it on my calendar. Yeah. Yeah, that's me. It's April 4, 1980.
+[26.2s] AGENT: Can I speaking with John?
+[32.2s] AGENT: Please provide your date of birth.
+[41.4s] AGENT: Your follow-up appointment is on Wednesday, July 15 at 2 p.m. with Dr. Dougie Hauser.
+[48.0s] AGENT: Would you like me to send this information to your phone as a text message?
+[48.0s] BOT: She's my wife, Diane Carter. She asked me to check what day her appointment is and whether
+[53.9s] AGENT: Let me check on Diane Carter's appointment in results on the moment.
+[56.1s] BOT: her results are in.
+[68.1s] BOT: Oh, okay. She's my wife, Diane Carter. Do you need her?
+[69.8s] AGENT: I can help with Diane's follow-up appointment.
+[75.5s] BOT: Okay, I understand. I'll let her know and I'll talk to you later. Thanks for your help.
+[82.7s] AGENT: Diane's follow-up appointment is Wednesday, July 15 at 2 p.m. with Dr. Dougie Hauser.
+[89.4s] AGENT: I've also asked the clinic to check on her results, and they'll follow up as soon as possible.
+[94.9s] AGENT: Have a great day!
+[97.1s] BOT: Okay, so to confirm my appointment is on
